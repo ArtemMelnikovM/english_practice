@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Sans', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #e8e8e8;
+    }
+
+    .container {
+      text-align: center;
+      padding: 3rem 2rem;
+      max-width: 520px;
+      width: 100%;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      color: rgba(233, 69, 96, 0.95);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .back:hover {
+      text-decoration: underline;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      letter-spacing: -0.02em;
+    }
+
+    .settings-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      text-align: left;
+    }
+
+    .settings-item {
+      width: 100%;
+      padding: 1.25rem 1.5rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s, border-color 0.2s, box-shadow 0.2s;
+      font-family: inherit;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #e8e8e8;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .settings-item:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(233, 69, 96, 0.5);
+      box-shadow: 0 8px 24px rgba(233, 69, 96, 0.2);
+    }
+
+    .settings-item.expanded {
+      border-color: rgba(233, 69, 96, 0.45);
+    }
+
+    .caret {
+      font-size: 0.85rem;
+      opacity: 0.7;
+      transition: transform 0.2s;
+    }
+
+    .settings-item.expanded .caret {
+      transform: rotate(90deg);
+    }
+
+    .settings-panel {
+      display: none;
+      margin-top: 0.75rem;
+      padding: 1.25rem 1.5rem;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+    }
+
+    .settings-panel.open {
+      display: block;
+    }
+
+    .settings-panel label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: rgba(232, 232, 232, 0.85);
+    }
+
+    .settings-panel input[type="password"],
+    .settings-panel input[type="text"] {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.08);
+      color: #e8e8e8;
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+
+    .settings-panel input:focus {
+      outline: none;
+      border-color: rgba(233, 69, 96, 0.6);
+    }
+
+    .row-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 0.55rem 1.25rem;
+      border-radius: 8px;
+      border: none;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+      color: #1a1a2e;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.92;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: rgba(232, 232, 232, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .hint {
+      margin-top: 0.75rem;
+      font-size: 0.8rem;
+      color: rgba(232, 232, 232, 0.55);
+      line-height: 1.45;
+    }
+
+    .hint a {
+      color: rgba(233, 69, 96, 0.95);
+    }
+
+    .status {
+      margin-top: 0.75rem;
+      font-size: 0.85rem;
+      min-height: 1.2em;
+    }
+
+    .status.ok {
+      color: #7bed9f;
+    }
+
+    .status.err {
+      color: #ff6b6b;
+    }
+
+    .toggle-visibility {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: rgba(233, 69, 96, 0.95);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      font-family: inherit;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back">← Back to menu</a>
+    <h1>Settings</h1>
+
+    <div class="settings-list">
+      <div>
+        <button type="button" class="settings-item expanded" id="btnApiKey" aria-expanded="true">
+          <span>API key</span>
+          <span class="caret" aria-hidden="true">›</span>
+        </button>
+        <div class="settings-panel open" id="panelApiKey">
+          <label for="apiKeyInput">OpenAI API key</label>
+          <input type="password" id="apiKeyInput" autocomplete="off" spellcheck="false" placeholder="sk-...">
+          <button type="button" class="toggle-visibility" id="toggleVisibility">Show key</button>
+          <div class="row-actions">
+            <button type="button" class="btn btn-primary" id="btnSave">Save</button>
+            <button type="button" class="btn btn-ghost" id="btnClear">Remove</button>
+          </div>
+          <p class="hint">Keys are stored only in this browser (<code>localStorage</code>). Get a key at <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">platform.openai.com</a>.</p>
+          <div class="status" id="status" role="status"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="api-config.js"></script>
+  <script>
+    (function () {
+      var btn = document.getElementById('btnApiKey');
+      var panel = document.getElementById('panelApiKey');
+      var input = document.getElementById('apiKeyInput');
+      var statusEl = document.getElementById('status');
+      var btnSave = document.getElementById('btnSave');
+      var btnClear = document.getElementById('btnClear');
+      var toggle = document.getElementById('toggleVisibility');
+
+      function loadKey() {
+        try {
+          input.value = localStorage.getItem(OPENAI_API_KEY_STORAGE_KEY) || '';
+        } catch (_) {
+          input.value = '';
+        }
+      }
+
+      function setStatus(text, kind) {
+        statusEl.textContent = text || '';
+        statusEl.className = 'status' + (kind ? ' ' + kind : '');
+      }
+
+      loadKey();
+
+      btn.addEventListener('click', function () {
+        var open = panel.classList.toggle('open');
+        btn.classList.toggle('expanded', open);
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (open) loadKey();
+      });
+
+      btnSave.addEventListener('click', function () {
+        var v = (input.value || '').trim();
+        try {
+          if (v) {
+            localStorage.setItem(OPENAI_API_KEY_STORAGE_KEY, v);
+          } else {
+            localStorage.removeItem(OPENAI_API_KEY_STORAGE_KEY);
+          }
+          setStatus('Saved.', 'ok');
+        } catch (e) {
+          setStatus('Could not save: ' + (e.message || 'storage error'), 'err');
+        }
+      });
+
+      btnClear.addEventListener('click', function () {
+        try {
+          localStorage.removeItem(OPENAI_API_KEY_STORAGE_KEY);
+          input.value = '';
+          setStatus('Removed.', 'ok');
+        } catch (e) {
+          setStatus('Could not remove: ' + (e.message || 'storage error'), 'err');
+        }
+      });
+
+      toggle.addEventListener('click', function () {
+        var isPwd = input.type === 'password';
+        input.type = isPwd ? 'text' : 'password';
+        toggle.textContent = isPwd ? 'Hide key' : 'Show key';
+      });
+    })();
+  </script>
+</body>
+</html>
