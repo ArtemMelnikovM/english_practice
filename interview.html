@@ -88,13 +88,6 @@
       min-height: 200px;
     }
 
-    .dictionary-sidebar {
-      width: min(360px, 34vw);
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-    }
-
     .message {
       padding: 1rem 1.25rem;
       border-radius: 12px;
@@ -150,11 +143,15 @@
 
     .input-row {
       display: flex;
+      flex-wrap: wrap;
       gap: 0.75rem;
+      align-items: flex-start;
     }
 
     .user-input {
-      flex: 1;
+      flex: 1 1 220px;
+      min-width: 0;
+      width: 100%;
       padding: 1rem 1.25rem;
       font-family: inherit;
       font-size: 1rem;
@@ -207,7 +204,14 @@
       transform: none;
     }
 
-    .btn-add-example {
+    .input-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .btn-translate {
       padding: 1rem 1.25rem;
       font-family: inherit;
       font-size: 1rem;
@@ -221,114 +225,113 @@
       transition: background 0.2s, border-color 0.2s;
     }
 
-    .btn-add-example:hover {
+    .btn-translate:hover:not(:disabled),
+    .btn-dict:hover:not(:disabled) {
       background: rgba(255, 255, 255, 0.15);
       border-color: rgba(255, 255, 255, 0.3);
     }
 
-    .saved-examples {
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-      height: 100%;
+    .btn-translate:disabled,
+    .btn-dict:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
-    .saved-examples-toggle {
-      display: block;
-      width: 100%;
-      padding: 0.5rem 0.75rem;
+    .btn-dict {
+      padding: 1rem 1.25rem;
       font-family: inherit;
-      font-size: 0.85rem;
+      font-size: 1rem;
       font-weight: 600;
-      color: rgba(232, 232, 232, 0.9);
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      cursor: pointer;
-      text-align: left;
-      transition: background 0.2s;
-    }
-
-    .saved-examples-toggle:hover {
+      color: #e8e8e8;
       background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.2s, border-color 0.2s;
     }
 
-    .saved-examples-toggle[aria-expanded="true"]::before {
-      content: '▼ ';
-      font-size: 0.7em;
+    .dict-status {
+      font-size: 0.85rem;
+      line-height: 1.45;
+      color: rgba(232, 232, 232, 0.65);
+      margin: 0;
+      min-height: 1.35em;
     }
 
-    .saved-examples-toggle[aria-expanded="false"]::before {
-      content: '▶ ';
-      font-size: 0.7em;
+    .dict-status.dict-status-error {
+      color: #ff8a8a;
     }
 
-    .saved-examples-list {
-      margin-top: 0.5rem;
-      flex: 1;
-      min-height: 240px;
-      max-height: calc(100vh - 220px);
+    .dict-status.dict-status-ok {
+      color: rgba(144, 238, 144, 0.85);
+    }
+
+    .translation-panel {
+      margin-top: 0.75rem;
+      padding: 1rem 1.15rem;
+      font-size: 0.9rem;
+      line-height: 1.55;
+      background: rgba(0, 0, 0, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      max-height: min(50vh, 420px);
       overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
     }
 
-    .saved-examples-list[hidden] {
+    .translation-panel[hidden] {
       display: none !important;
     }
 
-    .saved-example-item {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-start;
-      gap: 0.5rem;
-      padding: 0.5rem 0.75rem;
-      font-size: 0.85rem;
-      background: rgba(0, 0, 0, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 8px;
-    }
-
-    .saved-example-preview {
-      flex: 1;
-      min-width: 0;
-      white-space: pre-wrap;
-      word-break: break-word;
-      line-height: 1.5;
-      color: rgba(232, 232, 232, 0.9);
-    }
-
-    .saved-example-actions {
-      flex-shrink: 0;
-      display: flex;
-      gap: 0.25rem;
-    }
-
-    .saved-example-btn {
-      padding: 0.25rem 0.5rem;
-      font-family: inherit;
-      font-size: 0.75rem;
+    .translation-panel-title {
+      font-size: 0.8rem;
       font-weight: 600;
-      color: #1a1a2e;
-      background: rgba(232, 232, 232, 0.9);
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      opacity: 0.75;
+      margin-bottom: 0.65rem;
     }
 
-    .saved-example-btn.load {
-      background: rgba(233, 69, 96, 0.3);
-      color: #e8e8e8;
+    .translation-variant {
+      padding: 0.75rem 0.85rem;
+      margin-bottom: 0.65rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .saved-example-btn.delete {
-      background: rgba(255, 107, 107, 0.3);
-      color: #e8e8e8;
+    .translation-variant:last-child {
+      margin-bottom: 0;
     }
 
-    .saved-example-btn:hover {
-      opacity: 0.9;
+    .translation-variant-en {
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+
+    .translation-variant-ex {
+      font-size: 0.88rem;
+      color: rgba(232, 232, 232, 0.85);
+      font-style: italic;
+      margin-bottom: 0.4rem;
+      word-break: break-word;
+    }
+
+    .translation-variant-note {
+      font-size: 0.85rem;
+      color: rgba(232, 232, 232, 0.75);
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .translation-panel .translation-msg {
+      color: rgba(232, 232, 232, 0.65);
+      font-size: 0.88rem;
+    }
+
+    .translation-panel .translation-error {
+      color: #ff8a8a;
     }
 
     .feedback-wrap {
@@ -382,14 +385,37 @@
       .layout {
         flex-direction: column;
       }
+    }
 
-      .dictionary-sidebar {
+    @media (max-width: 640px) {
+      .header {
+        padding: 1rem 1rem;
+      }
+
+      .layout {
+        padding: 1rem;
+      }
+
+      .input-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .input-actions {
+        flex-direction: row;
         width: 100%;
       }
 
-      .saved-examples-list {
-        min-height: 160px;
-        max-height: calc(100vh - 300px);
+      .input-actions .btn-send,
+      .input-actions .btn-translate,
+      .input-actions .btn-dict {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .user-input {
+        flex: none;
+        width: 100%;
       }
     }
 
@@ -413,112 +439,166 @@
           <textarea
             class="user-input"
             id="userInput"
-            placeholder="Type your message..."
+            placeholder="Type your answer to the interviewer in English…"
             rows="2"
           ></textarea>
-          <button class="btn-send" type="button" id="btnSend">Send</button>
-          <button class="btn-add-example" type="button" id="btnAddExample">Add example</button>
+          <div class="input-actions">
+            <button class="btn-send" type="button" id="btnSend">Send</button>
+          </div>
         </div>
       </div>
-    </section>
-    <aside class="dictionary-sidebar">
-      <div class="saved-examples">
-        <button type="button" class="saved-examples-toggle" id="savedExamplesToggle" aria-expanded="true">Saved examples</button>
-        <div class="saved-examples-list" id="savedExamplesList"></div>
+
+      <div class="input-block">
+        <label class="input-block-label" for="toolsInput">Translate &amp; vocabulary</label>
+        <div class="input-row">
+          <textarea
+            class="user-input"
+            id="toolsInput"
+            placeholder="Russian text to translate, or an English word/phrase to add to your dictionary…"
+            rows="2"
+            autocomplete="off"
+          ></textarea>
+          <div class="input-actions">
+            <button class="btn-translate" type="button" id="btnTranslate">Translate</button>
+            <button class="btn-dict" type="button" id="btnAddWord">Add word</button>
+          </div>
+        </div>
+        <div class="dict-add-list-row">
+          <span>Add to vocabulary list:</span>
+          <label><input type="radio" name="addWordListInterview" value="it"> IT</label>
+          <label><input type="radio" name="addWordListInterview" value="general" checked> General</label>
+        </div>
+        <div class="translation-panel" id="translationPanel" hidden>
+          <div class="translation-panel-title">English options</div>
+          <div id="translationPanelBody" class="translation-msg" aria-live="polite"></div>
+        </div>
+        <p class="dict-status" id="dictStatus" role="status" aria-live="polite"></p>
       </div>
-    </aside>
+    </section>
   </main>
 
   <script src="api-config.js"></script>
   <script>
     const messagesEl = document.getElementById('messages');
     const userInputEl = document.getElementById('userInput');
+    const toolsInputEl = document.getElementById('toolsInput');
     const btnSend = document.getElementById('btnSend');
-    const btnAddExample = document.getElementById('btnAddExample');
-    const savedExamplesToggle = document.getElementById('savedExamplesToggle');
-    const savedExamplesList = document.getElementById('savedExamplesList');
+    const btnTranslate = document.getElementById('btnTranslate');
+    const btnAddWord = document.getElementById('btnAddWord');
+    const translationPanel = document.getElementById('translationPanel');
+    const translationPanelBody = document.getElementById('translationPanelBody');
+    const dictStatusEl = document.getElementById('dictStatus');
 
-    const EXAMPLES_STORAGE_KEY = 'hr-interview-examples';
+    const DICT_STORAGE_KEY = 'hr-interview-examples';
 
-    function getExamples() {
+    const TRANSLATION_SYSTEM_PROMPT =
+      'You help candidates prepare for English job interviews. The user will send text that may be in Russian (or mixed). ' +
+      'Suggest 2–4 natural English ways to express the same idea in an interview (professional but conversational). ' +
+      'For each variant provide: (1) english — the phrase or short sentence in English; (2) example — one English example sentence showing use in an interview answer; (3) note_ru — a brief explanation in Russian about tone, register, or when this wording fits best. ' +
+      'Reply with a single JSON object, no markdown: {"variants":[{"english":"...","example":"...","note_ru":"..."},...]}';
+
+    function parseTranslationResponse(content) {
+      var raw = (content || '').trim();
+      raw = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '');
+      var jsonStr = raw.match(/\{[\s\S]*\}/);
+      if (jsonStr) jsonStr = jsonStr[0];
+      else jsonStr = raw;
       try {
-        var raw = localStorage.getItem(EXAMPLES_STORAGE_KEY);
-        var list = raw ? JSON.parse(raw) : [];
-        return Array.isArray(list) ? list : [];
+        var parsed = JSON.parse(jsonStr);
+        var variants = parsed.variants;
+        if (!Array.isArray(variants)) return [];
+        return variants.map(function (v) {
+          return {
+            english: typeof v.english === 'string' ? v.english : '',
+            example: typeof v.example === 'string' ? v.example : (typeof v.ex === 'string' ? v.ex : ''),
+            note_ru: typeof v.note_ru === 'string' ? v.note_ru : (typeof v.note === 'string' ? v.note : '')
+          };
+        }).filter(function (v) { return v.english; });
       } catch (_) {
         return [];
       }
     }
 
-    function saveExamples(list) {
-      try {
-        localStorage.setItem(EXAMPLES_STORAGE_KEY, JSON.stringify(list));
-      } catch (_) {}
+    async function getTranslationSuggestions(russianOrMixed) {
+      var text = (russianOrMixed || '').trim();
+      if (!text) return { variants: [] };
+      const response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getOpenAiApiKey()
+        },
+        body: JSON.stringify({
+          model: 'gpt-5-mini-2025-08-07',
+          messages: [
+            { role: 'system', content: TRANSLATION_SYSTEM_PROMPT },
+            { role: 'user', content: text }
+          ],
+          response_format: { type: 'json_object' }
+        })
+      });
+      if (!response.ok) {
+        var err = await response.json().catch(function () { return { error: { message: response.statusText } }; });
+        throw new Error(err.error && err.error.message ? err.error.message : 'Translation request failed');
+      }
+      var data = await response.json();
+      var content = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content
+        ? data.choices[0].message.content.trim() : '';
+      var variants = parseTranslationResponse(content);
+      return { variants: variants };
     }
 
-    function addExample(text) {
-      var t = (text || '').trim();
-      if (!t) return;
-      var list = getExamples();
-      list.unshift({ id: Date.now(), text: t, createdAt: new Date().toISOString() });
-      saveExamples(list);
-      renderSavedExamplesList();
-    }
-
-    function deleteExample(id) {
-      var list = getExamples().filter(function (x) { return x.id !== id; });
-      saveExamples(list);
-      renderSavedExamplesList();
-    }
-
-    function loadExampleIntoInput(text) {
-      userInputEl.value = text || '';
-      userInputEl.focus();
-      userInputEl.dispatchEvent(new Event('input', { bubbles: true }));
-    }
-
-    function renderSavedExamplesList() {
-      var list = getExamples();
-      savedExamplesList.innerHTML = '';
-      if (list.length === 0) {
-        var empty = savedExamplesList.appendChild(document.createElement('div'));
-        empty.className = 'saved-example-empty';
-        empty.textContent = 'No saved examples yet.';
-        empty.style.cssText = 'padding:0.5rem 0.75rem;font-size:0.85rem;color:rgba(232,232,232,0.5);';
+    function renderTranslationPanel(variants, errorMsg) {
+      translationPanel.hidden = false;
+      translationPanelBody.className = '';
+      translationPanelBody.innerHTML = '';
+      if (errorMsg) {
+        translationPanelBody.className = 'translation-msg translation-error';
+        translationPanelBody.textContent = errorMsg;
         return;
       }
-      list.forEach(function (ex) {
-        var item = document.createElement('div');
-        item.className = 'saved-example-item';
-        item.innerHTML =
-          '<span class="saved-example-preview">' + escapeHtml(ex.text) + '</span>' +
-          '<span class="saved-example-actions">' +
-          '<button type="button" class="saved-example-btn load" data-id="' + ex.id + '">Load</button>' +
-          '<button type="button" class="saved-example-btn delete" data-id="' + ex.id + '">Delete</button>' +
-          '</span>';
-        item.querySelector('.saved-example-btn.load').addEventListener('click', function () {
-          loadExampleIntoInput(ex.text);
-        });
-        item.querySelector('.saved-example-btn.delete').addEventListener('click', function () {
-          deleteExample(ex.id);
-        });
-        savedExamplesList.appendChild(item);
+      if (!Array.isArray(variants)) return;
+      if (variants.length === 0) {
+        translationPanelBody.className = 'translation-msg';
+        translationPanelBody.textContent = 'No variants returned. Try rephrasing your text.';
+        return;
+      }
+      variants.forEach(function (v) {
+        var block = document.createElement('div');
+        block.className = 'translation-variant';
+        block.innerHTML =
+          '<div class="translation-variant-en">' + escapeHtml(v.english) + '</div>' +
+          (v.example ? '<div class="translation-variant-ex">Example: ' + escapeHtml(v.example) + '</div>' : '') +
+          (v.note_ru ? '<div class="translation-variant-note">' + escapeHtml(v.note_ru) + '</div>' : '');
+        translationPanelBody.appendChild(block);
       });
     }
 
-    btnAddExample.addEventListener('click', function () {
-      var text = userInputEl.value.trim();
-      if (!text) return;
-      addExample(text);
-      userInputEl.value = '';
-      userInputEl.dispatchEvent(new Event('input', { bubbles: true }));
-    });
+    async function runTranslate() {
+      var text = toolsInputEl.value.trim();
+      if (!text) {
+        renderTranslationPanel(null, 'Enter text to translate in the field above.');
+        return;
+      }
+      if (!getOpenAiApiKey()) {
+        renderTranslationPanel(null, 'Add your OpenAI API key in Settings (main menu).');
+        return;
+      }
+      btnTranslate.disabled = true;
+      translationPanel.hidden = false;
+      translationPanelBody.className = 'translation-msg';
+      translationPanelBody.textContent = 'Getting suggestions…';
+      try {
+        var result = await getTranslationSuggestions(text);
+        renderTranslationPanel(result.variants, null);
+      } catch (err) {
+        renderTranslationPanel(null, err.message || 'Translation failed');
+      } finally {
+        btnTranslate.disabled = false;
+      }
+    }
 
-    savedExamplesToggle.addEventListener('click', function () {
-      var expanded = savedExamplesToggle.getAttribute('aria-expanded') === 'true';
-      savedExamplesToggle.setAttribute('aria-expanded', !expanded);
-      savedExamplesList.hidden = !expanded;
-    });
+    btnTranslate.addEventListener('click', runTranslate);
 
     const HR_SYSTEM_PROMPT =
       'You are an HR specialist conducting a job interview. Conduct the dialogue in English: ask relevant questions, react to the candidate\'s answers, and ask follow-up or next questions. Be polite and professional. Keep your replies brief, one or two sentences, in the style of an interviewer.';
@@ -621,6 +701,123 @@
         if (err.name === 'AbortError') throw new Error('Request timed out after ' + (API_TIMEOUT_MS / 1000) + 's');
         throw err;
       });
+    }
+
+    function getDictionary() {
+      try {
+        var raw = localStorage.getItem(DICT_STORAGE_KEY);
+        var list = raw ? JSON.parse(raw) : [];
+        return Array.isArray(list) ? list : [];
+      } catch (_) {
+        return [];
+      }
+    }
+
+    function saveDictionary(list) {
+      try {
+        localStorage.setItem(DICT_STORAGE_KEY, JSON.stringify(list));
+      } catch (_) {}
+    }
+
+    function setDictStatus(message, kind) {
+      if (!dictStatusEl) return;
+      dictStatusEl.textContent = message || '';
+      dictStatusEl.classList.remove('dict-status-error', 'dict-status-ok');
+      if (kind === 'error') dictStatusEl.classList.add('dict-status-error');
+      else if (kind === 'ok') dictStatusEl.classList.add('dict-status-ok');
+    }
+
+    async function generateDictionaryDetails(word) {
+      var systemPrompt = 'You are an English-Russian vocabulary assistant for interview preparation. Given one English word or phrase, return JSON only with: (1) top 3 most common/popular Russian meanings, (2) exactly 3 concise interview-style example sentences in English that naturally use this word/phrase. Keep examples B1-C1 and professional. JSON format: {"translations_ru":["...","...","..."],"examples_en":["...","...","..."]}';
+      const response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getOpenAiApiKey()
+        },
+        body: JSON.stringify({
+          model: 'gpt-5-mini-2025-08-07',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: 'Word/phrase: ' + word }
+          ],
+          response_format: { type: 'json_object' }
+        })
+      });
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({ error: { message: response.statusText } }));
+        throw new Error(err.error && err.error.message ? err.error.message : 'Failed to generate word details');
+      }
+      const data = await response.json();
+      const content = data.choices?.[0]?.message?.content?.trim() || '';
+      const parsed = JSON.parse(content);
+      var ru = Array.isArray(parsed.translations_ru) ? parsed.translations_ru : [];
+      var en = Array.isArray(parsed.examples_en) ? parsed.examples_en : [];
+      return {
+        translationRu: ru.filter(Boolean).slice(0, 3),
+        examplesEn: en.filter(Boolean).slice(0, 3)
+      };
+    }
+
+    async function addWordToDictionary() {
+      var t = (toolsInputEl.value || '').trim();
+      if (!t) {
+        setDictStatus('Enter an English word or phrase.', 'error');
+        return;
+      }
+      var list = getDictionary();
+      if (list.some(function (x) { return x.text.toLowerCase() === t.toLowerCase(); })) {
+        setDictStatus('This word is already in your dictionary.', 'error');
+        return;
+      }
+
+      var newId = Date.now();
+      var wlEl = document.querySelector('input[name="addWordListInterview"]:checked');
+      var wl = wlEl && wlEl.value === 'it' ? 'it' : 'general';
+      list.unshift({
+        id: newId,
+        text: t,
+        wordList: wl,
+        createdAt: new Date().toISOString(),
+        learned: false,
+        translationRu: [],
+        examplesEn: [],
+        detailsReady: false
+      });
+      saveDictionary(list);
+      toolsInputEl.value = '';
+      toolsInputEl.dispatchEvent(new Event('input', { bubbles: true }));
+
+      if (!getOpenAiApiKey()) {
+        setDictStatus('Word saved. Add an API key in Settings to load Russian meanings and examples.', 'ok');
+        return;
+      }
+
+      btnAddWord.disabled = true;
+      setDictStatus('Loading translations and examples…', 'ok');
+      try {
+        var details = await generateDictionaryDetails(t);
+        var updatedList = getDictionary();
+        var item = updatedList.find(function (x) { return x.id === newId; });
+        if (!item) return;
+        item.translationRu = details.translationRu;
+        item.examplesEn = details.examplesEn;
+        item.detailsReady = true;
+        item.detailsError = '';
+        saveDictionary(updatedList);
+        setDictStatus('Added to vocabulary with translations and examples.', 'ok');
+      } catch (err) {
+        var failedList = getDictionary();
+        var failedItem = failedList.find(function (x) { return x.id === newId; });
+        if (failedItem) {
+          failedItem.detailsReady = false;
+          failedItem.detailsError = err && err.message ? err.message : 'Failed to generate details';
+          saveDictionary(failedList);
+        }
+        setDictStatus('Word saved, but details could not be loaded: ' + (err && err.message ? err.message : 'unknown error'), 'error');
+      } finally {
+        btnAddWord.disabled = false;
+      }
     }
 
     async function getChatGptReply() {
@@ -817,8 +1014,14 @@
       this.style.height = Math.min(this.scrollHeight, 120) + 'px';
     });
 
+    toolsInputEl.addEventListener('input', function () {
+      this.style.height = 'auto';
+      this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+    });
+
+    btnAddWord.addEventListener('click', addWordToDictionary);
+
     addHrMessage(FIRST_HR_MESSAGE);
-    renderSavedExamplesList();
   </script>
 </body>
 </html>

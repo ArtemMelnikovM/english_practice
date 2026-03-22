@@ -145,6 +145,206 @@
       border-color: rgba(233, 69, 96, 0.95);
     }
 
+    .add-word-list-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem 0.75rem;
+      margin-bottom: 1rem;
+      font-size: 0.88rem;
+      color: rgba(232, 232, 232, 0.75);
+    }
+
+    .add-word-list-row .add-word-list-label {
+      font-weight: 600;
+      margin-right: 0.25rem;
+    }
+
+    .add-word-list-row label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      cursor: pointer;
+      padding: 0.25rem 0.5rem;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .add-word-list-row label:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .add-word-list-row input {
+      accent-color: #e94560;
+    }
+
+    .dictionary-practice-filter {
+      margin-bottom: 1rem;
+    }
+
+    .dictionary-practice-filter .dictionary-subtype-label {
+      margin-bottom: 0.5rem;
+    }
+
+    .dictionary-item-wordlist {
+      display: inline-block;
+      margin-left: 0.5rem;
+      padding: 0.12rem 0.45rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: rgba(26, 26, 46, 0.95);
+      background: rgba(255, 255, 255, 0.35);
+      border-radius: 4px;
+      vertical-align: middle;
+    }
+
+    .dictionary-item-wordlist.it {
+      background: rgba(78, 205, 196, 0.85);
+      color: #0f3460;
+    }
+
+    .dictionary-item-wordlist.general {
+      background: rgba(255, 200, 87, 0.9);
+      color: #1a1a2e;
+    }
+
+    .phrasal-learned-wrap {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+    }
+
+    .phrasal-learned-toggle {
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: rgba(232, 232, 232, 0.95);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      padding: 0.5rem 0.85rem;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .phrasal-learned-toggle:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .phrasal-learned-list {
+      margin-top: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .phrasal-learned-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.35rem 0.5rem;
+      font-size: 0.88rem;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 6px;
+    }
+
+    .btn-phrasal-unlearn {
+      font-family: inherit;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      color: rgba(232, 232, 232, 0.9);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn-phrasal-unlearn:hover {
+      background: rgba(233, 69, 96, 0.35);
+      border-color: rgba(233, 69, 96, 0.6);
+    }
+
+    .btn-mark-phrasal {
+      margin-top: 0.75rem;
+      padding: 0.55rem 1rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-mark-phrasal:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(78, 205, 196, 0.35);
+    }
+
+    .btn-mark-phrasal:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .phrasal-topic-wrap {
+      margin-bottom: 1.25rem;
+      padding: 1rem 1.25rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+    }
+
+    .phrasal-topic-wrap[hidden] {
+      display: none !important;
+    }
+
+    .phrasal-topic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+      gap: 0.5rem;
+    }
+
+    .phrasal-topic-option {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.65rem;
+      font-size: 0.85rem;
+      color: rgba(232, 232, 232, 0.92);
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .phrasal-topic-option:has(input:checked) {
+      border-color: rgba(78, 205, 196, 0.65);
+      background: rgba(78, 205, 196, 0.12);
+    }
+
+    .phrasal-topic-option:hover {
+      border-color: rgba(255, 255, 255, 0.22);
+    }
+
+    .phrasal-topic-option input {
+      accent-color: #4ecdc4;
+    }
+
     .dictionary-input {
       flex: 1;
       padding: 0.85rem 1rem;
@@ -341,12 +541,13 @@
 
     .practice-mode-selector {
       display: flex;
+      flex-wrap: wrap;
       gap: 1rem;
       margin-bottom: 1.5rem;
     }
 
     .practice-mode-option {
-      flex: 1;
+      flex: 1 1 200px;
       display: flex;
       flex-direction: column;
       gap: 0.25rem;
@@ -721,8 +922,17 @@
         <input type="text" class="dictionary-input" id="dictInput" placeholder="Enter a word, phrase, or sentence...">
         <button class="btn-add" id="btnAddWord">Add</button>
       </div>
+      <div class="add-word-list-row">
+        <span class="add-word-list-label">Add to list:</span>
+        <label><input type="radio" name="addWordListDictionary" value="it"> IT</label>
+        <label><input type="radio" name="addWordListDictionary" value="general" checked> General</label>
+      </div>
       <div class="dictionary-search">
         <input type="text" class="dictionary-input" id="dictSearchInput" placeholder="Search in dictionary...">
+      </div>
+      <div class="dictionary-view-toggle">
+        <button class="dictionary-view-btn active" id="btnWordListIT" type="button">IT</button>
+        <button class="dictionary-view-btn" id="btnWordListGeneral" type="button">General</button>
       </div>
       <div class="dictionary-view-toggle">
         <button class="dictionary-view-btn active" id="btnViewLearning" type="button">Learning</button>
@@ -736,6 +946,11 @@
         <input type="text" class="dictionary-input" id="practiceDictInput" placeholder="Add a word, phrase, or sentence to your dictionary...">
         <button class="btn-add" id="btnAddPracticeWord">Add</button>
       </div>
+      <div class="add-word-list-row">
+        <span class="add-word-list-label">Add to list:</span>
+        <label><input type="radio" name="addWordListPractice" value="it"> IT</label>
+        <label><input type="radio" name="addWordListPractice" value="general" checked> General</label>
+      </div>
       <div class="practice-mode-selector">
         <label class="practice-mode-option">
           <input type="radio" name="practiceMode" value="dictionary">
@@ -747,6 +962,18 @@
           <span class="practice-mode-label">General Practice</span>
           <span class="practice-mode-desc">Random interview answers for Senior Product Manager</span>
         </label>
+        <label class="practice-mode-option">
+          <input type="radio" name="practiceMode" value="phrasal">
+          <span class="practice-mode-label">Phrasal verbs</span>
+          <span class="practice-mode-desc">Popular phrasal verbs — mark as learned when done</span>
+        </label>
+      </div>
+      <div class="dictionary-practice-filter" id="dictionaryPracticeFilterWrap" hidden>
+        <div class="dictionary-subtype-label">Words from list</div>
+        <div class="dictionary-view-toggle">
+          <button class="dictionary-view-btn" id="btnPracticeDictIT" type="button">IT</button>
+          <button class="dictionary-view-btn active" id="btnPracticeDictGeneral" type="button">General</button>
+        </div>
       </div>
       <div class="dictionary-subtype-wrap" id="dictionarySubtypeWrap" hidden>
         <div class="dictionary-subtype-label">Dictionary practice</div>
@@ -763,14 +990,98 @@
           </label>
         </div>
       </div>
+      <div class="phrasal-topic-wrap" id="phrasalTopicWrap" hidden>
+        <div class="dictionary-subtype-label">Topic for prompts</div>
+        <div class="phrasal-topic-grid">
+          <label class="phrasal-topic-option"><input type="radio" name="phrasalTopic" value="general" checked><span>General</span></label>
+          <label class="phrasal-topic-option"><input type="radio" name="phrasalTopic" value="it"><span>IT &amp; tech</span></label>
+          <label class="phrasal-topic-option"><input type="radio" name="phrasalTopic" value="travelling"><span>Travelling</span></label>
+          <label class="phrasal-topic-option"><input type="radio" name="phrasalTopic" value="business"><span>Business &amp; career</span></label>
+          <label class="phrasal-topic-option"><input type="radio" name="phrasalTopic" value="health"><span>Health &amp; lifestyle</span></label>
+          <label class="phrasal-topic-option"><input type="radio" name="phrasalTopic" value="education"><span>Education</span></label>
+          <label class="phrasal-topic-option"><input type="radio" name="phrasalTopic" value="hobbies"><span>Hobbies &amp; leisure</span></label>
+          <label class="phrasal-topic-option"><input type="radio" name="phrasalTopic" value="environment"><span>Environment</span></label>
+          <label class="phrasal-topic-option"><input type="radio" name="phrasalTopic" value="social"><span>Relationships</span></label>
+        </div>
+      </div>
       <div class="practice-area" id="practiceArea"></div>
+      <div class="phrasal-learned-wrap" id="phrasalLearnedWrap" hidden>
+        <button type="button" class="phrasal-learned-toggle" id="phrasalLearnedToggle">
+          Learned phrasal verbs (<span id="phrasalLearnedCount">0</span>)
+        </button>
+        <div id="phrasalLearnedList" class="phrasal-learned-list" hidden></div>
+      </div>
     </div>
   </main>
 
   <script src="api-config.js"></script>
   <script>
     const DICT_STORAGE_KEY = 'hr-interview-examples';
+    const PHRASAL_LEARNED_KEY = 'vocabulary-phrasal-learned';
+    const PHRASAL_TOPIC_KEY = 'vocabulary-phrasal-topic';
     const API_TIMEOUT_MS = 60000;
+
+    /** API-facing descriptions for phrasal prompt generation (keys match radio values). */
+    var PHRASAL_TOPIC_DESCRIPTIONS = {
+      general: 'General — mixed everyday situations (no single fixed theme)',
+      it: 'IT, software, engineering, startups, digital products, tech interviews',
+      travelling: 'Travel, trips, airports, hotels, sightseeing, holidays',
+      business: 'Business, career, office, meetings, negotiations, projects',
+      health: 'Health, fitness, habits, wellbeing, medical contexts (light)',
+      education: 'Education, study, courses, exams, school and university',
+      hobbies: 'Hobbies, sports, games, music, leisure time',
+      environment: 'Environment, nature, climate, sustainability',
+      social: 'Relationships, family, friends, social life, communication'
+    };
+
+    /** Curated popular phrasal verbs for practice (stable ids for Learned storage). */
+    var POPULAR_PHRASAL_VERBS = [
+      { id: 'pv-001', phrase: 'carry out' },
+      { id: 'pv-002', phrase: 'set up' },
+      { id: 'pv-003', phrase: 'go through' },
+      { id: 'pv-004', phrase: 'find out' },
+      { id: 'pv-005', phrase: 'come up with' },
+      { id: 'pv-006', phrase: 'look into' },
+      { id: 'pv-007', phrase: 'follow up' },
+      { id: 'pv-008', phrase: 'break down' },
+      { id: 'pv-009', phrase: 'point out' },
+      { id: 'pv-010', phrase: 'figure out' },
+      { id: 'pv-011', phrase: 'work out' },
+      { id: 'pv-012', phrase: 'bring up' },
+      { id: 'pv-013', phrase: 'catch up' },
+      { id: 'pv-014', phrase: 'keep up' },
+      { id: 'pv-015', phrase: 'give up' },
+      { id: 'pv-016', phrase: 'take on' },
+      { id: 'pv-017', phrase: 'take over' },
+      { id: 'pv-018', phrase: 'run into' },
+      { id: 'pv-019', phrase: 'get across' },
+      { id: 'pv-020', phrase: 'deal with' },
+      { id: 'pv-021', phrase: 'focus on' },
+      { id: 'pv-022', phrase: 'build on' },
+      { id: 'pv-023', phrase: 'scale up' },
+      { id: 'pv-024', phrase: 'roll out' },
+      { id: 'pv-025', phrase: 'sign off' },
+      { id: 'pv-026', phrase: 'follow through' },
+      { id: 'pv-027', phrase: 'call off' },
+      { id: 'pv-028', phrase: 'put off' },
+      { id: 'pv-029', phrase: 'turn down' },
+      { id: 'pv-030', phrase: 'fill in' },
+      { id: 'pv-031', phrase: 'hand over' },
+      { id: 'pv-032', phrase: 'reach out' },
+      { id: 'pv-033', phrase: 'fall behind' },
+      { id: 'pv-034', phrase: 'move forward' },
+      { id: 'pv-035', phrase: 'drill down' },
+      { id: 'pv-036', phrase: 'map out' },
+      { id: 'pv-037', phrase: 'flesh out' },
+      { id: 'pv-038', phrase: 'zero in on' },
+      { id: 'pv-039', phrase: 'touch base' },
+      { id: 'pv-040', phrase: 'loop in' },
+      { id: 'pv-041', phrase: 'back up' },
+      { id: 'pv-042', phrase: 'check in' },
+      { id: 'pv-043', phrase: 'opt out' },
+      { id: 'pv-044', phrase: 'wire up' },
+      { id: 'pv-045', phrase: 'phase out' }
+    ];
 
     const tabs = document.querySelectorAll('.tab');
     const panels = document.querySelectorAll('.panel');
@@ -784,6 +1095,16 @@
     const practiceDictInput = document.getElementById('practiceDictInput');
     const btnAddPracticeWord = document.getElementById('btnAddPracticeWord');
     const dictionarySubtypeWrap = document.getElementById('dictionarySubtypeWrap');
+    const dictionaryPracticeFilterWrap = document.getElementById('dictionaryPracticeFilterWrap');
+    const btnPracticeDictIT = document.getElementById('btnPracticeDictIT');
+    const btnPracticeDictGeneral = document.getElementById('btnPracticeDictGeneral');
+    const btnWordListIT = document.getElementById('btnWordListIT');
+    const btnWordListGeneral = document.getElementById('btnWordListGeneral');
+    const phrasalLearnedWrap = document.getElementById('phrasalLearnedWrap');
+    const phrasalLearnedToggle = document.getElementById('phrasalLearnedToggle');
+    const phrasalLearnedList = document.getElementById('phrasalLearnedList');
+    const phrasalLearnedCount = document.getElementById('phrasalLearnedCount');
+    const phrasalTopicWrap = document.getElementById('phrasalTopicWrap');
 
     let currentWordId = null;
     let currentWord = null;
@@ -794,15 +1115,57 @@
     let currentWordRuDisplay = '';
     let currentExamplesRu = [];
     let dictionaryView = 'learning';
+    /** 'it' | 'general' — which word list is shown in Dictionary */
+    let dictionaryWordListView = 'it';
+    /** 'it' | 'general' — which list is used for “From Dictionary” practice */
+    let practiceDictionaryWordList = 'general';
+    let currentPhrasalId = null;
     let expandedWordId = null;
     const shownTranslationById = {};
+
+    function syncPracticePanelAuxUi() {
+      if (dictionarySubtypeWrap) {
+        dictionarySubtypeWrap.hidden = practiceMode !== 'dictionary';
+      }
+      if (dictionaryPracticeFilterWrap) {
+        dictionaryPracticeFilterWrap.hidden = practiceMode !== 'dictionary';
+      }
+      if (phrasalTopicWrap) {
+        phrasalTopicWrap.hidden = practiceMode !== 'phrasal';
+      }
+      if (phrasalLearnedWrap) {
+        phrasalLearnedWrap.hidden = practiceMode !== 'phrasal';
+        if (practiceMode === 'phrasal') {
+          renderPhrasalLearnedPanel();
+        }
+      }
+    }
+
+    function getSelectedPhrasalTopic() {
+      var el = document.querySelector('input[name="phrasalTopic"]:checked');
+      var v = el && el.value ? el.value : 'general';
+      return PHRASAL_TOPIC_DESCRIPTIONS[v] ? v : 'general';
+    }
+
+    function savePhrasalTopicPreference() {
+      try {
+        localStorage.setItem(PHRASAL_TOPIC_KEY, getSelectedPhrasalTopic());
+      } catch (_) {}
+    }
+
+    function restorePhrasalTopic() {
+      try {
+        var saved = localStorage.getItem(PHRASAL_TOPIC_KEY);
+        if (!saved || !PHRASAL_TOPIC_DESCRIPTIONS[saved]) return;
+        var input = document.querySelector('input[name="phrasalTopic"][value="' + saved + '"]');
+        if (input) input.checked = true;
+      } catch (_) {}
+    }
 
     document.querySelectorAll('input[name="practiceMode"]').forEach(function (radio) {
       radio.addEventListener('change', function () {
         practiceMode = this.value;
-        if (dictionarySubtypeWrap) {
-          dictionarySubtypeWrap.hidden = practiceMode !== 'dictionary';
-        }
+        syncPracticePanelAuxUi();
         loadPractice();
       });
     });
@@ -811,6 +1174,15 @@
       radio.addEventListener('change', function () {
         dictionaryPracticeSubtype = this.value;
         if (practiceMode === 'dictionary') {
+          loadPractice();
+        }
+      });
+    });
+
+    document.querySelectorAll('input[name="phrasalTopic"]').forEach(function (radio) {
+      radio.addEventListener('change', function () {
+        savePhrasalTopicPreference();
+        if (practiceMode === 'phrasal') {
           loadPractice();
         }
       });
@@ -829,6 +1201,10 @@
       });
     });
 
+    function itemWordList(item) {
+      return item.wordList === 'it' ? 'it' : 'general';
+    }
+
     function getDictionary() {
       try {
         var raw = localStorage.getItem(DICT_STORAGE_KEY);
@@ -839,9 +1215,103 @@
       }
     }
 
+    function migrateWordListsOnce() {
+      try {
+        var list = getDictionary();
+        var changed = false;
+        list.forEach(function (item) {
+          if (item.wordList !== 'it' && item.wordList !== 'general') {
+            item.wordList = 'general';
+            changed = true;
+          }
+        });
+        if (changed) saveDictionary(list);
+      } catch (_) {}
+    }
+
+    function getLearnedPhrasalIds() {
+      try {
+        var raw = localStorage.getItem(PHRASAL_LEARNED_KEY);
+        var arr = raw ? JSON.parse(raw) : [];
+        return Array.isArray(arr) ? arr : [];
+      } catch (_) {
+        return [];
+      }
+    }
+
+    function saveLearnedPhrasalIds(ids) {
+      try {
+        localStorage.setItem(PHRASAL_LEARNED_KEY, JSON.stringify(ids));
+      } catch (_) {}
+    }
+
+    function markPhrasalVerbLearned(id) {
+      var ids = getLearnedPhrasalIds();
+      if (ids.indexOf(id) === -1) {
+        ids.push(id);
+        saveLearnedPhrasalIds(ids);
+      }
+      renderPhrasalLearnedPanel();
+    }
+
+    function unmarkPhrasalVerbLearned(id) {
+      var ids = getLearnedPhrasalIds().filter(function (x) { return x !== id; });
+      saveLearnedPhrasalIds(ids);
+      renderPhrasalLearnedPanel();
+    }
+
+    function renderPhrasalLearnedPanel() {
+      if (!phrasalLearnedCount || !phrasalLearnedList) return;
+      var learned = getLearnedPhrasalIds();
+      phrasalLearnedCount.textContent = String(learned.length);
+      phrasalLearnedList.innerHTML = '';
+      if (learned.length === 0) {
+        phrasalLearnedList.innerHTML = '<div class="dictionary-empty" style="padding:0.5rem 0;font-size:0.85rem;">No phrasal verbs marked as learned yet.</div>';
+        return;
+      }
+      var byId = {};
+      POPULAR_PHRASAL_VERBS.forEach(function (pv) { byId[pv.id] = pv.phrase; });
+      learned.forEach(function (id) {
+        var phrase = byId[id] || id;
+        var row = document.createElement('div');
+        row.className = 'phrasal-learned-item';
+        row.innerHTML =
+          '<span>' + escapeHtml(phrase) + '</span>' +
+          '<button type="button" class="btn-phrasal-unlearn" data-phrasal-id="' + escapeHtml(id) + '">Remove</button>';
+        row.querySelector('.btn-phrasal-unlearn').addEventListener('click', function () {
+          unmarkPhrasalVerbLearned(id);
+          if (practiceMode === 'phrasal') {
+            loadPractice();
+          }
+        });
+        phrasalLearnedList.appendChild(row);
+      });
+    }
+
+    function setPracticeDictionaryWordList(wl) {
+      practiceDictionaryWordList = wl === 'it' ? 'it' : 'general';
+      if (btnPracticeDictIT && btnPracticeDictGeneral) {
+        btnPracticeDictIT.classList.toggle('active', practiceDictionaryWordList === 'it');
+        btnPracticeDictGeneral.classList.toggle('active', practiceDictionaryWordList === 'general');
+      }
+    }
+
+    function getSelectedWordListDictionary() {
+      var el = document.querySelector('input[name="addWordListDictionary"]:checked');
+      return el && el.value === 'it' ? 'it' : 'general';
+    }
+
+    function getSelectedWordListPractice() {
+      var el = document.querySelector('input[name="addWordListPractice"]:checked');
+      return el && el.value === 'it' ? 'it' : 'general';
+    }
+
     /** Same pool for “full sentence” and “word only” dictionary practice */
     function getLearningDictionaryWords() {
-      return getDictionary().filter(function (item) { return !item.learned; });
+      return getDictionary().filter(function (item) {
+        if (item.learned) return false;
+        return itemWordList(item) === practiceDictionaryWordList;
+      });
     }
 
     /** DOM is source of truth — keeps Check in sync with the exercise on screen */
@@ -856,9 +1326,10 @@
       } catch (_) {}
     }
 
-    async function addWord(text) {
+    async function addWord(text, wordList) {
       var t = (text || '').trim();
       if (!t) return;
+      var wl = wordList === 'it' ? 'it' : 'general';
       var list = getDictionary();
       if (list.some(function (x) { return x.text.toLowerCase() === t.toLowerCase(); })) return;
 
@@ -866,6 +1337,7 @@
       list.unshift({
         id: newId,
         text: t,
+        wordList: wl,
         createdAt: new Date().toISOString(),
         learned: false,
         translationRu: [],
@@ -959,6 +1431,9 @@
       list = list.filter(function (item) {
         return dictionaryView === 'learned' ? !!item.learned : !item.learned;
       });
+      list = list.filter(function (item) {
+        return itemWordList(item) === dictionaryWordListView;
+      });
 
       var query = (dictSearchInput && dictSearchInput.value ? dictSearchInput.value : '').trim().toLowerCase();
       if (query) {
@@ -969,15 +1444,22 @@
 
       btnViewLearning.classList.toggle('active', dictionaryView === 'learning');
       btnViewLearned.classList.toggle('active', dictionaryView === 'learned');
+      if (btnWordListIT && btnWordListGeneral) {
+        btnWordListIT.classList.toggle('active', dictionaryWordListView === 'it');
+        btnWordListGeneral.classList.toggle('active', dictionaryWordListView === 'general');
+      }
 
       dictList.innerHTML = '';
       if (list.length === 0) {
         if (query) {
           dictList.innerHTML = '<div class="dictionary-empty">No matches found for your search.</div>';
         } else if (dictionaryView === 'learned') {
-          dictList.innerHTML = '<div class="dictionary-empty">No learned words yet.</div>';
+          dictList.innerHTML = '<div class="dictionary-empty">No learned words in this list yet.</div>';
         } else {
-          dictList.innerHTML = '<div class="dictionary-empty">No words yet. Add some words or phrases to start practicing.</div>';
+          dictList.innerHTML =
+            '<div class="dictionary-empty">No words in the ' +
+            (dictionaryWordListView === 'it' ? 'IT' : 'General') +
+            ' list yet. Add a word and choose this list above.</div>';
         }
         return;
       }
@@ -1013,10 +1495,14 @@
           examplesHtml = '<div class="dictionary-details-note">Generating translation and examples...</div>';
         }
 
+        var wl = itemWordList(item);
+        var listBadge =
+          '<span class="dictionary-item-wordlist ' + wl + '">' + (wl === 'it' ? 'IT' : 'General') + '</span>';
+
         el.innerHTML =
           '<div class="dictionary-item-main">' +
           '<div class="dictionary-item-content">' +
-          '<span class="dictionary-item-text">' + escapeHtml(item.text) + '</span>' +
+          '<span class="dictionary-item-text">' + escapeHtml(item.text) + '</span>' + listBadge +
           lastPracticedHtml +
           '</div>' +
           '<button class="btn-learned" data-id="' + item.id + '">' + (dictionaryView === 'learned' ? 'Return' : 'Learned') + '</button>' +
@@ -1051,13 +1537,13 @@
     }
 
     btnAddWord.addEventListener('click', function () {
-      addWord(dictInput.value);
+      addWord(dictInput.value, getSelectedWordListDictionary());
       dictInput.value = '';
     });
 
     dictInput.addEventListener('keydown', function (e) {
       if (e.key === 'Enter') {
-        addWord(dictInput.value);
+        addWord(dictInput.value, getSelectedWordListDictionary());
         dictInput.value = '';
       }
     });
@@ -1076,18 +1562,49 @@
       renderDictionary();
     });
 
+    btnWordListIT.addEventListener('click', function () {
+      dictionaryWordListView = 'it';
+      expandedWordId = null;
+      renderDictionary();
+    });
+
+    btnWordListGeneral.addEventListener('click', function () {
+      dictionaryWordListView = 'general';
+      expandedWordId = null;
+      renderDictionary();
+    });
+
+    btnPracticeDictIT.addEventListener('click', function () {
+      setPracticeDictionaryWordList('it');
+      loadPractice();
+    });
+
+    btnPracticeDictGeneral.addEventListener('click', function () {
+      setPracticeDictionaryWordList('general');
+      loadPractice();
+    });
+
+    if (phrasalLearnedToggle && phrasalLearnedList) {
+      phrasalLearnedToggle.addEventListener('click', function () {
+        var open = phrasalLearnedList.hidden;
+        phrasalLearnedList.hidden = !open;
+      });
+    }
+
     btnAddPracticeWord.addEventListener('click', function () {
-      addWord(practiceDictInput.value);
+      addWord(practiceDictInput.value, getSelectedWordListPractice());
       practiceDictInput.value = '';
     });
 
     practiceDictInput.addEventListener('keydown', function (e) {
       if (e.key === 'Enter') {
-        addWord(practiceDictInput.value);
+        addWord(practiceDictInput.value, getSelectedWordListPractice());
         practiceDictInput.value = '';
       }
     });
 
+    migrateWordListsOnce();
+    restorePhrasalTopic();
     renderDictionary();
 
     function fetchWithTimeout(url, options) {
@@ -1160,6 +1677,42 @@
       var content = data.choices?.[0]?.message?.content?.trim() || '';
       var parsed = JSON.parse(content);
       return { russian: parsed.russian || '', englishWord: parsed.english_word || word };
+    }
+
+    async function generatePhrasalPracticePrompt(phrase, topicKey) {
+      var tk = PHRASAL_TOPIC_DESCRIPTIONS[topicKey] ? topicKey : 'general';
+      var topicDesc = PHRASAL_TOPIC_DESCRIPTIONS[tk];
+      var systemPrompt =
+        'You create Russian sentences for English learners practicing phrasal verbs. ' +
+        'The learner will translate your Russian into English; their translation should naturally use the given English phrasal verb (correct form). ' +
+        'The situation must fit this topic: ' + topicDesc + '. ' +
+        'Write ONE natural Russian sentence (or two short connected sentences if needed) that fits the topic. ' +
+        'Do not name or reveal the English phrasal verb in the Russian text. Do not mention that the learner must use a phrasal verb. ' +
+        'Reply with JSON only: {"russian":"..."}';
+      var userContent = 'Topic: ' + topicDesc + '\nPhrasal verb the learner should aim to use in English: ' + phrase;
+      var response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getOpenAiApiKey()
+        },
+        body: JSON.stringify({
+          model: 'gpt-5-mini-2025-08-07',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userContent }
+          ],
+          response_format: { type: 'json_object' }
+        })
+      });
+      if (!response.ok) {
+        var err = await response.json().catch(function () { return { error: { message: response.statusText } }; });
+        throw new Error(err.error?.message || 'Failed to generate prompt');
+      }
+      var data = await response.json();
+      var content = data.choices?.[0]?.message?.content?.trim() || '';
+      var parsed = JSON.parse(content);
+      return { russian: parsed.russian || '' };
     }
 
     async function generateGeneralPrompt() {
@@ -1301,11 +1854,21 @@
     }
 
     function showPracticeInitialState() {
+      practiceMode = null;
       document.querySelectorAll('input[name="practiceMode"]').forEach(function (radio) {
         radio.checked = false;
       });
       if (dictionarySubtypeWrap) {
         dictionarySubtypeWrap.hidden = true;
+      }
+      if (dictionaryPracticeFilterWrap) {
+        dictionaryPracticeFilterWrap.hidden = true;
+      }
+      if (phrasalTopicWrap) {
+        phrasalTopicWrap.hidden = true;
+      }
+      if (phrasalLearnedWrap) {
+        phrasalLearnedWrap.hidden = true;
       }
       document.querySelectorAll('.practice-mode-option').forEach(function (opt) {
         opt.classList.remove('selected');
@@ -1346,12 +1909,28 @@
           practiceArea.innerHTML =
             '<div class="practice-empty">' +
             '<div class="practice-empty-icon">📚</div>' +
-            '<div class="practice-empty-text">Add some learning words to your dictionary first.</div>' +
+            '<div class="practice-empty-text">No learning words in the ' +
+            (practiceDictionaryWordList === 'it' ? 'IT' : 'General') +
+            ' list. Add words in the Dictionary tab (choose the same list) or switch the filter above.</div>' +
             '<button class="btn-go-dictionary" id="btnGoDictionary">Go to Dictionary</button>' +
             '</div>';
           document.getElementById('btnGoDictionary').addEventListener('click', function () {
             tabs[0].click();
           });
+          return;
+        }
+      }
+
+      if (practiceMode === 'phrasal') {
+        var learnedPv = getLearnedPhrasalIds();
+        var poolPv = POPULAR_PHRASAL_VERBS.filter(function (pv) { return learnedPv.indexOf(pv.id) === -1; });
+        if (poolPv.length === 0) {
+          practiceArea.innerHTML =
+            '<div class="practice-empty">' +
+            '<div class="practice-empty-icon">✓</div>' +
+            '<div class="practice-empty-text">You marked every phrasal verb as learned. Remove items from Learned below to practice them again.</div>' +
+            '</div>';
+          renderPhrasalLearnedPanel();
           return;
         }
       }
@@ -1366,6 +1945,7 @@
         currentExamplesRu = [];
 
         dictionaryPracticeSubtype = getCurrentDictionarySubtype();
+        currentPhrasalId = null;
 
         if (practiceMode === 'dictionary') {
           var list = getLearningDictionaryWords();
@@ -1407,9 +1987,28 @@
               '<div class="practice-label">Translate to English:</div>' +
               '<div class="practice-text">' + escapeHtml(currentPromptRu) + '</div>';
           }
+        } else if (practiceMode === 'phrasal') {
+          currentWordId = null;
+          var learnedPv2 = getLearnedPhrasalIds();
+          var poolPv2 = POPULAR_PHRASAL_VERBS.filter(function (pv) { return learnedPv2.indexOf(pv.id) === -1; });
+          var pvPick = poolPv2[Math.floor(Math.random() * poolPv2.length)];
+          currentPhrasalId = pvPick.id;
+          currentWord = pvPick.phrase;
+          var pvTopic = getSelectedPhrasalTopic();
+          var pvResult = await generatePhrasalPracticePrompt(currentWord, pvTopic);
+          currentPromptRu = pvResult.russian;
+          promptInnerHtml =
+            '<div class="practice-label">Translate to English:</div>' +
+            '<div class="practice-text">' + escapeHtml(currentPromptRu) + '</div>' +
+            '<div class="practice-hint">' +
+            '<button type="button" class="practice-hint-toggle" id="phrasalTargetToggle">Show target phrasal verb</button>' +
+            '<div class="practice-hint-content" id="phrasalTargetContent">' + escapeHtml(currentWord) + '</div>' +
+            '</div>' +
+            '<button type="button" class="btn-mark-phrasal" id="btnMarkPhrasalLearned">Mark as learned</button>';
         } else {
           currentWordId = null;
           currentWord = null;
+          currentPhrasalId = null;
           var genResult = await generateGeneralPrompt();
           currentPromptRu = genResult.russian;
           promptInnerHtml =
@@ -1449,6 +2048,25 @@
             toggle.textContent = expanded ? 'Hide hint' : 'Show hint';
           });
         }
+        if (practiceMode === 'phrasal') {
+          document.getElementById('phrasalTargetToggle').addEventListener('click', function () {
+            var toggle = document.getElementById('phrasalTargetToggle');
+            var content = document.getElementById('phrasalTargetContent');
+            var expanded = toggle.classList.toggle('expanded');
+            content.classList.toggle('visible', expanded);
+            toggle.textContent = expanded ? 'Hide target phrasal verb' : 'Show target phrasal verb';
+          });
+          document.getElementById('btnMarkPhrasalLearned').addEventListener('click', function () {
+            if (currentPhrasalId) {
+              markPhrasalVerbLearned(currentPhrasalId);
+              var btn = document.getElementById('btnMarkPhrasalLearned');
+              if (btn) {
+                btn.disabled = true;
+                btn.textContent = 'Saved to Learned';
+              }
+            }
+          });
+        }
         document.getElementById('userTranslation').addEventListener('keydown', function (e) {
           if (e.key === 'Enter' && e.ctrlKey) {
             handleCheck();
@@ -1473,6 +2091,7 @@
       try {
         var subtypeNow = getCurrentDictionarySubtype();
         var isWordOnly = practiceMode === 'dictionary' && subtypeNow === 'word';
+        var isPhrasal = practiceMode === 'phrasal';
 
         if (isWordOnly) {
           var wRes = await checkWordOnlyAnswer(
@@ -1496,6 +2115,24 @@
               '<div class="feedback-content">' + escapeHtml(badMsg) + '</div>' +
               '</div>';
           }
+        } else if (isPhrasal) {
+          var resultPv = await checkTranslation(currentPromptRu, translation, currentWord);
+          feedbackBlock.innerHTML =
+            '<div class="feedback-section">' +
+            '<div class="feedback-section-title score">Score: ' + starsFromScore(resultPv.score) + ' (' + resultPv.score + '/5)</div>' +
+            '</div>' +
+            '<div class="feedback-section">' +
+            '<div class="feedback-section-title alternatives">Corrected Answer</div>' +
+            '<div class="feedback-content">' + escapeHtml(resultPv.corrected || 'No corrections needed') + '</div>' +
+            '</div>' +
+            '<div class="feedback-section">' +
+            '<div class="feedback-section-title errors">Errors & Corrections</div>' +
+            '<div class="feedback-content">' + escapeHtml(resultPv.errors) + '</div>' +
+            '</div>' +
+            '<div class="feedback-section">' +
+            '<div class="feedback-section-title alternatives">B2-C1 Alternatives</div>' +
+            '<div class="feedback-content">' + escapeHtml(resultPv.alternatives) + '</div>' +
+            '</div>';
         } else {
           var result = await checkTranslation(currentPromptRu, translation, currentWord);
           feedbackBlock.innerHTML =
