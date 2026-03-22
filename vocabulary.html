@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vocabulary Practice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'DM Sans', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #e8e8e8;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      flex-shrink: 0;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.5rem 0.85rem;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(232, 232, 232, 0.9);
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .btn-back:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0 2rem;
+    }
+
+    .tab {
+      padding: 1rem 1.5rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: rgba(232, 232, 232, 0.6);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .tab:hover {
+      color: rgba(232, 232, 232, 0.9);
+    }
+
+    .tab.active {
+      color: #e94560;
+      border-bottom-color: #e94560;
+    }
+
+    .content {
+      flex: 1;
+      max-width: 720px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .panel {
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    .dictionary-add {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .dictionary-search {
+      margin-bottom: 1rem;
+    }
+
+    .dictionary-view-toggle {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .dictionary-view-btn {
+      padding: 0.5rem 0.85rem;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(232, 232, 232, 0.85);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .dictionary-view-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .dictionary-view-btn.active {
+      color: #1a1a2e;
+      background: rgba(233, 69, 96, 0.9);
+      border-color: rgba(233, 69, 96, 0.95);
+    }
+
+    .dictionary-input {
+      flex: 1;
+      padding: 0.85rem 1rem;
+      font-family: inherit;
+      font-size: 1rem;
+      color: #e8e8e8;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .dictionary-input::placeholder {
+      color: rgba(232, 232, 232, 0.4);
+    }
+
+    .dictionary-input:focus {
+      outline: none;
+      border-color: rgba(233, 69, 96, 0.6);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .btn-add {
+      padding: 0.85rem 1.25rem;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-add:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(233, 69, 96, 0.4);
+    }
+
+    .dictionary-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .dictionary-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      padding: 0.75rem 1rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+    }
+
+    .dictionary-item-main {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .dictionary-item-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      min-width: 0;
+      cursor: pointer;
+    }
+
+    .dictionary-item-text {
+      font-size: 1rem;
+      color: #e8e8e8;
+      word-break: break-word;
+    }
+
+    .dictionary-item-date {
+      font-size: 0.75rem;
+      color: rgba(232, 232, 232, 0.5);
+    }
+
+    .dictionary-item-date.not-practiced {
+      color: rgba(240, 193, 75, 0.6);
+      font-style: italic;
+    }
+
+    .btn-delete {
+      padding: 0.35rem 0.65rem;
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #e8e8e8;
+      background: rgba(255, 107, 107, 0.3);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn-delete:hover {
+      background: rgba(255, 107, 107, 0.5);
+    }
+
+    .btn-learned {
+      padding: 0.35rem 0.65rem;
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #e8e8e8;
+      background: rgba(78, 205, 196, 0.25);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn-learned:hover {
+      background: rgba(78, 205, 196, 0.45);
+    }
+
+    .dictionary-item-extra {
+      width: 100%;
+      display: none;
+      padding-top: 0.65rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .dictionary-item-extra.visible {
+      display: block;
+    }
+
+    .dictionary-extra-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: rgba(232, 232, 232, 0.65);
+      margin-bottom: 0.4rem;
+    }
+
+    .dictionary-extra-btn {
+      padding: 0.35rem 0.65rem;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #e8e8e8;
+      background: rgba(233, 69, 96, 0.25);
+      border: 1px solid rgba(233, 69, 96, 0.4);
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 0.55rem;
+    }
+
+    .dictionary-extra-btn:hover {
+      background: rgba(233, 69, 96, 0.4);
+    }
+
+    .dictionary-translation {
+      margin-bottom: 0.75rem;
+      padding: 0.5rem 0.7rem;
+      background: rgba(0, 0, 0, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: rgba(232, 232, 232, 0.95);
+      white-space: pre-wrap;
+    }
+
+    .dictionary-examples {
+      margin: 0;
+      padding-left: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      color: rgba(232, 232, 232, 0.9);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .dictionary-details-note {
+      font-size: 0.85rem;
+      color: rgba(232, 232, 232, 0.6);
+      font-style: italic;
+      margin-bottom: 0.6rem;
+    }
+
+    .dictionary-empty {
+      padding: 2rem;
+      text-align: center;
+      color: rgba(232, 232, 232, 0.5);
+      font-size: 0.95rem;
+    }
+
+    .practice-mode-selector {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .practice-mode-option {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .practice-mode-option:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .practice-mode-option:has(input:checked) {
+      background: rgba(233, 69, 96, 0.1);
+      border-color: rgba(233, 69, 96, 0.5);
+    }
+
+    .practice-mode-option input {
+      display: none;
+    }
+
+    .practice-mode-label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #e8e8e8;
+    }
+
+    .practice-mode-desc {
+      font-size: 0.8rem;
+      color: rgba(232, 232, 232, 0.6);
+      line-height: 1.4;
+    }
+
+    .dictionary-subtype-wrap {
+      margin-bottom: 1.25rem;
+      padding: 1rem 1.25rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+    }
+
+    .dictionary-subtype-wrap[hidden] {
+      display: none !important;
+    }
+
+    .dictionary-subtype-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: rgba(232, 232, 232, 0.55);
+      margin-bottom: 0.65rem;
+    }
+
+    .dictionary-subtype-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .dictionary-subtype-option {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      padding: 0.75rem 1rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .dictionary-subtype-option:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .dictionary-subtype-option:has(input:checked) {
+      background: rgba(233, 69, 96, 0.1);
+      border-color: rgba(233, 69, 96, 0.45);
+    }
+
+    .dictionary-subtype-option input {
+      display: none;
+    }
+
+    .dictionary-subtype-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #e8e8e8;
+    }
+
+    .dictionary-subtype-desc {
+      font-size: 0.78rem;
+      color: rgba(232, 232, 232, 0.55);
+      line-height: 1.35;
+    }
+
+    .practice-context-list {
+      margin: 0.5rem 0 0;
+      padding-left: 1.25rem;
+      font-size: 1rem;
+      line-height: 1.55;
+      color: rgba(232, 232, 232, 0.92);
+    }
+
+    .feedback-section-title.correct {
+      color: #4ecdc4;
+    }
+
+    .practice-area {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .practice-prompt {
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+    }
+
+    .practice-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: rgba(232, 232, 232, 0.6);
+      margin-bottom: 0.5rem;
+    }
+
+    .practice-text {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #e8e8e8;
+    }
+
+    .practice-hint {
+      margin-top: 0.75rem;
+    }
+
+    .practice-hint-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.7rem;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: rgba(232, 232, 232, 0.7);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .practice-hint-toggle:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .practice-hint-toggle::before {
+      content: '▶';
+      font-size: 0.65em;
+      transition: transform 0.2s;
+    }
+
+    .practice-hint-toggle.expanded::before {
+      transform: rotate(90deg);
+    }
+
+    .practice-hint-content {
+      display: none;
+      margin-top: 0.5rem;
+      padding: 0.4rem 0.7rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #f0c14b;
+      background: rgba(240, 193, 75, 0.15);
+      border-radius: 6px;
+    }
+
+    .practice-hint-content.visible {
+      display: inline-block;
+    }
+
+    .practice-input-area {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .practice-textarea {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      font-family: inherit;
+      font-size: 1rem;
+      color: #e8e8e8;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      resize: none;
+      min-height: 100px;
+      max-height: 60vh;
+      overflow-y: hidden;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .practice-textarea::placeholder {
+      color: rgba(232, 232, 232, 0.4);
+    }
+
+    .practice-textarea:focus {
+      outline: none;
+      border-color: rgba(233, 69, 96, 0.6);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .practice-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .btn-check {
+      padding: 0.85rem 1.5rem;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-check:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(233, 69, 96, 0.4);
+    }
+
+    .btn-check:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-next {
+      padding: 0.85rem 1.5rem;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #e8e8e8;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .btn-next:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .feedback-block {
+      padding: 1.5rem;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      display: none;
+    }
+
+    .feedback-block.visible {
+      display: block;
+    }
+
+    .feedback-section {
+      margin-bottom: 1.25rem;
+    }
+
+    .feedback-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .feedback-section-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+    }
+
+    .feedback-section-title.score {
+      color: #f0c14b;
+    }
+
+    .feedback-section-title.errors {
+      color: #ff6b6b;
+    }
+
+    .feedback-section-title.alternatives {
+      color: #4ecdc4;
+    }
+
+    .feedback-content {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: rgba(232, 232, 232, 0.9);
+      white-space: pre-wrap;
+    }
+
+    .practice-empty {
+      padding: 3rem;
+      text-align: center;
+      color: rgba(232, 232, 232, 0.5);
+    }
+
+    .practice-empty-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .practice-empty-text {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-go-dictionary {
+      padding: 0.75rem 1.25rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #e8e8e8;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-go-dictionary:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .loading {
+      color: rgba(232, 232, 232, 0.6);
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a href="index.html" class="btn-back">← Menu</a>
+    <h1>Vocabulary Practice</h1>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="dictionary">Dictionary</button>
+    <button class="tab" data-tab="practice">Practice</button>
+  </div>
+
+  <main class="content">
+    <div class="panel active" id="panelDictionary">
+      <div class="dictionary-add">
+        <input type="text" class="dictionary-input" id="dictInput" placeholder="Enter a word, phrase, or sentence...">
+        <button class="btn-add" id="btnAddWord">Add</button>
+      </div>
+      <div class="dictionary-search">
+        <input type="text" class="dictionary-input" id="dictSearchInput" placeholder="Search in dictionary...">
+      </div>
+      <div class="dictionary-view-toggle">
+        <button class="dictionary-view-btn active" id="btnViewLearning" type="button">Learning</button>
+        <button class="dictionary-view-btn" id="btnViewLearned" type="button">Learned</button>
+      </div>
+      <div class="dictionary-list" id="dictList"></div>
+    </div>
+
+    <div class="panel" id="panelPractice">
+      <div class="dictionary-add" style="margin-bottom: 1.25rem;">
+        <input type="text" class="dictionary-input" id="practiceDictInput" placeholder="Add a word, phrase, or sentence to your dictionary...">
+        <button class="btn-add" id="btnAddPracticeWord">Add</button>
+      </div>
+      <div class="practice-mode-selector">
+        <label class="practice-mode-option">
+          <input type="radio" name="practiceMode" value="dictionary">
+          <span class="practice-mode-label">From Dictionary</span>
+          <span class="practice-mode-desc">Practice words and phrases you saved</span>
+        </label>
+        <label class="practice-mode-option">
+          <input type="radio" name="practiceMode" value="general">
+          <span class="practice-mode-label">General Practice</span>
+          <span class="practice-mode-desc">Random interview answers for Senior Product Manager</span>
+        </label>
+      </div>
+      <div class="dictionary-subtype-wrap" id="dictionarySubtypeWrap" hidden>
+        <div class="dictionary-subtype-label">Dictionary practice</div>
+        <div class="dictionary-subtype-options">
+          <label class="dictionary-subtype-option">
+            <input type="radio" name="dictionarySubtype" value="sentence" checked>
+            <span class="dictionary-subtype-title">Full sentence</span>
+            <span class="dictionary-subtype-desc">Translate a Russian interview-style sentence into English</span>
+          </label>
+          <label class="dictionary-subtype-option">
+            <input type="radio" name="dictionarySubtype" value="word">
+            <span class="dictionary-subtype-title">Word or phrase only</span>
+            <span class="dictionary-subtype-desc">See the Russian word/phrase and two Russian context sentences; type the English word or phrase</span>
+          </label>
+        </div>
+      </div>
+      <div class="practice-area" id="practiceArea"></div>
+    </div>
+  </main>
+
+  <script src="api-config.js"></script>
+  <script>
+    const DICT_STORAGE_KEY = 'hr-interview-examples';
+    const API_TIMEOUT_MS = 60000;
+
+    const tabs = document.querySelectorAll('.tab');
+    const panels = document.querySelectorAll('.panel');
+    const dictInput = document.getElementById('dictInput');
+    const dictSearchInput = document.getElementById('dictSearchInput');
+    const btnViewLearning = document.getElementById('btnViewLearning');
+    const btnViewLearned = document.getElementById('btnViewLearned');
+    const btnAddWord = document.getElementById('btnAddWord');
+    const dictList = document.getElementById('dictList');
+    const practiceArea = document.getElementById('practiceArea');
+    const practiceDictInput = document.getElementById('practiceDictInput');
+    const btnAddPracticeWord = document.getElementById('btnAddPracticeWord');
+    const dictionarySubtypeWrap = document.getElementById('dictionarySubtypeWrap');
+
+    let currentWordId = null;
+    let currentWord = null;
+    let currentPromptRu = '';
+    let practiceMode = null;
+    /** 'sentence' | 'word' — only when practiceMode === 'dictionary' */
+    let dictionaryPracticeSubtype = 'sentence';
+    let currentWordRuDisplay = '';
+    let currentExamplesRu = [];
+    let dictionaryView = 'learning';
+    let expandedWordId = null;
+    const shownTranslationById = {};
+
+    document.querySelectorAll('input[name="practiceMode"]').forEach(function (radio) {
+      radio.addEventListener('change', function () {
+        practiceMode = this.value;
+        if (dictionarySubtypeWrap) {
+          dictionarySubtypeWrap.hidden = practiceMode !== 'dictionary';
+        }
+        loadPractice();
+      });
+    });
+
+    document.querySelectorAll('input[name="dictionarySubtype"]').forEach(function (radio) {
+      radio.addEventListener('change', function () {
+        dictionaryPracticeSubtype = this.value;
+        if (practiceMode === 'dictionary') {
+          loadPractice();
+        }
+      });
+    });
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        tabs.forEach(function (t) { t.classList.remove('active'); });
+        panels.forEach(function (p) { p.classList.remove('active'); });
+        tab.classList.add('active');
+        var panelId = 'panel' + tab.dataset.tab.charAt(0).toUpperCase() + tab.dataset.tab.slice(1);
+        document.getElementById(panelId).classList.add('active');
+        if (tab.dataset.tab === 'practice') {
+          showPracticeInitialState();
+        }
+      });
+    });
+
+    function getDictionary() {
+      try {
+        var raw = localStorage.getItem(DICT_STORAGE_KEY);
+        var list = raw ? JSON.parse(raw) : [];
+        return Array.isArray(list) ? list : [];
+      } catch (_) {
+        return [];
+      }
+    }
+
+    /** Same pool for “full sentence” and “word only” dictionary practice */
+    function getLearningDictionaryWords() {
+      return getDictionary().filter(function (item) { return !item.learned; });
+    }
+
+    /** DOM is source of truth — keeps Check in sync with the exercise on screen */
+    function getCurrentDictionarySubtype() {
+      var el = document.querySelector('input[name="dictionarySubtype"]:checked');
+      return el && el.value === 'word' ? 'word' : 'sentence';
+    }
+
+    function saveDictionary(list) {
+      try {
+        localStorage.setItem(DICT_STORAGE_KEY, JSON.stringify(list));
+      } catch (_) {}
+    }
+
+    async function addWord(text) {
+      var t = (text || '').trim();
+      if (!t) return;
+      var list = getDictionary();
+      if (list.some(function (x) { return x.text.toLowerCase() === t.toLowerCase(); })) return;
+
+      var newId = Date.now();
+      list.unshift({
+        id: newId,
+        text: t,
+        createdAt: new Date().toISOString(),
+        learned: false,
+        translationRu: [],
+        examplesEn: [],
+        detailsReady: false
+      });
+      saveDictionary(list);
+      renderDictionary();
+
+      if (!getOpenAiApiKey()) return;
+
+      try {
+        var details = await generateDictionaryDetails(t);
+        var updatedList = getDictionary();
+        var item = updatedList.find(function (x) { return x.id === newId; });
+        if (!item) return;
+        item.translationRu = details.translationRu;
+        item.examplesEn = details.examplesEn;
+        item.detailsReady = true;
+        item.detailsError = '';
+        saveDictionary(updatedList);
+        renderDictionary();
+      } catch (err) {
+        var failedList = getDictionary();
+        var failedItem = failedList.find(function (x) { return x.id === newId; });
+        if (!failedItem) return;
+        failedItem.detailsReady = false;
+        failedItem.detailsError = err && err.message ? err.message : 'Failed to generate details';
+        saveDictionary(failedList);
+        renderDictionary();
+      }
+    }
+
+    function deleteWord(id) {
+      var list = getDictionary().filter(function (x) { return x.id !== id; });
+      saveDictionary(list);
+      renderDictionary();
+    }
+
+    function setWordLearned(id, learned) {
+      var list = getDictionary();
+      var item = list.find(function (x) { return x.id === id; });
+      if (!item) return;
+      item.learned = !!learned;
+      saveDictionary(list);
+      renderDictionary();
+    }
+
+    function updateLastPracticed(id) {
+      var list = getDictionary();
+      var item = list.find(function (x) { return x.id === id; });
+      if (item) {
+        item.lastPracticed = new Date().toISOString();
+        saveDictionary(list);
+      }
+    }
+
+    function selectNextWord(list) {
+      if (list.length === 0) return null;
+      var neverPracticed = list.filter(function (x) { return !x.lastPracticed; });
+      if (neverPracticed.length > 0) {
+        return neverPracticed[Math.floor(Math.random() * neverPracticed.length)];
+      }
+      var sorted = list.slice().sort(function (a, b) {
+        return new Date(a.lastPracticed) - new Date(b.lastPracticed);
+      });
+      var oldestCount = Math.min(3, sorted.length);
+      return sorted[Math.floor(Math.random() * oldestCount)];
+    }
+
+    function escapeHtml(str) {
+      var div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function formatDate(isoString) {
+      if (!isoString) return null;
+      var d = new Date(isoString);
+      if (isNaN(d.getTime())) return null;
+      var day = String(d.getDate()).padStart(2, '0');
+      var month = String(d.getMonth() + 1).padStart(2, '0');
+      var year = d.getFullYear();
+      var hours = String(d.getHours()).padStart(2, '0');
+      var minutes = String(d.getMinutes()).padStart(2, '0');
+      return day + '-' + month + '-' + year + ' ' + hours + ':' + minutes;
+    }
+
+    function renderDictionary() {
+      var list = getDictionary();
+      list = list.filter(function (item) {
+        return dictionaryView === 'learned' ? !!item.learned : !item.learned;
+      });
+
+      var query = (dictSearchInput && dictSearchInput.value ? dictSearchInput.value : '').trim().toLowerCase();
+      if (query) {
+        list = list.filter(function (item) {
+          return (item.text || '').toLowerCase().includes(query);
+        });
+      }
+
+      btnViewLearning.classList.toggle('active', dictionaryView === 'learning');
+      btnViewLearned.classList.toggle('active', dictionaryView === 'learned');
+
+      dictList.innerHTML = '';
+      if (list.length === 0) {
+        if (query) {
+          dictList.innerHTML = '<div class="dictionary-empty">No matches found for your search.</div>';
+        } else if (dictionaryView === 'learned') {
+          dictList.innerHTML = '<div class="dictionary-empty">No learned words yet.</div>';
+        } else {
+          dictList.innerHTML = '<div class="dictionary-empty">No words yet. Add some words or phrases to start practicing.</div>';
+        }
+        return;
+      }
+      list.forEach(function (item) {
+        if (!Array.isArray(item.translationRu)) item.translationRu = [];
+        if (!Array.isArray(item.examplesEn)) item.examplesEn = [];
+
+        var el = document.createElement('div');
+        el.className = 'dictionary-item';
+        var lastPracticedHtml = item.lastPracticed
+          ? '<span class="dictionary-item-date">Last practiced: ' + formatDate(item.lastPracticed) + '</span>'
+          : '<span class="dictionary-item-date not-practiced">Not practiced yet</span>';
+
+        var isExpanded = expandedWordId === item.id;
+        var translationVisible = !!shownTranslationById[item.id];
+
+        var translationHtml = '';
+        if (translationVisible) {
+          var ruText = item.translationRu.length
+            ? item.translationRu.map(function (line, idx) { return (idx + 1) + '. ' + line; }).join('\n')
+            : 'No translation available.';
+          translationHtml = '<div class="dictionary-translation">' + escapeHtml(ruText) + '</div>';
+        }
+
+        var examplesHtml = '';
+        if (item.examplesEn.length) {
+          examplesHtml = '<ol class="dictionary-examples">' + item.examplesEn.map(function (example) {
+            return '<li>' + escapeHtml(example) + '</li>';
+          }).join('') + '</ol>';
+        } else if (item.detailsError) {
+          examplesHtml = '<div class="dictionary-details-note">Could not load details: ' + escapeHtml(item.detailsError) + '</div>';
+        } else {
+          examplesHtml = '<div class="dictionary-details-note">Generating translation and examples...</div>';
+        }
+
+        el.innerHTML =
+          '<div class="dictionary-item-main">' +
+          '<div class="dictionary-item-content">' +
+          '<span class="dictionary-item-text">' + escapeHtml(item.text) + '</span>' +
+          lastPracticedHtml +
+          '</div>' +
+          '<button class="btn-learned" data-id="' + item.id + '">' + (dictionaryView === 'learned' ? 'Return' : 'Learned') + '</button>' +
+          '<button class="btn-delete" data-id="' + item.id + '">Delete</button>' +
+          '</div>' +
+          '<div class="dictionary-item-extra' + (isExpanded ? ' visible' : '') + '">' +
+          '<div class="dictionary-extra-label">Word Details</div>' +
+          '<button class="dictionary-extra-btn" data-action="show-translation">' + (translationVisible ? 'Hide translation' : 'Show translation') + '</button>' +
+          translationHtml +
+          '<div class="dictionary-extra-label">Interview Examples</div>' +
+          examplesHtml +
+          '</div>';
+
+        el.querySelector('.dictionary-item-content').addEventListener('click', function () {
+          expandedWordId = expandedWordId === item.id ? null : item.id;
+          renderDictionary();
+        });
+
+        el.querySelector('.dictionary-extra-btn').addEventListener('click', function () {
+          shownTranslationById[item.id] = !shownTranslationById[item.id];
+          renderDictionary();
+        });
+
+        el.querySelector('.btn-learned').addEventListener('click', function () {
+          setWordLearned(item.id, dictionaryView !== 'learned');
+        });
+        el.querySelector('.btn-delete').addEventListener('click', function () {
+          deleteWord(item.id);
+        });
+        dictList.appendChild(el);
+      });
+    }
+
+    btnAddWord.addEventListener('click', function () {
+      addWord(dictInput.value);
+      dictInput.value = '';
+    });
+
+    dictInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        addWord(dictInput.value);
+        dictInput.value = '';
+      }
+    });
+
+    dictSearchInput.addEventListener('input', renderDictionary);
+
+    btnViewLearning.addEventListener('click', function () {
+      dictionaryView = 'learning';
+      expandedWordId = null;
+      renderDictionary();
+    });
+
+    btnViewLearned.addEventListener('click', function () {
+      dictionaryView = 'learned';
+      expandedWordId = null;
+      renderDictionary();
+    });
+
+    btnAddPracticeWord.addEventListener('click', function () {
+      addWord(practiceDictInput.value);
+      practiceDictInput.value = '';
+    });
+
+    practiceDictInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        addWord(practiceDictInput.value);
+        practiceDictInput.value = '';
+      }
+    });
+
+    renderDictionary();
+
+    function fetchWithTimeout(url, options) {
+      var ctrl = new AbortController();
+      var id = setTimeout(function () { ctrl.abort(); }, API_TIMEOUT_MS);
+      return fetch(url, Object.assign({}, options, { signal: ctrl.signal })).then(function (r) {
+        clearTimeout(id);
+        return r;
+      }, function (err) {
+        clearTimeout(id);
+        if (err.name === 'AbortError') throw new Error('Request timed out');
+        throw err;
+      });
+    }
+
+    async function generateDictionaryDetails(word) {
+      var systemPrompt = 'You are an English-Russian vocabulary assistant for interview preparation. Given one English word or phrase, return JSON only with: (1) top 3 most common/popular Russian meanings, (2) exactly 3 concise interview-style example sentences in English that naturally use this word/phrase. Keep examples B1-C1 and professional. JSON format: {"translations_ru":["...","...","..."],"examples_en":["...","...","..."]}';
+      var response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getOpenAiApiKey()
+        },
+        body: JSON.stringify({
+          model: 'gpt-5-mini-2025-08-07',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: 'Word/phrase: ' + word }
+          ],
+          response_format: { type: 'json_object' }
+        })
+      });
+      if (!response.ok) {
+        var err = await response.json().catch(function () { return { error: { message: response.statusText } }; });
+        throw new Error(err.error?.message || 'Failed to generate word details');
+      }
+      var data = await response.json();
+      var content = data.choices?.[0]?.message?.content?.trim() || '';
+      var parsed = JSON.parse(content);
+      var ru = Array.isArray(parsed.translations_ru) ? parsed.translations_ru : [];
+      var en = Array.isArray(parsed.examples_en) ? parsed.examples_en : [];
+      return {
+        translationRu: ru.filter(Boolean).slice(0, 3),
+        examplesEn: en.filter(Boolean).slice(0, 3)
+      };
+    }
+
+    async function generatePracticePrompt(word) {
+      var systemPrompt = 'You generate practice sentences for English learners. Given a word, phrase, or sentence in English, create a realistic interview answer in RUSSIAN that naturally uses the concept or meaning of the given word/phrase. The sentence should be something a job candidate might say. Reply with valid JSON only: {"russian": "the russian sentence", "english_word": "the original word/phrase"}';
+      var response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getOpenAiApiKey()
+        },
+        body: JSON.stringify({
+          model: 'gpt-5-mini-2025-08-07',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: 'Word/phrase: ' + word }
+          ],
+          response_format: { type: 'json_object' }
+        })
+      });
+      if (!response.ok) {
+        var err = await response.json().catch(function () { return { error: { message: response.statusText } }; });
+        throw new Error(err.error?.message || 'Failed to generate prompt');
+      }
+      var data = await response.json();
+      var content = data.choices?.[0]?.message?.content?.trim() || '';
+      var parsed = JSON.parse(content);
+      return { russian: parsed.russian || '', englishWord: parsed.english_word || word };
+    }
+
+    async function generateGeneralPrompt() {
+      var systemPrompt = 'You generate practice sentences for English learners preparing for job interviews. Create a realistic interview answer in RUSSIAN that a Senior Product Manager candidate might say. The answer should be professional, use business vocabulary, and be 2-4 sentences long. Topics can include: product strategy, stakeholder management, roadmap prioritization, metrics, A/B testing, user research, cross-functional collaboration, etc. Reply with valid JSON only: {"russian": "the russian sentence"}';
+      var response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getOpenAiApiKey()
+        },
+        body: JSON.stringify({
+          model: 'gpt-5-mini-2025-08-07',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: 'Generate a new interview answer in Russian for a Senior Product Manager position.' }
+          ],
+          response_format: { type: 'json_object' }
+        })
+      });
+      if (!response.ok) {
+        var err = await response.json().catch(function () { return { error: { message: response.statusText } }; });
+        throw new Error(err.error?.message || 'Failed to generate prompt');
+      }
+      var data = await response.json();
+      var content = data.choices?.[0]?.message?.content?.trim() || '';
+      var parsed = JSON.parse(content);
+      return { russian: parsed.russian || '' };
+    }
+
+    async function checkTranslation(russianText, userTranslation, targetWord) {
+      var targetWordInstruction = targetWord
+        ? 'They should use the word/phrase "' + targetWord + '" or its appropriate form. '
+        : '';
+      var systemPrompt = 'You are an English teacher evaluating translations. The student was given a Russian sentence and asked to translate it to English. ' + targetWordInstruction + 'Evaluate their translation:\n\n1. The student should correctly translate the main idea, but it is not a mistake to use synonyms or slightly different wording. Skip minor mistakes and issues. Give a score 1-5 (1=poor, 5=excellent)\n2. Provide ONE corrected version of the student answer at B2-C1 level\n3. List specific errors (grammar, vocabulary, word choice) with corrections. Do not check punctuation. Student can use formal and informal language and any abbreviations or contractions.\n4. Provide 2-3 alternative translations at B2-C1 level that a fluent speaker would use\n\nReply with JSON only: {"score": number, "corrected": "single corrected version", "errors": "detailed error analysis or \\"No errors\\" if perfect", "alternatives": "2-3 alternative B2-C1 level translations, each on new line"}';
+      var response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getOpenAiApiKey()
+        },
+        body: JSON.stringify({
+          model: 'gpt-5-mini-2025-08-07',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: 'Russian original: ' + russianText + '\n\nStudent translation: ' + userTranslation }
+          ],
+          response_format: { type: 'json_object' }
+        })
+      });
+      if (!response.ok) {
+        var err = await response.json().catch(function () { return { error: { message: response.statusText } }; });
+        throw new Error(err.error?.message || 'Failed to check translation');
+      }
+      var data = await response.json();
+      var content = data.choices?.[0]?.message?.content?.trim() || '';
+      var parsed = JSON.parse(content);
+      return {
+        score: parsed.score || 0,
+        corrected: parsed.corrected || '',
+        errors: parsed.errors || '',
+        alternatives: parsed.alternatives || ''
+      };
+    }
+
+    async function generateWordOnlyPractice(englishDict, russianGloss) {
+      var gloss = (russianGloss || '').trim();
+      var systemPrompt = 'You help English learners practice vocabulary for job interviews. Given an English word or phrase from their personal dictionary, produce material for a drill.\n\nReturn JSON only with:\n- russian_word: the Russian word or short phrase the learner should see as the prompt (natural Russian, interview-relevant register).\n- examples_ru: exactly 2 different Russian sentences (job interview / workplace context) that naturally use that Russian word/phrase or clearly illustrate the same meaning as the English dictionary entry.\n\nIf a Russian gloss is provided, keep the same sense. If gloss is empty, infer the best primary sense for interview English.\n\nFormat: {"russian_word":"...","examples_ru":["...","..."]}';
+      var userContent = 'English dictionary entry: ' + englishDict + '\nOptional Russian gloss (may be empty): ' + gloss;
+      var response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getOpenAiApiKey()
+        },
+        body: JSON.stringify({
+          model: 'gpt-5-mini-2025-08-07',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userContent }
+          ],
+          response_format: { type: 'json_object' }
+        })
+      });
+      if (!response.ok) {
+        var err = await response.json().catch(function () { return { error: { message: response.statusText } }; });
+        throw new Error(err.error?.message || 'Failed to generate word practice');
+      }
+      var data = await response.json();
+      var content = data.choices?.[0]?.message?.content?.trim() || '';
+      var parsed = JSON.parse(content);
+      var ruWord = typeof parsed.russian_word === 'string' ? parsed.russian_word.trim() : '';
+      var ex = Array.isArray(parsed.examples_ru) ? parsed.examples_ru : [];
+      ex = ex.filter(Boolean).slice(0, 2);
+      while (ex.length < 2) {
+        ex.push('');
+      }
+      return { russianWord: ruWord, examplesRu: ex };
+    }
+
+    async function checkWordOnlyAnswer(expectedEn, userAnswer, russianWord, examplesRu) {
+      var ctx = (examplesRu || []).map(function (s, i) { return (i + 1) + '. ' + s; }).join('\n');
+      var systemPrompt = 'You evaluate vocabulary recall for job-interview English. The learner saw a Russian word/phrase and two Russian context sentences, and must type the matching English word or phrase from their dictionary.\n\nExpected English is the authoritative answer (may be multi-word). Accept: correct spelling variants, obvious inflections of the same lemma if the dictionary entry is a single word, and minor articles only if they do not change the headword.\n\nReply with JSON only: {"is_correct": boolean, "message": "string"}\n\nIf is_correct is true: message = one short positive line (English).\n\nIf is_correct is false: message (English, structured paragraphs) MUST cover:\n1) Whether the learner\'s answer could still be acceptable in this interview context if it is close in meaning (say yes/no and briefly why).\n2) If it is not acceptable, why not.\n3) Semantic difference between the expected English and what the learner wrote.\n4) Practical usage: when to use the expected item vs the learner\'s word (register, collocations, typical interview phrases).';
+      var userContent =
+        'Russian word/phrase shown:\n' + russianWord +
+        '\n\nRussian context sentences:\n' + ctx +
+        '\n\nExpected English (dictionary entry):\n' + expectedEn +
+        '\n\nLearner answer:\n' + userAnswer;
+      var response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getOpenAiApiKey()
+        },
+        body: JSON.stringify({
+          model: 'gpt-5-mini-2025-08-07',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userContent }
+          ],
+          response_format: { type: 'json_object' }
+        })
+      });
+      if (!response.ok) {
+        var err = await response.json().catch(function () { return { error: { message: response.statusText } }; });
+        throw new Error(err.error?.message || 'Failed to check word answer');
+      }
+      var data = await response.json();
+      var content = data.choices?.[0]?.message?.content?.trim() || '';
+      var parsed = JSON.parse(content);
+      return {
+        isCorrect: !!parsed.is_correct,
+        message: typeof parsed.message === 'string' ? parsed.message : ''
+      };
+    }
+
+    function starsFromScore(score) {
+      var n = Math.min(5, Math.max(1, Math.round(score)));
+      return '★'.repeat(n) + '☆'.repeat(5 - n);
+    }
+
+    function showPracticeInitialState() {
+      document.querySelectorAll('input[name="practiceMode"]').forEach(function (radio) {
+        radio.checked = false;
+      });
+      if (dictionarySubtypeWrap) {
+        dictionarySubtypeWrap.hidden = true;
+      }
+      document.querySelectorAll('.practice-mode-option').forEach(function (opt) {
+        opt.classList.remove('selected');
+      });
+      practiceArea.innerHTML =
+        '<div class="practice-empty">' +
+        '<div class="practice-empty-icon">👆</div>' +
+        '<div class="practice-empty-text">Select a practice mode above to start</div>' +
+        '</div>';
+    }
+
+    function autoResizeTextarea(textarea) {
+      // Reset height to correctly measure scrollHeight
+      textarea.style.height = 'auto';
+
+      var maxHeightPx = Math.floor(window.innerHeight * 0.6);
+      var nextHeight = Math.min(textarea.scrollHeight, maxHeightPx);
+      textarea.style.height = nextHeight + 'px';
+
+      // If content is taller than max height, allow scrolling
+      textarea.style.overflowY = textarea.scrollHeight > maxHeightPx ? 'auto' : 'hidden';
+    }
+
+    async function loadPractice() {
+      if (!practiceMode) {
+        showPracticeInitialState();
+        return;
+      }
+
+      if (!getOpenAiApiKey()) {
+        practiceArea.innerHTML = '<div class="practice-empty"><div class="practice-empty-text">Add your OpenAI API key in Settings (main menu) to start practicing.</div></div>';
+        return;
+      }
+
+      if (practiceMode === 'dictionary') {
+        var list = getLearningDictionaryWords();
+        if (list.length === 0) {
+          practiceArea.innerHTML =
+            '<div class="practice-empty">' +
+            '<div class="practice-empty-icon">📚</div>' +
+            '<div class="practice-empty-text">Add some learning words to your dictionary first.</div>' +
+            '<button class="btn-go-dictionary" id="btnGoDictionary">Go to Dictionary</button>' +
+            '</div>';
+          document.getElementById('btnGoDictionary').addEventListener('click', function () {
+            tabs[0].click();
+          });
+          return;
+        }
+      }
+
+      practiceArea.innerHTML = '<div class="loading">Generating practice...</div>';
+
+      try {
+        var hintHtml = '';
+        var promptInnerHtml = '';
+        var textareaPlaceholder = 'Type your English translation...';
+        currentWordRuDisplay = '';
+        currentExamplesRu = [];
+
+        dictionaryPracticeSubtype = getCurrentDictionarySubtype();
+
+        if (practiceMode === 'dictionary') {
+          var list = getLearningDictionaryWords();
+          var selectedItem = selectNextWord(list);
+          currentWordId = selectedItem.id;
+          currentWord = selectedItem.text;
+
+          hintHtml =
+            '<div class="practice-hint">' +
+            '<button type="button" class="practice-hint-toggle" id="hintToggle">Show hint</button>' +
+            '<div class="practice-hint-content" id="hintContent">English in dictionary: ' + escapeHtml(currentWord) + '</div>' +
+            '</div>';
+
+          if (dictionaryPracticeSubtype === 'word') {
+            textareaPlaceholder = 'Type the English word or phrase...';
+            var ruGloss = '';
+            if (Array.isArray(selectedItem.translationRu) && selectedItem.translationRu.length) {
+              ruGloss = String(selectedItem.translationRu[0]).trim();
+            }
+            var wordPack = await generateWordOnlyPractice(currentWord, ruGloss);
+            currentWordRuDisplay = (wordPack.russianWord || ruGloss || '').trim() || ruGloss;
+            if (!currentWordRuDisplay) {
+              currentWordRuDisplay = '(Could not load Russian form — use Show hint for English)';
+            }
+            currentExamplesRu = wordPack.examplesRu || [];
+            var ex0 = escapeHtml(currentExamplesRu[0] || '—');
+            var ex1 = escapeHtml(currentExamplesRu[1] || '—');
+            promptInnerHtml =
+              '<div class="practice-label">Russian word or phrase</div>' +
+              '<div class="practice-text">' + escapeHtml(currentWordRuDisplay) + '</div>' +
+              '<div class="practice-label" style="margin-top:1rem;">Context (Russian)</div>' +
+              '<p class="practice-mode-desc" style="margin-top:0.35rem;">Two interview-style sentences using this vocabulary</p>' +
+              '<ol class="practice-context-list"><li>' + ex0 + '</li><li>' + ex1 + '</li></ol>';
+            currentPromptRu = currentWordRuDisplay;
+          } else {
+            var result = await generatePracticePrompt(currentWord);
+            currentPromptRu = result.russian;
+            promptInnerHtml =
+              '<div class="practice-label">Translate to English:</div>' +
+              '<div class="practice-text">' + escapeHtml(currentPromptRu) + '</div>';
+          }
+        } else {
+          currentWordId = null;
+          currentWord = null;
+          var genResult = await generateGeneralPrompt();
+          currentPromptRu = genResult.russian;
+          promptInnerHtml =
+            '<div class="practice-label">Translate to English:</div>' +
+            '<div class="practice-text">' + escapeHtml(currentPromptRu) + '</div>';
+        }
+
+        practiceArea.innerHTML =
+          '<div class="practice-prompt">' +
+          promptInnerHtml +
+          (practiceMode === 'dictionary' ? hintHtml : '') +
+          '</div>' +
+          '<div class="practice-input-area">' +
+          '<textarea class="practice-textarea" id="userTranslation" placeholder="' + escapeHtml(textareaPlaceholder) + '"></textarea>' +
+          '<div class="practice-actions">' +
+          '<button class="btn-check" id="btnCheck">Check</button>' +
+          '<button class="btn-next" id="btnNext">Next</button>' +
+          '</div>' +
+          '</div>' +
+          '<div class="feedback-block" id="feedbackBlock"></div>';
+
+        document.getElementById('btnCheck').addEventListener('click', handleCheck);
+        document.getElementById('btnNext').addEventListener('click', function () { loadPractice(); });
+
+        var userTextarea = document.getElementById('userTranslation');
+        autoResizeTextarea(userTextarea);
+        userTextarea.addEventListener('input', function () {
+          autoResizeTextarea(userTextarea);
+        });
+
+        if (practiceMode === 'dictionary') {
+          document.getElementById('hintToggle').addEventListener('click', function () {
+            var toggle = document.getElementById('hintToggle');
+            var content = document.getElementById('hintContent');
+            var expanded = toggle.classList.toggle('expanded');
+            content.classList.toggle('visible', expanded);
+            toggle.textContent = expanded ? 'Hide hint' : 'Show hint';
+          });
+        }
+        document.getElementById('userTranslation').addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' && e.ctrlKey) {
+            handleCheck();
+          }
+        });
+      } catch (err) {
+        practiceArea.innerHTML = '<div class="practice-empty"><div class="practice-empty-text">Error: ' + escapeHtml(err.message) + '</div></div>';
+      }
+    }
+
+    async function handleCheck() {
+      var textarea = document.getElementById('userTranslation');
+      var btnCheck = document.getElementById('btnCheck');
+      var feedbackBlock = document.getElementById('feedbackBlock');
+      var translation = textarea.value.trim();
+      if (!translation) return;
+
+      btnCheck.disabled = true;
+      btnCheck.textContent = 'Checking...';
+      feedbackBlock.classList.remove('visible');
+
+      try {
+        var subtypeNow = getCurrentDictionarySubtype();
+        var isWordOnly = practiceMode === 'dictionary' && subtypeNow === 'word';
+
+        if (isWordOnly) {
+          var wRes = await checkWordOnlyAnswer(
+            currentWord,
+            translation,
+            currentWordRuDisplay,
+            currentExamplesRu
+          );
+          var okMsg = (wRes.message && wRes.message.trim()) ? wRes.message.trim() : 'Correct — well done!';
+          if (wRes.isCorrect) {
+            feedbackBlock.innerHTML =
+              '<div class="feedback-section">' +
+              '<div class="feedback-section-title correct">Correct</div>' +
+              '<div class="feedback-content">' + escapeHtml(okMsg) + '</div>' +
+              '</div>';
+          } else {
+            var badMsg = (wRes.message && wRes.message.trim()) ? wRes.message.trim() : 'See explanation below.';
+            feedbackBlock.innerHTML =
+              '<div class="feedback-section">' +
+              '<div class="feedback-section-title errors">Incorrect</div>' +
+              '<div class="feedback-content">' + escapeHtml(badMsg) + '</div>' +
+              '</div>';
+          }
+        } else {
+          var result = await checkTranslation(currentPromptRu, translation, currentWord);
+          feedbackBlock.innerHTML =
+            '<div class="feedback-section">' +
+            '<div class="feedback-section-title score">Score: ' + starsFromScore(result.score) + ' (' + result.score + '/5)</div>' +
+            '</div>' +
+            '<div class="feedback-section">' +
+            '<div class="feedback-section-title alternatives">Corrected Answer</div>' +
+            '<div class="feedback-content">' + escapeHtml(result.corrected || 'No corrections needed') + '</div>' +
+            '</div>' +
+            '<div class="feedback-section">' +
+            '<div class="feedback-section-title errors">Errors & Corrections</div>' +
+            '<div class="feedback-content">' + escapeHtml(result.errors) + '</div>' +
+            '</div>' +
+            '<div class="feedback-section">' +
+            '<div class="feedback-section-title alternatives">B2-C1 Alternatives</div>' +
+            '<div class="feedback-content">' + escapeHtml(result.alternatives) + '</div>' +
+            '</div>';
+        }
+        feedbackBlock.classList.add('visible');
+        /* Same as “full sentence” mode: any completed Check updates lastPracticed for this dictionary item */
+        if (practiceMode === 'dictionary' && currentWordId) {
+          updateLastPracticed(currentWordId);
+        }
+      } catch (err) {
+        feedbackBlock.innerHTML = '<div class="feedback-content">Error: ' + escapeHtml(err.message) + '</div>';
+        feedbackBlock.classList.add('visible');
+      } finally {
+        btnCheck.disabled = false;
+        btnCheck.textContent = 'Check';
+      }
+    }
+  </script>
+</body>
+</html>

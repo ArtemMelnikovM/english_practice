@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HR Interview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'DM Sans', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #e8e8e8;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      flex-shrink: 0;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.5rem 0.85rem;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(232, 232, 232, 0.9);
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .btn-back:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .layout {
+      flex: 1;
+      display: flex;
+      gap: 1.5rem;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2rem;
+      min-height: 0;
+    }
+
+    .chat-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      min-width: 0;
+    }
+
+    .messages {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      overflow-y: auto;
+      min-height: 200px;
+    }
+
+    .dictionary-sidebar {
+      width: min(360px, 34vw);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .message {
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      max-width: 85%;
+      line-height: 1.5;
+    }
+
+    .message.hr {
+      align-self: flex-start;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .message.user {
+      align-self: flex-end;
+      background: rgba(233, 69, 96, 0.25);
+      border: 1px solid rgba(233, 69, 96, 0.4);
+    }
+
+    .message-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.7;
+      margin-bottom: 0.35rem;
+    }
+
+    .message-text {
+      font-size: 1rem;
+    }
+
+    .message.loading .message-text {
+      font-style: italic;
+      opacity: 0.8;
+    }
+
+    .message.error .message-text {
+      color: #ff6b6b;
+    }
+
+    .input-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .input-block-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      opacity: 0.8;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .user-input {
+      flex: 1;
+      padding: 1rem 1.25rem;
+      font-family: inherit;
+      font-size: 1rem;
+      color: #e8e8e8;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      resize: none;
+      min-height: 52px;
+      max-height: 120px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .user-input::placeholder {
+      color: rgba(232, 232, 232, 0.4);
+    }
+
+    .user-input:focus {
+      outline: none;
+      border-color: rgba(233, 69, 96, 0.6);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .btn-send {
+      padding: 1rem 1.5rem;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-send:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(233, 69, 96, 0.4);
+    }
+
+    .btn-send:active {
+      transform: translateY(0);
+    }
+
+    .btn-send:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-add-example {
+      padding: 1rem 1.25rem;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #e8e8e8;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .btn-add-example:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .saved-examples {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      height: 100%;
+    }
+
+    .saved-examples-toggle {
+      display: block;
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(232, 232, 232, 0.9);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.2s;
+    }
+
+    .saved-examples-toggle:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .saved-examples-toggle[aria-expanded="true"]::before {
+      content: '▼ ';
+      font-size: 0.7em;
+    }
+
+    .saved-examples-toggle[aria-expanded="false"]::before {
+      content: '▶ ';
+      font-size: 0.7em;
+    }
+
+    .saved-examples-list {
+      margin-top: 0.5rem;
+      flex: 1;
+      min-height: 240px;
+      max-height: calc(100vh - 220px);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .saved-examples-list[hidden] {
+      display: none !important;
+    }
+
+    .saved-example-item {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.85rem;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+    }
+
+    .saved-example-preview {
+      flex: 1;
+      min-width: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.5;
+      color: rgba(232, 232, 232, 0.9);
+    }
+
+    .saved-example-actions {
+      flex-shrink: 0;
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .saved-example-btn {
+      padding: 0.25rem 0.5rem;
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      background: rgba(232, 232, 232, 0.9);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .saved-example-btn.load {
+      background: rgba(233, 69, 96, 0.3);
+      color: #e8e8e8;
+    }
+
+    .saved-example-btn.delete {
+      background: rgba(255, 107, 107, 0.3);
+      color: #e8e8e8;
+    }
+
+    .saved-example-btn:hover {
+      opacity: 0.9;
+    }
+
+    .feedback-wrap {
+      margin-top: 0.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 0.5rem;
+    }
+
+    .feedback-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.5rem;
+      font-family: inherit;
+      font-size: 0.8rem;
+      color: rgba(232, 232, 232, 0.9);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .feedback-toggle:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .feedback-toggle .stars {
+      color: #f0c14b;
+    }
+
+    .feedback-detail {
+      margin-top: 0.5rem;
+      padding: 1rem 1rem;
+      font-size: 0.9rem;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: none;
+    }
+
+    .feedback-detail.expanded {
+      display: block;
+    }
+
+    @media (max-width: 980px) {
+      .layout {
+        flex-direction: column;
+      }
+
+      .dictionary-sidebar {
+        width: 100%;
+      }
+
+      .saved-examples-list {
+        min-height: 160px;
+        max-height: calc(100vh - 300px);
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a href="index.html" class="btn-back">← Menu</a>
+    <h1>HR Interview</h1>
+  </header>
+
+  <main class="layout">
+    <section class="chat-main">
+      <div class="messages" id="messages">
+        <!-- Сообщения от HR -->
+      </div>
+
+      <div class="input-block">
+        <label class="input-block-label" for="userInput">Your answer</label>
+        <div class="input-row">
+          <textarea
+            class="user-input"
+            id="userInput"
+            placeholder="Type your message..."
+            rows="2"
+          ></textarea>
+          <button class="btn-send" type="button" id="btnSend">Send</button>
+          <button class="btn-add-example" type="button" id="btnAddExample">Add example</button>
+        </div>
+      </div>
+    </section>
+    <aside class="dictionary-sidebar">
+      <div class="saved-examples">
+        <button type="button" class="saved-examples-toggle" id="savedExamplesToggle" aria-expanded="true">Saved examples</button>
+        <div class="saved-examples-list" id="savedExamplesList"></div>
+      </div>
+    </aside>
+  </main>
+
+  <script src="api-config.js"></script>
+  <script>
+    const messagesEl = document.getElementById('messages');
+    const userInputEl = document.getElementById('userInput');
+    const btnSend = document.getElementById('btnSend');
+    const btnAddExample = document.getElementById('btnAddExample');
+    const savedExamplesToggle = document.getElementById('savedExamplesToggle');
+    const savedExamplesList = document.getElementById('savedExamplesList');
+
+    const EXAMPLES_STORAGE_KEY = 'hr-interview-examples';
+
+    function getExamples() {
+      try {
+        var raw = localStorage.getItem(EXAMPLES_STORAGE_KEY);
+        var list = raw ? JSON.parse(raw) : [];
+        return Array.isArray(list) ? list : [];
+      } catch (_) {
+        return [];
+      }
+    }
+
+    function saveExamples(list) {
+      try {
+        localStorage.setItem(EXAMPLES_STORAGE_KEY, JSON.stringify(list));
+      } catch (_) {}
+    }
+
+    function addExample(text) {
+      var t = (text || '').trim();
+      if (!t) return;
+      var list = getExamples();
+      list.unshift({ id: Date.now(), text: t, createdAt: new Date().toISOString() });
+      saveExamples(list);
+      renderSavedExamplesList();
+    }
+
+    function deleteExample(id) {
+      var list = getExamples().filter(function (x) { return x.id !== id; });
+      saveExamples(list);
+      renderSavedExamplesList();
+    }
+
+    function loadExampleIntoInput(text) {
+      userInputEl.value = text || '';
+      userInputEl.focus();
+      userInputEl.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    function renderSavedExamplesList() {
+      var list = getExamples();
+      savedExamplesList.innerHTML = '';
+      if (list.length === 0) {
+        var empty = savedExamplesList.appendChild(document.createElement('div'));
+        empty.className = 'saved-example-empty';
+        empty.textContent = 'No saved examples yet.';
+        empty.style.cssText = 'padding:0.5rem 0.75rem;font-size:0.85rem;color:rgba(232,232,232,0.5);';
+        return;
+      }
+      list.forEach(function (ex) {
+        var item = document.createElement('div');
+        item.className = 'saved-example-item';
+        item.innerHTML =
+          '<span class="saved-example-preview">' + escapeHtml(ex.text) + '</span>' +
+          '<span class="saved-example-actions">' +
+          '<button type="button" class="saved-example-btn load" data-id="' + ex.id + '">Load</button>' +
+          '<button type="button" class="saved-example-btn delete" data-id="' + ex.id + '">Delete</button>' +
+          '</span>';
+        item.querySelector('.saved-example-btn.load').addEventListener('click', function () {
+          loadExampleIntoInput(ex.text);
+        });
+        item.querySelector('.saved-example-btn.delete').addEventListener('click', function () {
+          deleteExample(ex.id);
+        });
+        savedExamplesList.appendChild(item);
+      });
+    }
+
+    btnAddExample.addEventListener('click', function () {
+      var text = userInputEl.value.trim();
+      if (!text) return;
+      addExample(text);
+      userInputEl.value = '';
+      userInputEl.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+
+    savedExamplesToggle.addEventListener('click', function () {
+      var expanded = savedExamplesToggle.getAttribute('aria-expanded') === 'true';
+      savedExamplesToggle.setAttribute('aria-expanded', !expanded);
+      savedExamplesList.hidden = !expanded;
+    });
+
+    const HR_SYSTEM_PROMPT =
+      'You are an HR specialist conducting a job interview. Conduct the dialogue in English: ask relevant questions, react to the candidate\'s answers, and ask follow-up or next questions. Be polite and professional. Keep your replies brief, one or two sentences, in the style of an interviewer.';
+
+    const FIRST_HR_MESSAGE = 'Hello! Please tell us a little about yourself.';
+
+    const conversationHistory = [
+      { role: 'system', content: HR_SYSTEM_PROMPT },
+      { role: 'assistant', content: FIRST_HR_MESSAGE }
+    ];
+
+    function addHrMessage(text, options) {
+      const { loading = false, error = false } = options || {};
+      const div = document.createElement('div');
+      div.className = 'message hr' + (loading ? ' loading' : '') + (error ? ' error' : '');
+      div.innerHTML =
+        '<div class="message-label">HR</div>' +
+        '<div class="message-text">' + escapeHtml(text) + '</div>';
+      messagesEl.appendChild(div);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      return div;
+    }
+
+    function addUserMessage(text) {
+      const div = document.createElement('div');
+      div.className = 'message user';
+      div.innerHTML =
+        '<div class="message-label">You</div>' +
+        '<div class="message-text">' + escapeHtml(text) + '</div>';
+      messagesEl.appendChild(div);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      return div;
+    }
+
+    function starsFromScore(score) {
+      const n = Math.min(5, Math.max(1, Math.round(score)));
+      return '★'.repeat(n) + '☆'.repeat(5 - n);
+    }
+
+    function formatFeedbackDescription(desc) {
+      if (!desc || typeof desc !== 'string') return '';
+      var s = desc.replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim();
+      s = s.replace(/\n{3,}/g, '\n\n');
+      s = s.replace(/\s+(\d+)\.\s+/g, '\n$1. ');
+      s = s.replace(/\s+[-•]\s+/g, '\n• ');
+      s = s.replace(/\s+\*\s+/g, '\n• ');
+      return s.split('\n').map(function (line) { return line.trim(); }).join('\n').replace(/\n\n+/g, '\n\n').trim();
+    }
+
+    function attachFeedbackBlock(userMsgEl, blockTitle, analysis) {
+      if (!userMsgEl) return;
+      const score = analysis && analysis.score != null ? analysis.score : null;
+      const descRaw = (analysis && analysis.description) ? analysis.description : 'Feedback could not be loaded.';
+      const desc = formatFeedbackDescription(descRaw);
+      const hasScore = score != null && score >= 1 && score <= 5;
+      const label = hasScore
+        ? escapeHtml(blockTitle) + ': <span class="stars">' + escapeHtml(starsFromScore(score)) + '</span> (' + score + '/5)'
+        : escapeHtml(blockTitle);
+      const wrap = document.createElement('div');
+      wrap.className = 'feedback-wrap';
+      wrap.innerHTML =
+        '<button type="button" class="feedback-toggle" title="' + escapeHtml(descRaw) + '">' + label + '</button>' +
+        '<div class="feedback-detail">' + escapeHtml(desc) + '</div>';
+      const toggle = wrap.querySelector('.feedback-toggle');
+      const detail = wrap.querySelector('.feedback-detail');
+      toggle.addEventListener('click', function () {
+        detail.classList.toggle('expanded');
+      });
+      userMsgEl.appendChild(wrap);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function updateLastHrMessage(text, error) {
+      const last = messagesEl.querySelector('.message.hr:last-child');
+      if (!last) return;
+      const textEl = last.querySelector('.message-text');
+      if (textEl) {
+        textEl.textContent = text;
+        last.classList.toggle('loading', false);
+        last.classList.toggle('error', !!error);
+      }
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    const API_TIMEOUT_MS = 60000;
+
+    function fetchWithTimeout(url, options) {
+      const ctrl = new AbortController();
+      const id = setTimeout(function () { ctrl.abort(); }, API_TIMEOUT_MS);
+      return fetch(url, { ...options, signal: ctrl.signal }).then(function (r) {
+        clearTimeout(id);
+        return r;
+      }, function (err) {
+        clearTimeout(id);
+        if (err.name === 'AbortError') throw new Error('Request timed out after ' + (API_TIMEOUT_MS / 1000) + 's');
+        throw err;
+      });
+    }
+
+    async function getChatGptReply() {
+      const response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getOpenAiApiKey()
+        },
+        body: JSON.stringify({
+          model: 'gpt-5-mini-2025-08-07',
+          messages: conversationHistory
+        })
+      });
+
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({ error: { message: response.statusText } }));
+        throw new Error(err.error?.message || 'Ошибка запроса к OpenAI');
+      }
+
+      const data = await response.json();
+      const content = data.choices?.[0]?.message?.content?.trim();
+      if (!content) throw new Error('Empty response from ChatGPT');
+      return content;
+    }
+
+    const ANALYSIS_SYSTEM_PROMPT =
+      'You are an HR evaluator. Given the interview question and the candidate\'s answer, provide a score from 1 to 5 (from an HR perspective: 1 = very weak, 5 = excellent) and a short description. Take into account that this is an interviewer–candidate dialogue, answers should be concise, cover necessary details, and avoid unnecessary information. In the description explain why this score, and list main strengths and weaknesses of the answer. Reply with a single JSON object on one line, no markdown, no code blocks. Example: {"score": 4, "description": "Clear structure and relevant experience. Could add more concrete examples."}';
+
+    const ENG_ANALYSIS_SYSTEM_PROMPT =
+      'You are an English language evaluator for job interviews. Given the candidate\'s answer, evaluate their English level with a score from 1 to 5 (1 = very weak, 5 = native-like). In the description you MUST: (1) Quote or clearly point to each place where there was a grammar, vocabulary, or style error; (2) For each error, suggest the correct or better way to say it—more grammatically correct, more natural, or more professional. Do not check the punctuation marks and the style of writing numbers (for example, 8 or eight). Be specific: e.g. "In \'I have work there\' use \'I have worked there\' or \'I worked there\'." Reply with a single JSON object: {"score": number 1-5, "description": "your detailed feedback with exact error locations and corrections"}';
+
+    function parseAnalysisResponse(content) {
+      let raw = (content || '').trim();
+      raw = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '');
+      let jsonStr = raw.match(/\{[\s\S]*\}/);
+      if (jsonStr) jsonStr = jsonStr[0];
+      else jsonStr = raw;
+
+      try {
+        const parsed = JSON.parse(jsonStr);
+        const score = typeof parsed.score === 'number' ? parsed.score : parseInt(parsed.score, 10);
+        const num = Math.min(5, Math.max(1, isNaN(score) ? 3 : score));
+        const desc = typeof parsed.description === 'string' ? parsed.description : String(parsed.description || '');
+        return { score: num, description: desc };
+      } catch (_) {
+        const scoreMatch = raw.match(/"score"\s*:\s*(\d)|score\s*:\s*(\d)|(\d)\s*\/\s*5/i);
+        const score = scoreMatch ? parseInt(scoreMatch[1] || scoreMatch[2] || scoreMatch[3], 10) : 3;
+        const descMatch = raw.match(/"description"\s*:\s*"((?:[^"\\]|\\.)*)"|description\s*:\s*"((?:[^"\\]|\\.)*)"/i);
+        const desc = (descMatch && (descMatch[1] || descMatch[2])) ? (descMatch[1] || descMatch[2]).replace(/\\"/g, '"') : raw;
+        return {
+          score: Math.min(5, Math.max(1, isNaN(score) ? 3 : score)),
+          description: desc.length > 500 ? desc.slice(0, 497) + '...' : desc
+        };
+      }
+    }
+
+    async function getAnswerAnalysis(hrQuestion, userAnswer) {
+      var userContent = 'Question: ' + hrQuestion + '\n\nCandidate\'s answer: ' + userAnswer;
+      const response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getOpenAiApiKey()
+        },
+        body: JSON.stringify({
+          model: 'gpt-5-mini-2025-08-07',
+          messages: [
+            { role: 'system', content: ANALYSIS_SYSTEM_PROMPT },
+            { role: 'user', content: userContent }
+          ],
+          response_format: { type: 'json_object' }
+        })
+      });
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({ error: { message: response.statusText } }));
+        throw new Error(err.error?.message || 'Analysis request failed');
+      }
+      const data = await response.json();
+      const content = data.choices?.[0]?.message?.content?.trim() || '';
+      if (!content) return { score: null, description: '' };
+      return parseAnalysisResponse(content);
+    }
+
+    async function getEnglishFeedback(hrQuestion, userAnswer) {
+      var userContent = 'Question: ' + hrQuestion + '\n\nCandidate\'s answer: ' + userAnswer;
+      const response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getOpenAiApiKey()
+        },
+        body: JSON.stringify({
+          model: 'gpt-5-mini-2025-08-07',
+          messages: [
+            { role: 'system', content: ENG_ANALYSIS_SYSTEM_PROMPT },
+            { role: 'user', content: userContent }
+          ],
+          response_format: { type: 'json_object' }
+        })
+      });
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({ error: { message: response.statusText } }));
+        throw new Error(err.error?.message || 'English feedback request failed');
+      }
+      const data = await response.json();
+      const content = data.choices?.[0]?.message?.content?.trim() || '';
+      if (!content) return { score: null, description: '' };
+      return parseAnalysisResponse(content);
+    }
+
+    function delay(ms) {
+      return new Promise(function (resolve) { setTimeout(resolve, ms); });
+    }
+
+    async function getAnswerAnalysisWithRetry(hrQuestion, userAnswer) {
+      await delay(1500);
+      var result = await getAnswerAnalysis(hrQuestion, userAnswer);
+      var attempts = 1;
+      while ((result.description === '' || result.score == null) && attempts < 3) {
+        await delay(2000 * attempts);
+        result = await getAnswerAnalysis(hrQuestion, userAnswer);
+        attempts++;
+      }
+      if (!result.description && result.score == null) {
+        result.description = 'Analysis returned no content.';
+      }
+      return result;
+    }
+
+    async function getEnglishFeedbackWithRetry(hrQuestion, userAnswer) {
+      await delay(400);
+      var result = await getEnglishFeedback(hrQuestion, userAnswer);
+      var attempts = 1;
+      while ((result.description === '' || result.score == null) && attempts < 3) {
+        await delay(2000 * attempts);
+        result = await getEnglishFeedback(hrQuestion, userAnswer);
+        attempts++;
+      }
+      if (!result.description && result.score == null) {
+        result.description = 'Analysis returned no content.';
+      }
+      return result;
+    }
+
+    async function sendUserMessage() {
+      const text = userInputEl.value.trim();
+      if (!text) return;
+
+      const userMsgEl = addUserMessage(text);
+      conversationHistory.push({ role: 'user', content: text });
+      userInputEl.value = '';
+      userInputEl.style.height = 'auto';
+
+      if (!getOpenAiApiKey()) {
+        addHrMessage('Add your OpenAI API key in Settings (main menu).', { error: true });
+        return;
+      }
+
+      btnSend.disabled = true;
+      addHrMessage('Thinking...', { loading: true });
+
+      try {
+        const reply = await getChatGptReply();
+        conversationHistory.push({ role: 'assistant', content: reply });
+        updateLastHrMessage(reply);
+
+        const hrQuestion = conversationHistory[conversationHistory.length - 3]?.content || FIRST_HR_MESSAGE;
+        var skillsPromise = getAnswerAnalysisWithRetry(hrQuestion, text);
+        var engPromise = getEnglishFeedbackWithRetry(hrQuestion, text);
+        var results = await Promise.allSettled([skillsPromise, engPromise]);
+        var skillsResult = results[0].status === 'fulfilled' ? results[0].value : { score: null, description: (results[0].reason && results[0].reason.message) ? results[0].reason.message : 'Feedback could not be loaded.' };
+        var engResult = results[1].status === 'fulfilled' ? results[1].value : { score: null, description: (results[1].reason && results[1].reason.message) ? results[1].reason.message : 'Feedback could not be loaded.' };
+        attachFeedbackBlock(userMsgEl, 'Skills feedback', skillsResult);
+        attachFeedbackBlock(userMsgEl, 'Eng feedback', engResult);
+      } catch (err) {
+        const msg = err.message || 'Could not get response';
+        updateLastHrMessage('Error: ' + msg, true);
+      } finally {
+        btnSend.disabled = false;
+      }
+    }
+
+    btnSend.addEventListener('click', sendUserMessage);
+    userInputEl.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendUserMessage();
+      }
+    });
+
+    userInputEl.addEventListener('input', function () {
+      this.style.height = 'auto';
+      this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+    });
+
+    addHrMessage(FIRST_HR_MESSAGE);
+    renderSavedExamplesList();
+  </script>
+</body>
+</html>
