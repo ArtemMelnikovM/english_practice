@@ -105,14 +105,325 @@
       display: block;
     }
 
+    .dictionary-section {
+      margin-bottom: 1.75rem;
+      padding: 1.25rem 1.35rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+    }
+
+    .dictionary-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .dictionary-section-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(232, 232, 232, 0.5);
+      margin-bottom: 1rem;
+    }
+
+    .dictionary-section-title--inline {
+      margin-bottom: 0;
+    }
+
+    .dictionary-section-list {
+      padding: 0.85rem 1rem;
+    }
+
+    .dictionary-section-add[hidden] {
+      display: none !important;
+    }
+
+    .dictionary-add-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .dictionary-add-header .dictionary-section-title {
+      margin-bottom: 0;
+    }
+
+    .btn-dictionary-add-open {
+      flex-shrink: 0;
+      padding: 0.4rem 0.85rem;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: rgba(232, 232, 232, 0.92);
+      background: rgba(233, 69, 96, 0.2);
+      border: 1px solid rgba(233, 69, 96, 0.45);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .btn-dictionary-add-open:hover {
+      background: rgba(233, 69, 96, 0.3);
+      border-color: rgba(233, 69, 96, 0.65);
+    }
+
+    .btn-dictionary-add-close {
+      flex-shrink: 0;
+      padding: 0.35rem 0.65rem;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: rgba(232, 232, 232, 0.75);
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-dictionary-add-close:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(232, 232, 232, 0.95);
+    }
+
+    .dictionary-list-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .practice-panel-toolbar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 0.75rem;
+    }
+
     .dictionary-add {
       display: flex;
       gap: 0.75rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
 
-    .dictionary-search {
-      margin-bottom: 1rem;
+    .dictionary-add-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem 1rem;
+    }
+
+    .dictionary-field-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(232, 232, 232, 0.65);
+      min-width: 4.5rem;
+    }
+
+    .dictionary-field-label--inline {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: rgba(232, 232, 232, 0.55);
+      min-width: auto;
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    .dictionary-select {
+      min-width: 160px;
+      padding: 0.55rem 2rem 0.55rem 0.75rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #e8e8e8;
+      color-scheme: dark;
+      background-color: rgba(255, 255, 255, 0.08);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23e8e8e8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.65rem center;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      cursor: pointer;
+      appearance: none;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+
+    /* Native dropdown list: match page blues (#16213e / #1a1a2e), not system white */
+    .dictionary-select option {
+      font-weight: 600;
+      background-color: #1e2744;
+      color: #ececf0;
+    }
+
+    .dictionary-select option:checked,
+    .dictionary-select option:focus {
+      background-color: #2d3a63;
+      color: #ffffff;
+    }
+
+    .dictionary-select:hover {
+      border-color: rgba(255, 255, 255, 0.25);
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .dictionary-select:focus {
+      outline: none;
+      border-color: rgba(233, 69, 96, 0.55);
+      box-shadow: 0 0 0 2px rgba(233, 69, 96, 0.2);
+    }
+
+    .dictionary-select--compact {
+      min-width: 4.5rem;
+      padding: 0.32rem 1.5rem 0.32rem 0.5rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border-radius: 8px;
+      background-position: right 0.45rem center;
+      background-size: 10px;
+    }
+
+    .dictionary-list-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.45rem 0.65rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .dictionary-search-input {
+      flex: 1 1 140px;
+      min-width: 0;
+    }
+
+    .dictionary-list-controls-filters {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem 0.55rem;
+    }
+
+    .dictionary-filter-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .dictionary-learning-toggle--compact {
+      gap: 0.4rem;
+    }
+
+    .dictionary-learning-toggle--compact .dictionary-learning-side {
+      font-size: 0.72rem;
+    }
+
+    .dictionary-switch--compact {
+      width: 40px;
+      height: 22px;
+    }
+
+    .dictionary-switch--compact .dictionary-switch-slider::before {
+      height: 16px;
+      width: 16px;
+      left: 3px;
+      bottom: 2px;
+    }
+
+    .dictionary-switch--compact input:checked + .dictionary-switch-slider::before {
+      transform: translateX(18px);
+    }
+
+    .dictionary-filters {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 1.25rem 1.5rem;
+      margin-bottom: 1.15rem;
+    }
+
+    .dictionary-filter-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .dictionary-filter-field--toggle .dictionary-field-label {
+      margin-bottom: 0;
+    }
+
+    .dictionary-learning-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .dictionary-learning-side {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(232, 232, 232, 0.4);
+      transition: color 0.2s;
+      user-select: none;
+    }
+
+    .dictionary-learning-toggle.is-learned .dictionary-learning-side--learned {
+      color: rgba(232, 232, 232, 0.95);
+    }
+
+    .dictionary-learning-toggle:not(.is-learned) .dictionary-learning-side--learning {
+      color: rgba(232, 232, 232, 0.95);
+    }
+
+    .dictionary-switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 26px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .dictionary-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+
+    .dictionary-switch-slider {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 26px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .dictionary-switch-slider::before {
+      content: '';
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 2px;
+      background: #e8e8e8;
+      border-radius: 50%;
+      transition: transform 0.22s ease;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    .dictionary-switch input:checked + .dictionary-switch-slider {
+      background: rgba(233, 69, 96, 0.35);
+      border-color: rgba(233, 69, 96, 0.65);
+    }
+
+    .dictionary-switch input:checked + .dictionary-switch-slider::before {
+      transform: translateX(22px);
+      background: #fff;
+    }
+
+    .dictionary-switch input:focus-visible + .dictionary-switch-slider {
+      box-shadow: 0 0 0 2px rgba(233, 69, 96, 0.35);
     }
 
     .dictionary-view-toggle {
@@ -210,99 +521,9 @@
       color: #1a1a2e;
     }
 
-    .phrasal-learned-wrap {
-      margin-top: 1rem;
-      padding: 0.75rem 1rem;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-    }
-
-    .phrasal-learned-toggle {
-      font-family: inherit;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: rgba(232, 232, 232, 0.95);
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 8px;
-      padding: 0.5rem 0.85rem;
-      cursor: pointer;
-      width: 100%;
-      text-align: left;
-      transition: background 0.2s, border-color 0.2s;
-    }
-
-    .phrasal-learned-toggle:hover {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.25);
-    }
-
-    .phrasal-learned-list {
-      margin-top: 0.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      max-height: 200px;
-      overflow-y: auto;
-    }
-
-    .phrasal-learned-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-      padding: 0.35rem 0.5rem;
-      font-size: 0.88rem;
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 6px;
-    }
-
-    .btn-phrasal-unlearn {
-      font-family: inherit;
-      font-size: 0.75rem;
-      padding: 0.25rem 0.5rem;
-      color: rgba(232, 232, 232, 0.9);
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .btn-phrasal-unlearn:hover {
-      background: rgba(233, 69, 96, 0.35);
-      border-color: rgba(233, 69, 96, 0.6);
-    }
-
-    .btn-mark-phrasal {
-      margin-top: 0.75rem;
-      padding: 0.55rem 1rem;
-      font-family: inherit;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: #1a1a2e;
-      background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .btn-mark-phrasal:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(78, 205, 196, 0.35);
-    }
-
-    .btn-mark-phrasal:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-
     .phrasal-topic-wrap {
-      margin-bottom: 1.25rem;
-      padding: 1rem 1.25rem;
+      margin-bottom: 1rem;
+      padding: 0.65rem 0.85rem;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 12px;
@@ -312,37 +533,21 @@
       display: none !important;
     }
 
-    .phrasal-topic-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
-      gap: 0.5rem;
-    }
-
-    .phrasal-topic-option {
+    .phrasal-topic-row {
       display: flex;
       align-items: center;
-      gap: 0.4rem;
-      padding: 0.45rem 0.65rem;
-      font-size: 0.85rem;
-      color: rgba(232, 232, 232, 0.92);
-      background: rgba(255, 255, 255, 0.05);
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
+      gap: 0.5rem 0.75rem;
+      flex-wrap: wrap;
     }
 
-    .phrasal-topic-option:has(input:checked) {
-      border-color: rgba(78, 205, 196, 0.65);
-      background: rgba(78, 205, 196, 0.12);
+    .phrasal-topic-row .dictionary-field-label--inline {
+      flex-shrink: 0;
     }
 
-    .phrasal-topic-option:hover {
-      border-color: rgba(255, 255, 255, 0.22);
-    }
-
-    .phrasal-topic-option input {
-      accent-color: #4ecdc4;
+    .phrasal-topic-row .dictionary-select {
+      flex: 1 1 200px;
+      min-width: 0;
+      max-width: 100%;
     }
 
     .dictionary-input {
@@ -365,6 +570,13 @@
       outline: none;
       border-color: rgba(233, 69, 96, 0.6);
       background: rgba(255, 255, 255, 0.08);
+    }
+
+    .dictionary-input--compact {
+      flex: 1 1 auto;
+      padding: 0.45rem 0.65rem;
+      font-size: 0.85rem;
+      border-radius: 8px;
     }
 
     .btn-add {
@@ -541,45 +753,99 @@
 
     .practice-mode-selector {
       display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
+      flex-wrap: nowrap;
+      gap: 0;
+      margin-bottom: 1rem;
+      padding: 0.2rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
     }
 
     .practice-mode-option {
-      flex: 1 1 200px;
+      position: relative;
+      flex: 1 1 0;
+      min-width: 0;
       display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-      padding: 1rem;
-      background: rgba(255, 255, 255, 0.04);
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
+      align-items: center;
+      justify-content: center;
+      padding: 0.42rem 0.3rem;
+      margin: 0;
+      border: none;
+      border-radius: 8px;
+      background: transparent;
       cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
+      transition: background 0.2s, color 0.2s;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .practice-mode-option:hover {
       background: rgba(255, 255, 255, 0.06);
-      border-color: rgba(255, 255, 255, 0.2);
     }
 
     .practice-mode-option:has(input:checked) {
-      background: rgba(233, 69, 96, 0.1);
-      border-color: rgba(233, 69, 96, 0.5);
+      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+      box-shadow: 0 1px 6px rgba(233, 69, 96, 0.35);
+    }
+
+    .practice-mode-option:has(input:checked):hover {
+      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+    }
+
+    .practice-mode-option:has(input:checked) .practice-mode-label {
+      color: #1a1a2e;
     }
 
     .practice-mode-option input {
-      display: none;
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .practice-mode-option input:focus-visible + .practice-mode-label {
+      outline: 2px solid rgba(233, 69, 96, 0.8);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    .practice-mode-option:has(input:checked) input:focus-visible + .practice-mode-label {
+      outline-color: rgba(26, 26, 46, 0.9);
     }
 
     .practice-mode-label {
-      font-size: 1rem;
+      font-size: 0.74rem;
       font-weight: 600;
-      color: #e8e8e8;
+      line-height: 1.2;
+      color: rgba(232, 232, 232, 0.92);
+      text-align: center;
+      hyphens: auto;
+      overflow-wrap: anywhere;
     }
 
-    .practice-mode-desc {
+    @media (min-width: 400px) {
+      .practice-mode-label {
+        font-size: 0.82rem;
+      }
+    }
+
+    @media (min-width: 520px) {
+      .practice-mode-option {
+        padding: 0.5rem 0.5rem;
+      }
+
+      .practice-mode-label {
+        font-size: 0.88rem;
+      }
+    }
+
+    /* Reused inside practice area (prompts), not on mode selector */
+    p.practice-mode-desc {
       font-size: 0.8rem;
       color: rgba(232, 232, 232, 0.6);
       line-height: 1.4;
@@ -740,6 +1006,32 @@
       display: inline-block;
     }
 
+    .btn-add-phrasal-to-vocab {
+      margin-top: 0.5rem;
+      padding: 0.4rem 0.85rem;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+    }
+
+    .btn-add-phrasal-to-vocab:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 3px 10px rgba(78, 205, 196, 0.35);
+    }
+
+    .btn-add-phrasal-to-vocab:disabled {
+      opacity: 0.75;
+      cursor: default;
+      transform: none;
+      box-shadow: none;
+    }
+
     .practice-input-area {
       display: flex;
       flex-direction: column;
@@ -866,6 +1158,13 @@
       white-space: pre-wrap;
     }
 
+    .feedback-block .practice-hint-content#feedbackCorrectedContent {
+      font-weight: 400;
+      color: rgba(232, 232, 232, 0.95);
+      background: rgba(78, 205, 196, 0.1);
+      border: 1px solid rgba(78, 205, 196, 0.28);
+    }
+
     .practice-empty {
       padding: 3rem;
       text-align: center;
@@ -918,55 +1217,107 @@
 
   <main class="content">
     <div class="panel active" id="panelDictionary">
-      <div class="dictionary-add">
-        <input type="text" class="dictionary-input" id="dictInput" placeholder="Enter a word, phrase, or sentence...">
-        <button class="btn-add" id="btnAddWord">Add</button>
-      </div>
-      <div class="add-word-list-row">
-        <span class="add-word-list-label">Add to list:</span>
-        <label><input type="radio" name="addWordListDictionary" value="it"> IT</label>
-        <label><input type="radio" name="addWordListDictionary" value="general" checked> General</label>
-      </div>
-      <div class="dictionary-search">
-        <input type="text" class="dictionary-input" id="dictSearchInput" placeholder="Search in dictionary...">
-      </div>
-      <div class="dictionary-view-toggle">
-        <button class="dictionary-view-btn active" id="btnWordListIT" type="button">IT</button>
-        <button class="dictionary-view-btn" id="btnWordListGeneral" type="button">General</button>
-      </div>
-      <div class="dictionary-view-toggle">
-        <button class="dictionary-view-btn active" id="btnViewLearning" type="button">Learning</button>
-        <button class="dictionary-view-btn" id="btnViewLearned" type="button">Learned</button>
-      </div>
-      <div class="dictionary-list" id="dictList"></div>
+      <section id="dictAddSection" class="dictionary-section dictionary-section-add" aria-labelledby="dictAddHeading" hidden>
+        <div class="dictionary-add-header">
+          <h2 class="dictionary-section-title" id="dictAddHeading">Add a word</h2>
+          <button type="button" class="btn-dictionary-add-close" id="btnCloseDictAdd">Close</button>
+        </div>
+        <div class="dictionary-add">
+          <input type="text" class="dictionary-input" id="dictInput" placeholder="Enter a word, phrase, or sentence...">
+          <button class="btn-add" id="btnAddWord">Add</button>
+        </div>
+        <div class="dictionary-add-meta">
+          <label class="dictionary-field-label" for="addWordListDictionarySelect">Add to list</label>
+          <select id="addWordListDictionarySelect" class="dictionary-select" aria-label="Dictionary list for new word">
+            <option value="it">IT</option>
+            <option value="general" selected>General</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="dictionary-section dictionary-section-list" aria-labelledby="dictListHeading">
+        <div class="dictionary-list-head">
+          <h2 class="dictionary-section-title dictionary-section-title--inline" id="dictListHeading">Your words</h2>
+          <button type="button" class="btn-dictionary-add-open" id="btnToggleDictAdd" aria-expanded="false" aria-controls="dictAddSection">Add word</button>
+        </div>
+        <div class="dictionary-list-controls">
+          <input type="search" class="dictionary-input dictionary-input--compact dictionary-search-input" id="dictSearchInput" placeholder="Search…" autocomplete="off" enterkeyhint="search">
+          <div class="dictionary-list-controls-filters">
+            <div class="dictionary-filter-inline">
+              <label class="dictionary-field-label dictionary-field-label--inline" for="dictWordListFilter">List</label>
+              <select id="dictWordListFilter" class="dictionary-select dictionary-select--compact" aria-label="Filter by word list">
+                <option value="it" selected>IT</option>
+                <option value="general">General</option>
+              </select>
+            </div>
+            <div class="dictionary-filter-inline">
+              <span class="dictionary-field-label dictionary-field-label--inline" id="dictStatusLabel">Status</span>
+              <div class="dictionary-learning-toggle dictionary-learning-toggle--compact" role="group" aria-labelledby="dictStatusLabel">
+                <span class="dictionary-learning-side dictionary-learning-side--learning">Learning</span>
+                <label class="dictionary-switch dictionary-switch--compact">
+                  <input type="checkbox" id="dictViewLearnedToggle" aria-label="Switch between learning and learned words">
+                  <span class="dictionary-switch-slider"></span>
+                </label>
+                <span class="dictionary-learning-side dictionary-learning-side--learned">Learned</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dictionary-list" id="dictList"></div>
+      </section>
     </div>
 
     <div class="panel" id="panelPractice">
-      <div class="dictionary-add" style="margin-bottom: 1.25rem;">
-        <input type="text" class="dictionary-input" id="practiceDictInput" placeholder="Add a word, phrase, or sentence to your dictionary...">
-        <button class="btn-add" id="btnAddPracticeWord">Add</button>
+      <div class="practice-panel-toolbar">
+        <button type="button" class="btn-dictionary-add-open" id="btnTogglePracticeAdd" aria-expanded="false" aria-controls="practiceAddSection">Add word</button>
       </div>
-      <div class="add-word-list-row">
-        <span class="add-word-list-label">Add to list:</span>
-        <label><input type="radio" name="addWordListPractice" value="it"> IT</label>
-        <label><input type="radio" name="addWordListPractice" value="general" checked> General</label>
+      <section id="practiceAddSection" class="dictionary-section dictionary-section-add" aria-labelledby="practiceAddHeading" hidden>
+        <div class="dictionary-add-header">
+          <h2 class="dictionary-section-title" id="practiceAddHeading">Add a word</h2>
+          <button type="button" class="btn-dictionary-add-close" id="btnClosePracticeAdd">Close</button>
+        </div>
+        <div class="dictionary-add">
+          <input type="text" class="dictionary-input" id="practiceDictInput" placeholder="Add a word, phrase, or sentence to your dictionary...">
+          <button class="btn-add" id="btnAddPracticeWord">Add</button>
+        </div>
+        <div class="dictionary-add-meta">
+          <label class="dictionary-field-label" for="addWordListPracticeSelect">Add to list</label>
+          <select id="addWordListPracticeSelect" class="dictionary-select" aria-label="Dictionary list for new word">
+            <option value="it">IT</option>
+            <option value="general" selected>General</option>
+          </select>
+        </div>
+      </section>
+      <div class="practice-mode-selector" role="radiogroup" aria-label="Practice mode">
+        <label class="practice-mode-option" title="Practice words and phrases you saved">
+          <input type="radio" name="practiceMode" value="dictionary" aria-label="Dictionary — practice words and phrases you saved">
+          <span class="practice-mode-label">Dictionary</span>
+        </label>
+        <label class="practice-mode-option" title="Translate short Russian prompts; choose a topic below">
+          <input type="radio" name="practiceMode" value="general" aria-label="General — translate Russian prompts; pick a topic below">
+          <span class="practice-mode-label">General</span>
+        </label>
+        <label class="practice-mode-option" title="Popular phrasal verbs in context">
+          <input type="radio" name="practiceMode" value="phrasal" aria-label="Phrasal — practice popular phrasal verbs in context">
+          <span class="practice-mode-label">Phrasal</span>
+        </label>
       </div>
-      <div class="practice-mode-selector">
-        <label class="practice-mode-option">
-          <input type="radio" name="practiceMode" value="dictionary">
-          <span class="practice-mode-label">From Dictionary</span>
-          <span class="practice-mode-desc">Practice words and phrases you saved</span>
-        </label>
-        <label class="practice-mode-option">
-          <input type="radio" name="practiceMode" value="general">
-          <span class="practice-mode-label">General Practice</span>
-          <span class="practice-mode-desc">Random interview answers for Senior Product Manager</span>
-        </label>
-        <label class="practice-mode-option">
-          <input type="radio" name="practiceMode" value="phrasal">
-          <span class="practice-mode-label">Phrasal verbs</span>
-          <span class="practice-mode-desc">Popular phrasal verbs — mark as learned when done</span>
-        </label>
+      <div class="phrasal-topic-wrap" id="generalTopicWrap" hidden>
+        <div class="phrasal-topic-row">
+          <label class="dictionary-field-label dictionary-field-label--inline" for="generalTopicSelect">Topic</label>
+          <select id="generalTopicSelect" class="dictionary-select dictionary-select--compact" aria-label="Topic for General practice">
+            <option value="general">General</option>
+            <option value="it_interview">IT interview</option>
+            <option value="business">Business &amp; work</option>
+            <option value="travel">Travel &amp; tourism</option>
+            <option value="daily_life">Daily life</option>
+            <option value="education">Education &amp; learning</option>
+            <option value="health">Health &amp; lifestyle</option>
+            <option value="entertainment">Entertainment &amp; culture</option>
+            <option value="environment">Environment &amp; society</option>
+            <option value="relationships">Relationships &amp; social</option>
+          </select>
+        </div>
       </div>
       <div class="dictionary-practice-filter" id="dictionaryPracticeFilterWrap" hidden>
         <div class="dictionary-subtype-label">Words from list</div>
@@ -991,35 +1342,53 @@
         </div>
       </div>
       <div class="phrasal-topic-wrap" id="phrasalTopicWrap" hidden>
-        <div class="dictionary-subtype-label">Topic for prompts</div>
-        <div class="phrasal-topic-grid">
-          <label class="phrasal-topic-option"><input type="radio" name="phrasalTopic" value="general" checked><span>General</span></label>
-          <label class="phrasal-topic-option"><input type="radio" name="phrasalTopic" value="it"><span>IT &amp; tech</span></label>
-          <label class="phrasal-topic-option"><input type="radio" name="phrasalTopic" value="travelling"><span>Travelling</span></label>
-          <label class="phrasal-topic-option"><input type="radio" name="phrasalTopic" value="business"><span>Business &amp; career</span></label>
-          <label class="phrasal-topic-option"><input type="radio" name="phrasalTopic" value="health"><span>Health &amp; lifestyle</span></label>
-          <label class="phrasal-topic-option"><input type="radio" name="phrasalTopic" value="education"><span>Education</span></label>
-          <label class="phrasal-topic-option"><input type="radio" name="phrasalTopic" value="hobbies"><span>Hobbies &amp; leisure</span></label>
-          <label class="phrasal-topic-option"><input type="radio" name="phrasalTopic" value="environment"><span>Environment</span></label>
-          <label class="phrasal-topic-option"><input type="radio" name="phrasalTopic" value="social"><span>Relationships</span></label>
+        <div class="phrasal-topic-row">
+          <label class="dictionary-field-label dictionary-field-label--inline" for="phrasalListSelect">Phrasal list</label>
+          <select id="phrasalListSelect" class="dictionary-select dictionary-select--compact" aria-label="Which phrasal verb list to practice">
+            <option value="general">Spoken English — 100 common</option>
+            <option value="it_pm">IT &amp; Product — 100 for PMs</option>
+          </select>
+        </div>
+        <div class="phrasal-topic-row">
+          <label class="dictionary-field-label dictionary-field-label--inline" for="phrasalTopicSelect">Topic</label>
+          <select id="phrasalTopicSelect" class="dictionary-select dictionary-select--compact" aria-label="Topic for phrasal prompts">
+            <option value="general">General</option>
+            <option value="it">IT &amp; tech</option>
+            <option value="travelling">Travelling</option>
+            <option value="business">Business &amp; career</option>
+            <option value="health">Health &amp; lifestyle</option>
+            <option value="education">Education</option>
+            <option value="hobbies">Hobbies &amp; leisure</option>
+            <option value="environment">Environment</option>
+            <option value="social">Relationships</option>
+          </select>
         </div>
       </div>
       <div class="practice-area" id="practiceArea"></div>
-      <div class="phrasal-learned-wrap" id="phrasalLearnedWrap" hidden>
-        <button type="button" class="phrasal-learned-toggle" id="phrasalLearnedToggle">
-          Learned phrasal verbs (<span id="phrasalLearnedCount">0</span>)
-        </button>
-        <div id="phrasalLearnedList" class="phrasal-learned-list" hidden></div>
-      </div>
     </div>
   </main>
 
   <script src="api-config.js"></script>
   <script>
     const DICT_STORAGE_KEY = 'hr-interview-examples';
-    const PHRASAL_LEARNED_KEY = 'vocabulary-phrasal-learned';
     const PHRASAL_TOPIC_KEY = 'vocabulary-phrasal-topic';
+    const PHRASAL_LIST_KEY = 'vocabulary-phrasal-wordlist';
+    const GENERAL_TOPIC_KEY = 'vocabulary-general-topic';
     const API_TIMEOUT_MS = 60000;
+
+    /** API-facing descriptions for General practice (keys match select option values). */
+    var GENERAL_TOPIC_DESCRIPTIONS = {
+      general: 'General — mixed everyday and professional situations (no single fixed theme)',
+      it_interview: 'IT job interview in English: experience, stack, teamwork, system design, algorithms, behavioural questions',
+      business: 'Business & work: office, meetings, projects, deadlines, communication with colleagues',
+      travel: 'Travel & tourism: trips, flights, hotels, sightseeing, holidays abroad',
+      daily_life: 'Daily life: routines, shopping, home, city life, errands',
+      education: 'Education & learning: courses, degrees, certifications, self-study',
+      health: 'Health & lifestyle: fitness, habits, sleep, nutrition, wellbeing',
+      entertainment: 'Entertainment & culture: films, music, books, games, streaming, events',
+      environment: 'Environment & society: climate, sustainability, cities, news',
+      relationships: 'Relationships & social life: family, friends, dating, networking'
+    };
 
     /** API-facing descriptions for phrasal prompt generation (keys match radio values). */
     var PHRASAL_TOPIC_DESCRIPTIONS = {
@@ -1034,77 +1403,245 @@
       social: 'Relationships, family, friends, social life, communication'
     };
 
-    /** Curated popular phrasal verbs for practice (stable ids for Learned storage). */
-    var POPULAR_PHRASAL_VERBS = [
-      { id: 'pv-001', phrase: 'carry out' },
-      { id: 'pv-002', phrase: 'set up' },
-      { id: 'pv-003', phrase: 'go through' },
-      { id: 'pv-004', phrase: 'find out' },
-      { id: 'pv-005', phrase: 'come up with' },
-      { id: 'pv-006', phrase: 'look into' },
-      { id: 'pv-007', phrase: 'follow up' },
-      { id: 'pv-008', phrase: 'break down' },
-      { id: 'pv-009', phrase: 'point out' },
-      { id: 'pv-010', phrase: 'figure out' },
-      { id: 'pv-011', phrase: 'work out' },
-      { id: 'pv-012', phrase: 'bring up' },
-      { id: 'pv-013', phrase: 'catch up' },
-      { id: 'pv-014', phrase: 'keep up' },
-      { id: 'pv-015', phrase: 'give up' },
-      { id: 'pv-016', phrase: 'take on' },
-      { id: 'pv-017', phrase: 'take over' },
-      { id: 'pv-018', phrase: 'run into' },
-      { id: 'pv-019', phrase: 'get across' },
-      { id: 'pv-020', phrase: 'deal with' },
-      { id: 'pv-021', phrase: 'focus on' },
-      { id: 'pv-022', phrase: 'build on' },
-      { id: 'pv-023', phrase: 'scale up' },
-      { id: 'pv-024', phrase: 'roll out' },
-      { id: 'pv-025', phrase: 'sign off' },
-      { id: 'pv-026', phrase: 'follow through' },
-      { id: 'pv-027', phrase: 'call off' },
-      { id: 'pv-028', phrase: 'put off' },
-      { id: 'pv-029', phrase: 'turn down' },
-      { id: 'pv-030', phrase: 'fill in' },
-      { id: 'pv-031', phrase: 'hand over' },
-      { id: 'pv-032', phrase: 'reach out' },
-      { id: 'pv-033', phrase: 'fall behind' },
-      { id: 'pv-034', phrase: 'move forward' },
-      { id: 'pv-035', phrase: 'drill down' },
-      { id: 'pv-036', phrase: 'map out' },
-      { id: 'pv-037', phrase: 'flesh out' },
-      { id: 'pv-038', phrase: 'zero in on' },
-      { id: 'pv-039', phrase: 'touch base' },
-      { id: 'pv-040', phrase: 'loop in' },
-      { id: 'pv-041', phrase: 'back up' },
-      { id: 'pv-042', phrase: 'check in' },
-      { id: 'pv-043', phrase: 'opt out' },
-      { id: 'pv-044', phrase: 'wire up' },
-      { id: 'pv-045', phrase: 'phase out' }
+    /** ~100 high-frequency spoken phrasal verbs (mixed topics). */
+    var PHRASAL_VERBS_GENERAL = [
+      { id: 'pv-g-001', phrase: 'get up' },
+      { id: 'pv-g-002', phrase: 'wake up' },
+      { id: 'pv-g-003', phrase: 'go on' },
+      { id: 'pv-g-004', phrase: 'go out' },
+      { id: 'pv-g-005', phrase: 'go off' },
+      { id: 'pv-g-006', phrase: 'go over' },
+      { id: 'pv-g-007', phrase: 'go through' },
+      { id: 'pv-g-008', phrase: 'go back' },
+      { id: 'pv-g-009', phrase: 'go ahead' },
+      { id: 'pv-g-010', phrase: 'come on' },
+      { id: 'pv-g-011', phrase: 'come back' },
+      { id: 'pv-g-012', phrase: 'come out' },
+      { id: 'pv-g-013', phrase: 'come up' },
+      { id: 'pv-g-014', phrase: 'come across' },
+      { id: 'pv-g-015', phrase: 'come up with' },
+      { id: 'pv-g-016', phrase: 'get on' },
+      { id: 'pv-g-017', phrase: 'get off' },
+      { id: 'pv-g-018', phrase: 'get in' },
+      { id: 'pv-g-019', phrase: 'get out' },
+      { id: 'pv-g-020', phrase: 'get over' },
+      { id: 'pv-g-021', phrase: 'get along' },
+      { id: 'pv-g-022', phrase: 'get by' },
+      { id: 'pv-g-023', phrase: 'get back' },
+      { id: 'pv-g-024', phrase: 'get rid of' },
+      { id: 'pv-g-025', phrase: 'look for' },
+      { id: 'pv-g-026', phrase: 'look after' },
+      { id: 'pv-g-027', phrase: 'look into' },
+      { id: 'pv-g-028', phrase: 'look forward to' },
+      { id: 'pv-g-029', phrase: 'look up' },
+      { id: 'pv-g-030', phrase: 'look out' },
+      { id: 'pv-g-031', phrase: 'take off' },
+      { id: 'pv-g-032', phrase: 'take on' },
+      { id: 'pv-g-033', phrase: 'take over' },
+      { id: 'pv-g-034', phrase: 'take out' },
+      { id: 'pv-g-035', phrase: 'take up' },
+      { id: 'pv-g-036', phrase: 'take in' },
+      { id: 'pv-g-037', phrase: 'put on' },
+      { id: 'pv-g-038', phrase: 'put off' },
+      { id: 'pv-g-039', phrase: 'put up with' },
+      { id: 'pv-g-040', phrase: 'put out' },
+      { id: 'pv-g-041', phrase: 'put away' },
+      { id: 'pv-g-042', phrase: 'put forward' },
+      { id: 'pv-g-043', phrase: 'turn on' },
+      { id: 'pv-g-044', phrase: 'turn off' },
+      { id: 'pv-g-045', phrase: 'turn up' },
+      { id: 'pv-g-046', phrase: 'turn down' },
+      { id: 'pv-g-047', phrase: 'turn out' },
+      { id: 'pv-g-048', phrase: 'break down' },
+      { id: 'pv-g-049', phrase: 'break up' },
+      { id: 'pv-g-050', phrase: 'break in' },
+      { id: 'pv-g-051', phrase: 'bring up' },
+      { id: 'pv-g-052', phrase: 'bring about' },
+      { id: 'pv-g-053', phrase: 'carry on' },
+      { id: 'pv-g-054', phrase: 'carry out' },
+      { id: 'pv-g-055', phrase: 'catch up' },
+      { id: 'pv-g-056', phrase: 'check out' },
+      { id: 'pv-g-057', phrase: 'cut down' },
+      { id: 'pv-g-058', phrase: 'cut off' },
+      { id: 'pv-g-059', phrase: 'deal with' },
+      { id: 'pv-g-060', phrase: 'figure out' },
+      { id: 'pv-g-061', phrase: 'fill in' },
+      { id: 'pv-g-062', phrase: 'fill out' },
+      { id: 'pv-g-063', phrase: 'find out' },
+      { id: 'pv-g-064', phrase: 'give up' },
+      { id: 'pv-g-065', phrase: 'give in' },
+      { id: 'pv-g-066', phrase: 'give back' },
+      { id: 'pv-g-067', phrase: 'hang out' },
+      { id: 'pv-g-068', phrase: 'hold on' },
+      { id: 'pv-g-069', phrase: 'keep on' },
+      { id: 'pv-g-070', phrase: 'keep up' },
+      { id: 'pv-g-071', phrase: 'let down' },
+      { id: 'pv-g-072', phrase: 'make up' },
+      { id: 'pv-g-073', phrase: 'pick up' },
+      { id: 'pv-g-074', phrase: 'point out' },
+      { id: 'pv-g-075', phrase: 'run into' },
+      { id: 'pv-g-076', phrase: 'run out of' },
+      { id: 'pv-g-077', phrase: 'set up' },
+      { id: 'pv-g-078', phrase: 'show up' },
+      { id: 'pv-g-079', phrase: 'sit down' },
+      { id: 'pv-g-080', phrase: 'stand up' },
+      { id: 'pv-g-081', phrase: 'try on' },
+      { id: 'pv-g-082', phrase: 'try out' },
+      { id: 'pv-g-083', phrase: 'work out' },
+      { id: 'pv-g-084', phrase: 'work on' },
+      { id: 'pv-g-085', phrase: 'end up' },
+      { id: 'pv-g-086', phrase: 'pay off' },
+      { id: 'pv-g-087', phrase: 'fall behind' },
+      { id: 'pv-g-088', phrase: 'grow up' },
+      { id: 'pv-g-089', phrase: 'speak up' },
+      { id: 'pv-g-090', phrase: 'watch out' },
+      { id: 'pv-g-091', phrase: 'call off' },
+      { id: 'pv-g-092', phrase: 'call back' },
+      { id: 'pv-g-093', phrase: 'hand in' },
+      { id: 'pv-g-094', phrase: 'hand out' },
+      { id: 'pv-g-095', phrase: 'pass away' },
+      { id: 'pv-g-096', phrase: 'think over' },
+      { id: 'pv-g-097', phrase: 'make out' },
+      { id: 'pv-g-098', phrase: 'look down on' },
+      { id: 'pv-g-099', phrase: 'go along with' },
+      { id: 'pv-g-100', phrase: 'get on with' },
     ];
+
+    /** ~100 IT / product-management workplace phrasal verbs. */
+    var PHRASAL_VERBS_IT_PM = [
+      { id: 'pv-it-001', phrase: 'roll out' },
+      { id: 'pv-it-002', phrase: 'phase out' },
+      { id: 'pv-it-003', phrase: 'scale up' },
+      { id: 'pv-it-004', phrase: 'scale down' },
+      { id: 'pv-it-005', phrase: 'drill down' },
+      { id: 'pv-it-006', phrase: 'touch base' },
+      { id: 'pv-it-007', phrase: 'loop in' },
+      { id: 'pv-it-008', phrase: 'circle back' },
+      { id: 'pv-it-009', phrase: 'sync up' },
+      { id: 'pv-it-010', phrase: 'follow up' },
+      { id: 'pv-it-011', phrase: 'reach out' },
+      { id: 'pv-it-012', phrase: 'map out' },
+      { id: 'pv-it-013', phrase: 'flesh out' },
+      { id: 'pv-it-014', phrase: 'zero in on' },
+      { id: 'pv-it-015', phrase: 'sign off' },
+      { id: 'pv-it-016', phrase: 'roll back' },
+      { id: 'pv-it-017', phrase: 'back up' },
+      { id: 'pv-it-018', phrase: 'back out' },
+      { id: 'pv-it-019', phrase: 'call out' },
+      { id: 'pv-it-020', phrase: 'hash out' },
+      { id: 'pv-it-021', phrase: 'level set' },
+      { id: 'pv-it-022', phrase: 'tee up' },
+      { id: 'pv-it-023', phrase: 'stack up' },
+      { id: 'pv-it-024', phrase: 'ramp up' },
+      { id: 'pv-it-025', phrase: 'wind down' },
+      { id: 'pv-it-026', phrase: 'stand up' },
+      { id: 'pv-it-027', phrase: 'spin up' },
+      { id: 'pv-it-028', phrase: 'tear down' },
+      { id: 'pv-it-029', phrase: 'lock down' },
+      { id: 'pv-it-030', phrase: 'build out' },
+      { id: 'pv-it-031', phrase: 'push out' },
+      { id: 'pv-it-032', phrase: 'bubble up' },
+      { id: 'pv-it-033', phrase: 'double down' },
+      { id: 'pv-it-034', phrase: 'carve out' },
+      { id: 'pv-it-035', phrase: 'bake in' },
+      { id: 'pv-it-036', phrase: 'fold in' },
+      { id: 'pv-it-037', phrase: 'plug in' },
+      { id: 'pv-it-038', phrase: 'opt in' },
+      { id: 'pv-it-039', phrase: 'opt out' },
+      { id: 'pv-it-040', phrase: 'check in' },
+      { id: 'pv-it-041', phrase: 'log in' },
+      { id: 'pv-it-042', phrase: 'log out' },
+      { id: 'pv-it-043', phrase: 'wire up' },
+      { id: 'pv-it-044', phrase: 'branch out' },
+      { id: 'pv-it-045', phrase: 'iron out' },
+      { id: 'pv-it-046', phrase: 'hammer out' },
+      { id: 'pv-it-047', phrase: 'spell out' },
+      { id: 'pv-it-048', phrase: 'lay out' },
+      { id: 'pv-it-049', phrase: 'dig into' },
+      { id: 'pv-it-050', phrase: 'dive into' },
+      { id: 'pv-it-051', phrase: 'tap into' },
+      { id: 'pv-it-052', phrase: 'build on' },
+      { id: 'pv-it-053', phrase: 'build in' },
+      { id: 'pv-it-054', phrase: 'factor in' },
+      { id: 'pv-it-055', phrase: 'factor out' },
+      { id: 'pv-it-056', phrase: 'scope out' },
+      { id: 'pv-it-057', phrase: 'sort out' },
+      { id: 'pv-it-058', phrase: 'work through' },
+      { id: 'pv-it-059', phrase: 'walk through' },
+      { id: 'pv-it-060', phrase: 'talk through' },
+      { id: 'pv-it-061', phrase: 'run through' },
+      { id: 'pv-it-062', phrase: 'step through' },
+      { id: 'pv-it-063', phrase: 'hand off' },
+      { id: 'pv-it-064', phrase: 'hand over' },
+      { id: 'pv-it-065', phrase: 'take offline' },
+      { id: 'pv-it-066', phrase: 'chase down' },
+      { id: 'pv-it-067', phrase: 'track down' },
+      { id: 'pv-it-068', phrase: 'pair up' },
+      { id: 'pv-it-069', phrase: 'team up' },
+      { id: 'pv-it-070', phrase: 'break out' },
+      { id: 'pv-it-071', phrase: 'shut down' },
+      { id: 'pv-it-072', phrase: 'boot up' },
+      { id: 'pv-it-073', phrase: 'scale out' },
+      { id: 'pv-it-074', phrase: 'dial in' },
+      { id: 'pv-it-075', phrase: 'dial down' },
+      { id: 'pv-it-076', phrase: 'tie in' },
+      { id: 'pv-it-077', phrase: 'tie up' },
+      { id: 'pv-it-078', phrase: 'wrap up' },
+      { id: 'pv-it-079', phrase: 'push back' },
+      { id: 'pv-it-080', phrase: 'pull together' },
+      { id: 'pv-it-081', phrase: 'pull off' },
+      { id: 'pv-it-082', phrase: 'pull in' },
+      { id: 'pv-it-083', phrase: 'pull out' },
+      { id: 'pv-it-084', phrase: 'draw up' },
+      { id: 'pv-it-085', phrase: 'draw on' },
+      { id: 'pv-it-086', phrase: 'pass on' },
+      { id: 'pv-it-087', phrase: 'pass along' },
+      { id: 'pv-it-088', phrase: 'sign up' },
+      { id: 'pv-it-089', phrase: 'sign in' },
+      { id: 'pv-it-090', phrase: 'sign out' },
+      { id: 'pv-it-091', phrase: 'merge into' },
+      { id: 'pv-it-092', phrase: 'fold into' },
+      { id: 'pv-it-093', phrase: 'bake into' },
+      { id: 'pv-it-094', phrase: 'slot in' },
+      { id: 'pv-it-095', phrase: 'hook up' },
+      { id: 'pv-it-096', phrase: 'chime in' },
+      { id: 'pv-it-097', phrase: 'weigh in' },
+      { id: 'pv-it-098', phrase: 'nail down' },
+      { id: 'pv-it-099', phrase: 'lock in' },
+      { id: 'pv-it-100', phrase: 'firm up' },
+    ];
+
+    var PHRASAL_LIST_KEYS = { general: true, it_pm: true };
+
+
 
     const tabs = document.querySelectorAll('.tab');
     const panels = document.querySelectorAll('.panel');
     const dictInput = document.getElementById('dictInput');
     const dictSearchInput = document.getElementById('dictSearchInput');
-    const btnViewLearning = document.getElementById('btnViewLearning');
-    const btnViewLearned = document.getElementById('btnViewLearned');
+    const dictWordListFilter = document.getElementById('dictWordListFilter');
+    const dictViewLearnedToggle = document.getElementById('dictViewLearnedToggle');
+    const addWordListDictionarySelect = document.getElementById('addWordListDictionarySelect');
     const btnAddWord = document.getElementById('btnAddWord');
+    const dictAddSection = document.getElementById('dictAddSection');
+    const btnToggleDictAdd = document.getElementById('btnToggleDictAdd');
+    const btnCloseDictAdd = document.getElementById('btnCloseDictAdd');
     const dictList = document.getElementById('dictList');
     const practiceArea = document.getElementById('practiceArea');
     const practiceDictInput = document.getElementById('practiceDictInput');
     const btnAddPracticeWord = document.getElementById('btnAddPracticeWord');
+    const practiceAddSection = document.getElementById('practiceAddSection');
+    const btnTogglePracticeAdd = document.getElementById('btnTogglePracticeAdd');
+    const btnClosePracticeAdd = document.getElementById('btnClosePracticeAdd');
     const dictionarySubtypeWrap = document.getElementById('dictionarySubtypeWrap');
     const dictionaryPracticeFilterWrap = document.getElementById('dictionaryPracticeFilterWrap');
     const btnPracticeDictIT = document.getElementById('btnPracticeDictIT');
     const btnPracticeDictGeneral = document.getElementById('btnPracticeDictGeneral');
-    const btnWordListIT = document.getElementById('btnWordListIT');
-    const btnWordListGeneral = document.getElementById('btnWordListGeneral');
-    const phrasalLearnedWrap = document.getElementById('phrasalLearnedWrap');
-    const phrasalLearnedToggle = document.getElementById('phrasalLearnedToggle');
-    const phrasalLearnedList = document.getElementById('phrasalLearnedList');
-    const phrasalLearnedCount = document.getElementById('phrasalLearnedCount');
+    const generalTopicWrap = document.getElementById('generalTopicWrap');
+    const generalTopicSelect = document.getElementById('generalTopicSelect');
     const phrasalTopicWrap = document.getElementById('phrasalTopicWrap');
+    const phrasalListSelect = document.getElementById('phrasalListSelect');
+    const phrasalTopicSelect = document.getElementById('phrasalTopicSelect');
 
     let currentWordId = null;
     let currentWord = null;
@@ -1130,19 +1667,36 @@
       if (dictionaryPracticeFilterWrap) {
         dictionaryPracticeFilterWrap.hidden = practiceMode !== 'dictionary';
       }
+      if (generalTopicWrap) {
+        generalTopicWrap.hidden = practiceMode !== 'general';
+      }
       if (phrasalTopicWrap) {
         phrasalTopicWrap.hidden = practiceMode !== 'phrasal';
       }
-      if (phrasalLearnedWrap) {
-        phrasalLearnedWrap.hidden = practiceMode !== 'phrasal';
-        if (practiceMode === 'phrasal') {
-          renderPhrasalLearnedPanel();
-        }
-      }
+    }
+
+    function getSelectedGeneralTopic() {
+      var el = generalTopicSelect;
+      var v = el && el.value ? el.value : 'general';
+      return GENERAL_TOPIC_DESCRIPTIONS[v] ? v : 'general';
+    }
+
+    function saveGeneralTopicPreference() {
+      try {
+        localStorage.setItem(GENERAL_TOPIC_KEY, getSelectedGeneralTopic());
+      } catch (_) {}
+    }
+
+    function restoreGeneralTopic() {
+      try {
+        var saved = localStorage.getItem(GENERAL_TOPIC_KEY);
+        if (!saved || !GENERAL_TOPIC_DESCRIPTIONS[saved]) return;
+        if (generalTopicSelect) generalTopicSelect.value = saved;
+      } catch (_) {}
     }
 
     function getSelectedPhrasalTopic() {
-      var el = document.querySelector('input[name="phrasalTopic"]:checked');
+      var el = phrasalTopicSelect;
       var v = el && el.value ? el.value : 'general';
       return PHRASAL_TOPIC_DESCRIPTIONS[v] ? v : 'general';
     }
@@ -1157,8 +1711,31 @@
       try {
         var saved = localStorage.getItem(PHRASAL_TOPIC_KEY);
         if (!saved || !PHRASAL_TOPIC_DESCRIPTIONS[saved]) return;
-        var input = document.querySelector('input[name="phrasalTopic"][value="' + saved + '"]');
-        if (input) input.checked = true;
+        if (phrasalTopicSelect) phrasalTopicSelect.value = saved;
+      } catch (_) {}
+    }
+
+    function getSelectedPhrasalList() {
+      var el = phrasalListSelect;
+      var v = el && el.value ? el.value : 'general';
+      return PHRASAL_LIST_KEYS[v] ? v : 'general';
+    }
+
+    function getPhrasalVerbPool() {
+      return getSelectedPhrasalList() === 'it_pm' ? PHRASAL_VERBS_IT_PM : PHRASAL_VERBS_GENERAL;
+    }
+
+    function savePhrasalListPreference() {
+      try {
+        localStorage.setItem(PHRASAL_LIST_KEY, getSelectedPhrasalList());
+      } catch (_) {}
+    }
+
+    function restorePhrasalList() {
+      try {
+        var saved = localStorage.getItem(PHRASAL_LIST_KEY);
+        if (!saved || !PHRASAL_LIST_KEYS[saved]) return;
+        if (phrasalListSelect) phrasalListSelect.value = saved;
       } catch (_) {}
     }
 
@@ -1179,14 +1756,32 @@
       });
     });
 
-    document.querySelectorAll('input[name="phrasalTopic"]').forEach(function (radio) {
-      radio.addEventListener('change', function () {
+    if (generalTopicSelect) {
+      generalTopicSelect.addEventListener('change', function () {
+        saveGeneralTopicPreference();
+        if (practiceMode === 'general') {
+          loadPractice();
+        }
+      });
+    }
+
+    if (phrasalTopicSelect) {
+      phrasalTopicSelect.addEventListener('change', function () {
         savePhrasalTopicPreference();
         if (practiceMode === 'phrasal') {
           loadPractice();
         }
       });
-    });
+    }
+
+    if (phrasalListSelect) {
+      phrasalListSelect.addEventListener('change', function () {
+        savePhrasalListPreference();
+        if (practiceMode === 'phrasal') {
+          loadPractice();
+        }
+      });
+    }
 
     tabs.forEach(function (tab) {
       tab.addEventListener('click', function () {
@@ -1215,6 +1810,29 @@
       }
     }
 
+    function normalizePhraseForMatch(s) {
+      return String(s || '')
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, ' ');
+    }
+
+    /** Any saved dictionary row (IT or General, learning or learned). */
+    function isPhraseInDictionary(phrase) {
+      var n = normalizePhraseForMatch(phrase);
+      if (!n) return false;
+      return getDictionary().some(function (x) {
+        return normalizePhraseForMatch(x.text) === n;
+      });
+    }
+
+    /** Current phrasal list minus entries already in the dictionary. */
+    function getPhrasalPracticePool() {
+      return getPhrasalVerbPool().filter(function (item) {
+        return !isPhraseInDictionary(item.phrase);
+      });
+    }
+
     function migrateWordListsOnce() {
       try {
         var list = getDictionary();
@@ -1229,65 +1847,6 @@
       } catch (_) {}
     }
 
-    function getLearnedPhrasalIds() {
-      try {
-        var raw = localStorage.getItem(PHRASAL_LEARNED_KEY);
-        var arr = raw ? JSON.parse(raw) : [];
-        return Array.isArray(arr) ? arr : [];
-      } catch (_) {
-        return [];
-      }
-    }
-
-    function saveLearnedPhrasalIds(ids) {
-      try {
-        localStorage.setItem(PHRASAL_LEARNED_KEY, JSON.stringify(ids));
-      } catch (_) {}
-    }
-
-    function markPhrasalVerbLearned(id) {
-      var ids = getLearnedPhrasalIds();
-      if (ids.indexOf(id) === -1) {
-        ids.push(id);
-        saveLearnedPhrasalIds(ids);
-      }
-      renderPhrasalLearnedPanel();
-    }
-
-    function unmarkPhrasalVerbLearned(id) {
-      var ids = getLearnedPhrasalIds().filter(function (x) { return x !== id; });
-      saveLearnedPhrasalIds(ids);
-      renderPhrasalLearnedPanel();
-    }
-
-    function renderPhrasalLearnedPanel() {
-      if (!phrasalLearnedCount || !phrasalLearnedList) return;
-      var learned = getLearnedPhrasalIds();
-      phrasalLearnedCount.textContent = String(learned.length);
-      phrasalLearnedList.innerHTML = '';
-      if (learned.length === 0) {
-        phrasalLearnedList.innerHTML = '<div class="dictionary-empty" style="padding:0.5rem 0;font-size:0.85rem;">No phrasal verbs marked as learned yet.</div>';
-        return;
-      }
-      var byId = {};
-      POPULAR_PHRASAL_VERBS.forEach(function (pv) { byId[pv.id] = pv.phrase; });
-      learned.forEach(function (id) {
-        var phrase = byId[id] || id;
-        var row = document.createElement('div');
-        row.className = 'phrasal-learned-item';
-        row.innerHTML =
-          '<span>' + escapeHtml(phrase) + '</span>' +
-          '<button type="button" class="btn-phrasal-unlearn" data-phrasal-id="' + escapeHtml(id) + '">Remove</button>';
-        row.querySelector('.btn-phrasal-unlearn').addEventListener('click', function () {
-          unmarkPhrasalVerbLearned(id);
-          if (practiceMode === 'phrasal') {
-            loadPractice();
-          }
-        });
-        phrasalLearnedList.appendChild(row);
-      });
-    }
-
     function setPracticeDictionaryWordList(wl) {
       practiceDictionaryWordList = wl === 'it' ? 'it' : 'general';
       if (btnPracticeDictIT && btnPracticeDictGeneral) {
@@ -1297,12 +1856,12 @@
     }
 
     function getSelectedWordListDictionary() {
-      var el = document.querySelector('input[name="addWordListDictionary"]:checked');
+      var el = addWordListDictionarySelect;
       return el && el.value === 'it' ? 'it' : 'general';
     }
 
     function getSelectedWordListPractice() {
-      var el = document.querySelector('input[name="addWordListPractice"]:checked');
+      var el = document.getElementById('addWordListPracticeSelect');
       return el && el.value === 'it' ? 'it' : 'general';
     }
 
@@ -1418,12 +1977,7 @@
       if (!isoString) return null;
       var d = new Date(isoString);
       if (isNaN(d.getTime())) return null;
-      var day = String(d.getDate()).padStart(2, '0');
-      var month = String(d.getMonth() + 1).padStart(2, '0');
-      var year = d.getFullYear();
-      var hours = String(d.getHours()).padStart(2, '0');
-      var minutes = String(d.getMinutes()).padStart(2, '0');
-      return day + '-' + month + '-' + year + ' ' + hours + ':' + minutes;
+      return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
     }
 
     function renderDictionary() {
@@ -1442,11 +1996,15 @@
         });
       }
 
-      btnViewLearning.classList.toggle('active', dictionaryView === 'learning');
-      btnViewLearned.classList.toggle('active', dictionaryView === 'learned');
-      if (btnWordListIT && btnWordListGeneral) {
-        btnWordListIT.classList.toggle('active', dictionaryWordListView === 'it');
-        btnWordListGeneral.classList.toggle('active', dictionaryWordListView === 'general');
+      if (dictWordListFilter) {
+        dictWordListFilter.value = dictionaryWordListView;
+      }
+      if (dictViewLearnedToggle) {
+        dictViewLearnedToggle.checked = dictionaryView === 'learned';
+      }
+      var learnToggleWrap = document.querySelector('.dictionary-learning-toggle');
+      if (learnToggleWrap) {
+        learnToggleWrap.classList.toggle('is-learned', dictionaryView === 'learned');
       }
 
       dictList.innerHTML = '';
@@ -1459,7 +2017,7 @@
           dictList.innerHTML =
             '<div class="dictionary-empty">No words in the ' +
             (dictionaryWordListView === 'it' ? 'IT' : 'General') +
-            ' list yet. Add a word and choose this list above.</div>';
+            ' list yet. Open “Add word”, pick the list, and save a word.</div>';
         }
         return;
       }
@@ -1469,8 +2027,9 @@
 
         var el = document.createElement('div');
         el.className = 'dictionary-item';
-        var lastPracticedHtml = item.lastPracticed
-          ? '<span class="dictionary-item-date">Last practiced: ' + formatDate(item.lastPracticed) + '</span>'
+        var practicedDateStr = item.lastPracticed ? formatDate(item.lastPracticed) : null;
+        var lastPracticedHtml = practicedDateStr
+          ? '<span class="dictionary-item-date">' + practicedDateStr + '</span>'
           : '<span class="dictionary-item-date not-practiced">Not practiced yet</span>';
 
         var isExpanded = expandedWordId === item.id;
@@ -1550,29 +2109,88 @@
 
     dictSearchInput.addEventListener('input', renderDictionary);
 
-    btnViewLearning.addEventListener('click', function () {
-      dictionaryView = 'learning';
-      expandedWordId = null;
-      renderDictionary();
+    function setDictAddOpen(open) {
+      if (!dictAddSection || !btnToggleDictAdd) return;
+      dictAddSection.hidden = !open;
+      btnToggleDictAdd.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open && dictInput) {
+        requestAnimationFrame(function () {
+          dictInput.focus();
+        });
+      } else if (!open) {
+        btnToggleDictAdd.focus();
+      }
+    }
+
+    if (btnToggleDictAdd && dictAddSection) {
+      btnToggleDictAdd.addEventListener('click', function () {
+        if (dictAddSection.hidden) {
+          setDictAddOpen(true);
+        }
+      });
+    }
+
+    if (btnCloseDictAdd) {
+      btnCloseDictAdd.addEventListener('click', function () {
+        setDictAddOpen(false);
+      });
+    }
+
+    function setPracticeAddOpen(open) {
+      if (!practiceAddSection || !btnTogglePracticeAdd) return;
+      practiceAddSection.hidden = !open;
+      btnTogglePracticeAdd.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open && practiceDictInput) {
+        requestAnimationFrame(function () {
+          practiceDictInput.focus();
+        });
+      } else if (!open) {
+        btnTogglePracticeAdd.focus();
+      }
+    }
+
+    if (btnTogglePracticeAdd && practiceAddSection) {
+      btnTogglePracticeAdd.addEventListener('click', function () {
+        if (practiceAddSection.hidden) {
+          setPracticeAddOpen(true);
+        }
+      });
+    }
+
+    if (btnClosePracticeAdd) {
+      btnClosePracticeAdd.addEventListener('click', function () {
+        setPracticeAddOpen(false);
+      });
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      var dictPanel = document.getElementById('panelDictionary');
+      var practicePanel = document.getElementById('panelPractice');
+      if (dictPanel && dictPanel.classList.contains('active') && dictAddSection && !dictAddSection.hidden) {
+        setDictAddOpen(false);
+        return;
+      }
+      if (practicePanel && practicePanel.classList.contains('active') && practiceAddSection && !practiceAddSection.hidden) {
+        setPracticeAddOpen(false);
+      }
     });
 
-    btnViewLearned.addEventListener('click', function () {
-      dictionaryView = 'learned';
-      expandedWordId = null;
-      renderDictionary();
-    });
+    if (dictWordListFilter) {
+      dictWordListFilter.addEventListener('change', function () {
+        dictionaryWordListView = this.value === 'it' ? 'it' : 'general';
+        expandedWordId = null;
+        renderDictionary();
+      });
+    }
 
-    btnWordListIT.addEventListener('click', function () {
-      dictionaryWordListView = 'it';
-      expandedWordId = null;
-      renderDictionary();
-    });
-
-    btnWordListGeneral.addEventListener('click', function () {
-      dictionaryWordListView = 'general';
-      expandedWordId = null;
-      renderDictionary();
-    });
+    if (dictViewLearnedToggle) {
+      dictViewLearnedToggle.addEventListener('change', function () {
+        dictionaryView = this.checked ? 'learned' : 'learning';
+        expandedWordId = null;
+        renderDictionary();
+      });
+    }
 
     btnPracticeDictIT.addEventListener('click', function () {
       setPracticeDictionaryWordList('it');
@@ -1583,13 +2201,6 @@
       setPracticeDictionaryWordList('general');
       loadPractice();
     });
-
-    if (phrasalLearnedToggle && phrasalLearnedList) {
-      phrasalLearnedToggle.addEventListener('click', function () {
-        var open = phrasalLearnedList.hidden;
-        phrasalLearnedList.hidden = !open;
-      });
-    }
 
     btnAddPracticeWord.addEventListener('click', function () {
       addWord(practiceDictInput.value, getSelectedWordListPractice());
@@ -1604,7 +2215,9 @@
     });
 
     migrateWordListsOnce();
+    restorePhrasalList();
     restorePhrasalTopic();
+    restoreGeneralTopic();
     renderDictionary();
 
     function fetchWithTimeout(url, options) {
@@ -1715,8 +2328,15 @@
       return { russian: parsed.russian || '' };
     }
 
-    async function generateGeneralPrompt() {
-      var systemPrompt = 'You generate practice sentences for English learners preparing for job interviews. Create a realistic interview answer in RUSSIAN that a Senior Product Manager candidate might say. The answer should be professional, use business vocabulary, and be 2-4 sentences long. Topics can include: product strategy, stakeholder management, roadmap prioritization, metrics, A/B testing, user research, cross-functional collaboration, etc. Reply with valid JSON only: {"russian": "the russian sentence"}';
+    async function generateGeneralPrompt(topicKey) {
+      var tk = GENERAL_TOPIC_DESCRIPTIONS[topicKey] ? topicKey : 'general';
+      var topicDesc = GENERAL_TOPIC_DESCRIPTIONS[tk];
+      var systemPrompt =
+        'You generate practice material for English learners. They will translate your Russian into English. ' +
+        'Write in RUSSIAN only. The content must fit this topic: ' + topicDesc + '. ' +
+        'Use at most 1–2 short sentences total (one sentence is fine). Natural, professional or everyday register as fits the topic. ' +
+        'Reply with valid JSON only: {"russian": "the russian text"}';
+      var userContent = 'Topic: ' + topicDesc + '\nGenerate one new Russian prompt for translation practice.';
       var response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -1727,7 +2347,7 @@
           model: 'gpt-5-mini-2025-08-07',
           messages: [
             { role: 'system', content: systemPrompt },
-            { role: 'user', content: 'Generate a new interview answer in Russian for a Senior Product Manager position.' }
+            { role: 'user', content: userContent }
           ],
           response_format: { type: 'json_object' }
         })
@@ -1746,7 +2366,7 @@
       var targetWordInstruction = targetWord
         ? 'They should use the word/phrase "' + targetWord + '" or its appropriate form. '
         : '';
-      var systemPrompt = 'You are an English teacher evaluating translations. The student was given a Russian sentence and asked to translate it to English. ' + targetWordInstruction + 'Evaluate their translation:\n\n1. The student should correctly translate the main idea, but it is not a mistake to use synonyms or slightly different wording. Skip minor mistakes and issues. Give a score 1-5 (1=poor, 5=excellent)\n2. Provide ONE corrected version of the student answer at B2-C1 level\n3. List specific errors (grammar, vocabulary, word choice) with corrections. Do not check punctuation. Student can use formal and informal language and any abbreviations or contractions.\n4. Provide 2-3 alternative translations at B2-C1 level that a fluent speaker would use\n\nReply with JSON only: {"score": number, "corrected": "single corrected version", "errors": "detailed error analysis or \\"No errors\\" if perfect", "alternatives": "2-3 alternative B2-C1 level translations, each on new line"}';
+      var systemPrompt = 'You are an English teacher evaluating translations. The student was given a Russian sentence and asked to translate it to English. ' + targetWordInstruction + 'Evaluate their translation:\n\n1. The student should correctly translate the main idea, but it is not a mistake to use synonyms or slightly different wording. Skip minor mistakes and issues. Skip capitalization mistakes. Give a score 1-5 (1=poor, 5=excellent)\n2. Provide ONE corrected version of the student answer at B2-C1 level\n3. List specific errors (grammar, vocabulary, word choice) with corrections. Whenever you discuss a word or phrase the student used, briefly state what meaning that English word or phrase conveys on its own (how a fluent reader would interpret it) before explaining why it does not match the Russian or the intended idea. Do not check punctuation. Student can use formal and informal language and any abbreviations or contractions.\n4. Provide 2-3 alternative translations at B2-C1 level that a fluent speaker would use\n\nReply with JSON only: {"score": number, "corrected": "single corrected version", "errors": "detailed error analysis or \\"No errors\\" if perfect", "alternatives": "2-3 alternative B2-C1 level translations, each on new line"}';
       var response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -1853,6 +2473,41 @@
       return '★'.repeat(n) + '☆'.repeat(5 - n);
     }
 
+    function buildTranslationFeedbackHtml(result) {
+      var corrected = (result.corrected && String(result.corrected).trim()) ? result.corrected : 'No corrections needed';
+      return (
+        '<div class="feedback-section">' +
+        '<div class="feedback-section-title score">Score: ' + starsFromScore(result.score) + ' (' + result.score + '/5)</div>' +
+        '</div>' +
+        '<div class="feedback-section">' +
+        '<div class="feedback-section-title alternatives">Corrected answer</div>' +
+        '<div class="practice-hint">' +
+        '<button type="button" class="practice-hint-toggle" id="feedbackCorrectedToggle">Show corrected answer</button>' +
+        '<div class="practice-hint-content" id="feedbackCorrectedContent">' + escapeHtml(corrected) + '</div>' +
+        '</div>' +
+        '</div>' +
+        '<div class="feedback-section">' +
+        '<div class="feedback-section-title errors">Errors &amp; corrections</div>' +
+        '<div class="feedback-content">' + escapeHtml(result.errors || '') + '</div>' +
+        '</div>' +
+        '<div class="feedback-section">' +
+        '<div class="feedback-section-title alternatives">B2–C1 alternatives</div>' +
+        '<div class="feedback-content">' + escapeHtml(result.alternatives || '') + '</div>' +
+        '</div>'
+      );
+    }
+
+    function wireFeedbackCorrectedToggle() {
+      var toggle = document.getElementById('feedbackCorrectedToggle');
+      var content = document.getElementById('feedbackCorrectedContent');
+      if (!toggle || !content) return;
+      toggle.addEventListener('click', function () {
+        var expanded = toggle.classList.toggle('expanded');
+        content.classList.toggle('visible', expanded);
+        toggle.textContent = expanded ? 'Hide corrected answer' : 'Show corrected answer';
+      });
+    }
+
     function showPracticeInitialState() {
       practiceMode = null;
       document.querySelectorAll('input[name="practiceMode"]').forEach(function (radio) {
@@ -1864,18 +2519,18 @@
       if (dictionaryPracticeFilterWrap) {
         dictionaryPracticeFilterWrap.hidden = true;
       }
+      if (generalTopicWrap) {
+        generalTopicWrap.hidden = true;
+      }
       if (phrasalTopicWrap) {
         phrasalTopicWrap.hidden = true;
-      }
-      if (phrasalLearnedWrap) {
-        phrasalLearnedWrap.hidden = true;
       }
       document.querySelectorAll('.practice-mode-option').forEach(function (opt) {
         opt.classList.remove('selected');
       });
       practiceArea.innerHTML =
         '<div class="practice-empty">' +
-        '<div class="practice-empty-icon">👆</div>' +
+        '<div class="practice-empty-icon" aria-hidden="true">&#8593;</div>' +
         '<div class="practice-empty-text">Select a practice mode above to start</div>' +
         '</div>';
     }
@@ -1908,7 +2563,7 @@
         if (list.length === 0) {
           practiceArea.innerHTML =
             '<div class="practice-empty">' +
-            '<div class="practice-empty-icon">📚</div>' +
+            '<div class="practice-empty-icon" aria-hidden="true">&#128218;</div>' +
             '<div class="practice-empty-text">No learning words in the ' +
             (practiceDictionaryWordList === 'it' ? 'IT' : 'General') +
             ' list. Add words in the Dictionary tab (choose the same list) or switch the filter above.</div>' +
@@ -1922,15 +2577,17 @@
       }
 
       if (practiceMode === 'phrasal') {
-        var learnedPv = getLearnedPhrasalIds();
-        var poolPv = POPULAR_PHRASAL_VERBS.filter(function (pv) { return learnedPv.indexOf(pv.id) === -1; });
-        if (poolPv.length === 0) {
+        var phrasalPracticePool = getPhrasalPracticePool();
+        if (phrasalPracticePool.length === 0) {
           practiceArea.innerHTML =
             '<div class="practice-empty">' +
-            '<div class="practice-empty-icon">✓</div>' +
-            '<div class="practice-empty-text">You marked every phrasal verb as learned. Remove items from Learned below to practice them again.</div>' +
+            '<div class="practice-empty-text">Every phrasal verb from this list is already in your dictionary (learning or learned). ' +
+            'Remove some in the Dictionary tab or switch the other phrasal list above.</div>' +
+            '<button class="btn-go-dictionary" id="btnGoPhrasalDictionary">Go to Dictionary</button>' +
             '</div>';
-          renderPhrasalLearnedPanel();
+          document.getElementById('btnGoPhrasalDictionary').addEventListener('click', function () {
+            tabs[0].click();
+          });
           return;
         }
       }
@@ -1989,8 +2646,7 @@
           }
         } else if (practiceMode === 'phrasal') {
           currentWordId = null;
-          var learnedPv2 = getLearnedPhrasalIds();
-          var poolPv2 = POPULAR_PHRASAL_VERBS.filter(function (pv) { return learnedPv2.indexOf(pv.id) === -1; });
+          var poolPv2 = getPhrasalPracticePool();
           var pvPick = poolPv2[Math.floor(Math.random() * poolPv2.length)];
           currentPhrasalId = pvPick.id;
           currentWord = pvPick.phrase;
@@ -2003,13 +2659,14 @@
             '<div class="practice-hint">' +
             '<button type="button" class="practice-hint-toggle" id="phrasalTargetToggle">Show target phrasal verb</button>' +
             '<div class="practice-hint-content" id="phrasalTargetContent">' + escapeHtml(currentWord) + '</div>' +
-            '</div>' +
-            '<button type="button" class="btn-mark-phrasal" id="btnMarkPhrasalLearned">Mark as learned</button>';
+            '<button type="button" class="btn-add-phrasal-to-vocab" id="btnAddPhrasalToVocab" hidden title="Saves to the list chosen under Add word → Add to list">Add to vocab</button>' +
+            '</div>';
         } else {
           currentWordId = null;
           currentWord = null;
           currentPhrasalId = null;
-          var genResult = await generateGeneralPrompt();
+          var genTopic = getSelectedGeneralTopic();
+          var genResult = await generateGeneralPrompt(genTopic);
           currentPromptRu = genResult.russian;
           promptInnerHtml =
             '<div class="practice-label">Translate to English:</div>' +
@@ -2052,19 +2709,29 @@
           document.getElementById('phrasalTargetToggle').addEventListener('click', function () {
             var toggle = document.getElementById('phrasalTargetToggle');
             var content = document.getElementById('phrasalTargetContent');
+            var addBtn = document.getElementById('btnAddPhrasalToVocab');
             var expanded = toggle.classList.toggle('expanded');
             content.classList.toggle('visible', expanded);
             toggle.textContent = expanded ? 'Hide target phrasal verb' : 'Show target phrasal verb';
-          });
-          document.getElementById('btnMarkPhrasalLearned').addEventListener('click', function () {
-            if (currentPhrasalId) {
-              markPhrasalVerbLearned(currentPhrasalId);
-              var btn = document.getElementById('btnMarkPhrasalLearned');
-              if (btn) {
-                btn.disabled = true;
-                btn.textContent = 'Saved to Learned';
-              }
+            if (addBtn) {
+              addBtn.hidden = !expanded;
             }
+          });
+          document.getElementById('btnAddPhrasalToVocab').addEventListener('click', async function () {
+            var phrase = currentWord;
+            if (!phrase) return;
+            var btn = this;
+            if (btn.disabled) return;
+            var list = getDictionary();
+            if (list.some(function (x) { return x.text.toLowerCase() === phrase.toLowerCase(); })) {
+              btn.textContent = 'Already in vocab';
+              btn.disabled = true;
+              return;
+            }
+            btn.disabled = true;
+            btn.textContent = 'Adding…';
+            await addWord(phrase, getSelectedWordListPractice());
+            btn.textContent = 'Added';
           });
         }
         document.getElementById('userTranslation').addEventListener('keydown', function (e) {
@@ -2091,7 +2758,6 @@
       try {
         var subtypeNow = getCurrentDictionarySubtype();
         var isWordOnly = practiceMode === 'dictionary' && subtypeNow === 'word';
-        var isPhrasal = practiceMode === 'phrasal';
 
         if (isWordOnly) {
           var wRes = await checkWordOnlyAnswer(
@@ -2115,42 +2781,10 @@
               '<div class="feedback-content">' + escapeHtml(badMsg) + '</div>' +
               '</div>';
           }
-        } else if (isPhrasal) {
-          var resultPv = await checkTranslation(currentPromptRu, translation, currentWord);
-          feedbackBlock.innerHTML =
-            '<div class="feedback-section">' +
-            '<div class="feedback-section-title score">Score: ' + starsFromScore(resultPv.score) + ' (' + resultPv.score + '/5)</div>' +
-            '</div>' +
-            '<div class="feedback-section">' +
-            '<div class="feedback-section-title alternatives">Corrected Answer</div>' +
-            '<div class="feedback-content">' + escapeHtml(resultPv.corrected || 'No corrections needed') + '</div>' +
-            '</div>' +
-            '<div class="feedback-section">' +
-            '<div class="feedback-section-title errors">Errors & Corrections</div>' +
-            '<div class="feedback-content">' + escapeHtml(resultPv.errors) + '</div>' +
-            '</div>' +
-            '<div class="feedback-section">' +
-            '<div class="feedback-section-title alternatives">B2-C1 Alternatives</div>' +
-            '<div class="feedback-content">' + escapeHtml(resultPv.alternatives) + '</div>' +
-            '</div>';
         } else {
-          var result = await checkTranslation(currentPromptRu, translation, currentWord);
-          feedbackBlock.innerHTML =
-            '<div class="feedback-section">' +
-            '<div class="feedback-section-title score">Score: ' + starsFromScore(result.score) + ' (' + result.score + '/5)</div>' +
-            '</div>' +
-            '<div class="feedback-section">' +
-            '<div class="feedback-section-title alternatives">Corrected Answer</div>' +
-            '<div class="feedback-content">' + escapeHtml(result.corrected || 'No corrections needed') + '</div>' +
-            '</div>' +
-            '<div class="feedback-section">' +
-            '<div class="feedback-section-title errors">Errors & Corrections</div>' +
-            '<div class="feedback-content">' + escapeHtml(result.errors) + '</div>' +
-            '</div>' +
-            '<div class="feedback-section">' +
-            '<div class="feedback-section-title alternatives">B2-C1 Alternatives</div>' +
-            '<div class="feedback-content">' + escapeHtml(result.alternatives) + '</div>' +
-            '</div>';
+          var trResult = await checkTranslation(currentPromptRu, translation, currentWord);
+          feedbackBlock.innerHTML = buildTranslationFeedbackHtml(trResult);
+          wireFeedbackCorrectedToggle();
         }
         feedbackBlock.classList.add('visible');
         /* Same as “full sentence” mode: any completed Check updates lastPracticed for this dictionary item */
