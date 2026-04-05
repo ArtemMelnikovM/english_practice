@@ -23,6 +23,13 @@
       flex-direction: column;
     }
 
+    .app-shell {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+    }
+
     .header {
       display: flex;
       align-items: center;
@@ -58,6 +65,166 @@
       font-size: 1.5rem;
       font-weight: 700;
       letter-spacing: -0.02em;
+    }
+
+    .auth-gate {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.25rem 3rem;
+      box-sizing: border-box;
+    }
+
+    .auth-gate[hidden] {
+      display: none !important;
+    }
+
+    .app-shell[hidden] {
+      display: none !important;
+    }
+
+    .auth-boot {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: rgba(232, 232, 232, 0.55);
+      font-size: 0.95rem;
+      font-style: italic;
+    }
+
+    .auth-boot[hidden] {
+      display: none !important;
+    }
+
+    .auth-gate-back {
+      align-self: flex-start;
+      margin-bottom: 1.25rem;
+    }
+
+    .auth-gate-card {
+      width: 100%;
+      max-width: 420px;
+      padding: 1.75rem 1.5rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+    }
+
+    .auth-gate-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .auth-gate-intro {
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: rgba(232, 232, 232, 0.65);
+      margin-bottom: 1.25rem;
+    }
+
+    .auth-gate-fields label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(232, 232, 232, 0.55);
+      margin-bottom: 0.35rem;
+    }
+
+    .auth-gate-fields input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.55rem 0.75rem;
+      margin-bottom: 0.85rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(0, 0, 0, 0.28);
+      color: #e8e8e8;
+    }
+
+    .auth-gate-fields input:focus {
+      outline: none;
+      border-color: rgba(233, 69, 96, 0.55);
+    }
+
+    .auth-gate-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.25rem;
+    }
+
+    .btn-auth-gate-primary {
+      padding: 0.55rem 1.1rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      color: #1a1a2e;
+      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+      transition: opacity 0.2s, transform 0.15s;
+    }
+
+    .btn-auth-gate-primary:hover {
+      opacity: 0.95;
+    }
+
+    .btn-auth-gate-secondary {
+      padding: 0.55rem 1.1rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(232, 232, 232, 0.95);
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .btn-auth-gate-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.32);
+    }
+
+    .auth-gate .auth-error {
+      font-size: 0.82rem;
+      color: #ff8a8a;
+      margin: 0.75rem 0 0;
+      line-height: 1.4;
+    }
+
+    .link-auth-gate-skip {
+      display: block;
+      width: 100%;
+      margin-top: 1.25rem;
+      padding: 0;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(232, 232, 232, 0.5);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 0.15em;
+    }
+
+    .link-auth-gate-skip:hover {
+      color: rgba(233, 69, 96, 0.95);
     }
 
     .tabs {
@@ -1205,6 +1372,28 @@
   </style>
 </head>
 <body>
+  <div class="auth-boot" id="authBoot" aria-busy="true" aria-live="polite">Loading…</div>
+  <div class="auth-gate" id="authGate" hidden>
+    <a href="index.html" class="btn-back auth-gate-back">← Menu</a>
+    <div class="auth-gate-card">
+      <h2 class="auth-gate-title">Sign in or create an account</h2>
+      <p class="auth-gate-intro">Your vocabulary syncs across devices when you’re signed in. New here? Enter email and password, then tap Sign up.</p>
+      <div class="auth-gate-fields">
+        <label for="gateEmail">Email</label>
+        <input type="email" id="gateEmail" autocomplete="email" placeholder="you@example.com" aria-label="Email">
+        <label for="gatePassword">Password</label>
+        <input type="password" id="gatePassword" autocomplete="new-password" placeholder="At least 6 characters" aria-label="Password">
+      </div>
+      <div class="auth-gate-actions">
+        <button type="button" class="btn-auth-gate-primary" id="gateSignIn">Sign in</button>
+        <button type="button" class="btn-auth-gate-secondary" id="gateSignUp">Sign up</button>
+      </div>
+      <p class="auth-error" id="gateAuthError" hidden></p>
+      <button type="button" class="link-auth-gate-skip" id="gateContinueLocal">Continue without an account (this browser only)</button>
+    </div>
+  </div>
+
+  <div class="app-shell" id="appShell" hidden>
   <header class="header">
     <a href="index.html" class="btn-back">← Menu</a>
     <h1>Vocabulary Practice</h1>
@@ -1367,7 +1556,13 @@
       <div class="practice-area" id="practiceArea"></div>
     </div>
   </main>
+  </div>
 
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics-compat.js"></script>
+  <script src="dictionary-firebase.js"></script>
   <script src="api-config.js"></script>
   <script>
     const DICT_STORAGE_KEY = 'hr-interview-examples';
@@ -1801,6 +1996,9 @@
     }
 
     function getDictionary() {
+      if (typeof DictionaryFirebase !== 'undefined' && DictionaryFirebase.getDictionary) {
+        return DictionaryFirebase.getDictionary();
+      }
       try {
         var raw = localStorage.getItem(DICT_STORAGE_KEY);
         var list = raw ? JSON.parse(raw) : [];
@@ -1880,6 +2078,10 @@
     }
 
     function saveDictionary(list) {
+      if (typeof DictionaryFirebase !== 'undefined' && DictionaryFirebase.saveDictionary) {
+        DictionaryFirebase.saveDictionary(list);
+        return;
+      }
       try {
         localStorage.setItem(DICT_STORAGE_KEY, JSON.stringify(list));
       } catch (_) {}
@@ -2214,11 +2416,110 @@
       }
     });
 
-    migrateWordListsOnce();
-    restorePhrasalList();
-    restorePhrasalTopic();
-    restoreGeneralTopic();
-    renderDictionary();
+    var vocabAppStarted = false;
+
+    function hideVocabAuthBoot() {
+      var boot = document.getElementById('authBoot');
+      if (boot) boot.hidden = true;
+    }
+
+    function syncVocabAuthGate() {
+      var gate = document.getElementById('authGate');
+      var shell = document.getElementById('appShell');
+      if (!gate || !shell) return;
+      var df = typeof DictionaryFirebase !== 'undefined' ? DictionaryFirebase : null;
+      var skip = df && df.isLocalSessionSkip && df.isLocalSessionSkip();
+      if (!df || !df.isFirebaseAvailable || !df.isFirebaseAvailable()) {
+        if (skip) {
+          gate.hidden = true;
+          shell.hidden = false;
+        } else {
+          gate.hidden = false;
+          shell.hidden = true;
+        }
+        return;
+      }
+      var u = df.getCurrentUser();
+      if (u || skip) {
+        gate.hidden = true;
+        shell.hidden = false;
+      } else {
+        gate.hidden = false;
+        shell.hidden = true;
+      }
+    }
+
+    function startVocabularyAppOnce() {
+      if (vocabAppStarted) return;
+      vocabAppStarted = true;
+      if (typeof DictionaryFirebase !== 'undefined') {
+        DictionaryFirebase.onDictionaryUpdate(function () {
+          migrateWordListsOnce();
+          renderDictionary();
+        });
+      }
+      migrateWordListsOnce();
+      restorePhrasalList();
+      restorePhrasalTopic();
+      restoreGeneralTopic();
+      renderDictionary();
+    }
+
+    function onVocabAuthUi(user) {
+      hideVocabAuthBoot();
+      syncVocabAuthGate();
+      var df = typeof DictionaryFirebase !== 'undefined' ? DictionaryFirebase : null;
+      if (!df || !df.isFirebaseAvailable || !df.isFirebaseAvailable()) {
+        if (df && df.isLocalSessionSkip()) {
+          startVocabularyAppOnce();
+        }
+        return;
+      }
+      if (user || df.isLocalSessionSkip()) {
+        startVocabularyAppOnce();
+      }
+    }
+
+    if (typeof DictionaryFirebase !== 'undefined' && DictionaryFirebase.isFirebaseAvailable && DictionaryFirebase.isFirebaseAvailable()) {
+      DictionaryFirebase.bindAuthUI({
+        email: document.getElementById('gateEmail'),
+        password: document.getElementById('gatePassword'),
+        signIn: document.getElementById('gateSignIn'),
+        signUp: document.getElementById('gateSignUp'),
+        signOut: null,
+        loggedOut: null,
+        loggedIn: null,
+        userEmail: null,
+        error: document.getElementById('gateAuthError')
+      });
+    }
+
+    var gateContinueLocal = document.getElementById('gateContinueLocal');
+    if (gateContinueLocal) {
+      gateContinueLocal.addEventListener('click', function () {
+        hideVocabAuthBoot();
+        if (typeof DictionaryFirebase !== 'undefined' && DictionaryFirebase.setLocalSessionSkip) {
+          DictionaryFirebase.setLocalSessionSkip();
+        }
+        syncVocabAuthGate();
+        startVocabularyAppOnce();
+      });
+    }
+
+    if (typeof DictionaryFirebase !== 'undefined' && DictionaryFirebase.onAuthUiChange) {
+      DictionaryFirebase.onAuthUiChange(onVocabAuthUi);
+    } else {
+      hideVocabAuthBoot();
+      syncVocabAuthGate();
+      var df0 = typeof DictionaryFirebase !== 'undefined' ? DictionaryFirebase : null;
+      if (!df0 || !df0.isFirebaseAvailable || !df0.isFirebaseAvailable()) {
+        if (df0 && df0.isLocalSessionSkip()) {
+          startVocabularyAppOnce();
+        }
+      } else if (df0.getCurrentUser() || df0.isLocalSessionSkip()) {
+        startVocabularyAppOnce();
+      }
+    }
 
     function fetchWithTimeout(url, options) {
       var ctrl = new AbortController();
@@ -2366,7 +2667,7 @@
       var targetWordInstruction = targetWord
         ? 'They should use the word/phrase "' + targetWord + '" or its appropriate form. '
         : '';
-      var systemPrompt = 'You are an English teacher evaluating translations. The student was given a Russian sentence and asked to translate it to English. ' + targetWordInstruction + 'Evaluate their translation:\n\n1. The student should correctly translate the main idea, but it is not a mistake to use synonyms or slightly different wording. Skip minor mistakes and issues. Skip capitalization mistakes. Give a score 1-5 (1=poor, 5=excellent)\n2. Provide ONE corrected version of the student answer at B2-C1 level\n3. List specific errors (grammar, vocabulary, word choice) with corrections. Whenever you discuss a word or phrase the student used, briefly state what meaning that English word or phrase conveys on its own (how a fluent reader would interpret it) before explaining why it does not match the Russian or the intended idea. Do not check punctuation. Student can use formal and informal language and any abbreviations or contractions.\n4. Provide 2-3 alternative translations at B2-C1 level that a fluent speaker would use\n\nReply with JSON only: {"score": number, "corrected": "single corrected version", "errors": "detailed error analysis or \\"No errors\\" if perfect", "alternatives": "2-3 alternative B2-C1 level translations, each on new line"}';
+      var systemPrompt = 'You are an English teacher evaluating translations. The student was given a Russian sentence and asked to translate it to English. ' + targetWordInstruction + 'Evaluate their translation:\n\n1. The student should correctly translate the main idea, but it is not a mistake to use synonyms or slightly different wording. Skip minor mistakes and issues. If there is only minor mistakes, return success text in the "errors" block. Skip capitalization mistakes. Give a score 1-5 (1=poor, 5=excellent)\n2. Provide ONE corrected version of the student answer at B2-C1 level\n3. List specific errors (grammar, vocabulary, word choice) with corrections. Whenever you discuss a word or phrase the student used, briefly state what meaning that English word or phrase conveys on its own (how a fluent reader would interpret it) before explaining why it does not match the Russian or the intended idea. Do not check punctuation. Student can use formal and informal language and any abbreviations or contractions.\n4. Provide 2-3 alternative translations at B2-C1 level that a fluent speaker would use\n\nReply with JSON only: {"score": number, "corrected": "single corrected version", "errors": "detailed error analysis or \\"No errors\\" if perfect", "alternatives": "2-3 alternative B2-C1 level translations, each on new line"}';
       var response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {

@@ -213,6 +213,19 @@
       font-family: inherit;
       text-decoration: underline;
     }
+
+    .account-email {
+      font-size: 0.95rem;
+      word-break: break-all;
+      color: #e8e8e8;
+    }
+
+    .settings-panel .auth-error {
+      margin-top: 0.75rem;
+      font-size: 0.85rem;
+      color: #ff6b6b;
+      line-height: 1.4;
+    }
   </style>
 </head>
 <body>
@@ -221,6 +234,34 @@
     <h1>Settings</h1>
 
     <div class="settings-list">
+      <div>
+        <button type="button" class="settings-item" id="btnAccount" aria-expanded="false">
+          <span>Account</span>
+          <span class="caret" aria-hidden="true">›</span>
+        </button>
+        <div class="settings-panel" id="panelAccount">
+          <div id="accountSignedIn" hidden>
+            <p class="hint" style="margin-top: 0;">Signed in as</p>
+            <p class="account-email" id="settingsUserEmail"></p>
+            <p class="hint">Your vocabulary syncs across devices when you use Vocabulary Practice or HR Interview while signed in.</p>
+            <div class="row-actions">
+              <button type="button" class="btn btn-ghost" id="settingsSignOut">Sign out</button>
+            </div>
+          </div>
+          <div id="accountSignedOut">
+            <p class="hint" style="margin-top: 0;">Sign in with the same email you use for practice modes, or create an account.</p>
+            <label for="settingsEmail">Email</label>
+            <input type="email" id="settingsEmail" autocomplete="email" placeholder="you@example.com">
+            <label for="settingsPassword">Password</label>
+            <input type="password" id="settingsPassword" autocomplete="current-password" placeholder="At least 6 characters for new accounts">
+            <div class="row-actions">
+              <button type="button" class="btn btn-primary" id="settingsSignIn">Sign in</button>
+              <button type="button" class="btn btn-ghost" id="settingsSignUp">Create account</button>
+            </div>
+            <p class="auth-error" id="settingsAuthError" hidden></p>
+          </div>
+        </div>
+      </div>
       <div>
         <button type="button" class="settings-item expanded" id="btnApiKey" aria-expanded="true">
           <span>API key</span>
@@ -241,9 +282,38 @@
     </div>
   </div>
 
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics-compat.js"></script>
+  <script src="dictionary-firebase.js"></script>
   <script src="api-config.js"></script>
   <script>
     (function () {
+      var btnAccount = document.getElementById('btnAccount');
+      var panelAccount = document.getElementById('panelAccount');
+      if (btnAccount && panelAccount) {
+        btnAccount.addEventListener('click', function () {
+          var open = panelAccount.classList.toggle('open');
+          btnAccount.classList.toggle('expanded', open);
+          btnAccount.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      }
+
+      if (typeof DictionaryFirebase !== 'undefined' && DictionaryFirebase.bindAuthUI) {
+        DictionaryFirebase.bindAuthUI({
+          email: document.getElementById('settingsEmail'),
+          password: document.getElementById('settingsPassword'),
+          signIn: document.getElementById('settingsSignIn'),
+          signUp: document.getElementById('settingsSignUp'),
+          signOut: document.getElementById('settingsSignOut'),
+          loggedOut: document.getElementById('accountSignedOut'),
+          loggedIn: document.getElementById('accountSignedIn'),
+          userEmail: document.getElementById('settingsUserEmail'),
+          error: document.getElementById('settingsAuthError')
+        });
+      }
+
       var btn = document.getElementById('btnApiKey');
       var panel = document.getElementById('panelApiKey');
       var input = document.getElementById('apiKeyInput');

@@ -26,10 +26,18 @@
     .header {
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
       gap: 1rem;
       padding: 1.5rem 2rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       flex-shrink: 0;
+    }
+
+    .app-shell {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
     }
 
     .btn-back {
@@ -60,6 +68,207 @@
       letter-spacing: -0.02em;
     }
 
+    .header-modes {
+      margin-left: auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      align-items: center;
+    }
+
+    .header-modes-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      opacity: 0.55;
+      margin-right: 0.25rem;
+    }
+
+    .mode-pill {
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(232, 232, 232, 0.85);
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .mode-pill:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.28);
+    }
+
+    .mode-pill.active {
+      color: #1a1a2e;
+      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+      border-color: transparent;
+    }
+
+    .auth-gate {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.25rem 3rem;
+      box-sizing: border-box;
+    }
+
+    .auth-gate[hidden] {
+      display: none !important;
+    }
+
+    .app-shell[hidden] {
+      display: none !important;
+    }
+
+    .auth-boot {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: rgba(232, 232, 232, 0.55);
+      font-size: 0.95rem;
+      font-style: italic;
+    }
+
+    .auth-boot[hidden] {
+      display: none !important;
+    }
+
+    .auth-gate-back {
+      align-self: flex-start;
+      margin-bottom: 1.25rem;
+    }
+
+    .auth-gate-card {
+      width: 100%;
+      max-width: 420px;
+      padding: 1.75rem 1.5rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+    }
+
+    .auth-gate-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .auth-gate-intro {
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: rgba(232, 232, 232, 0.65);
+      margin-bottom: 1.25rem;
+    }
+
+    .auth-gate-fields label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(232, 232, 232, 0.55);
+      margin-bottom: 0.35rem;
+    }
+
+    .auth-gate-fields input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.55rem 0.75rem;
+      margin-bottom: 0.85rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(0, 0, 0, 0.28);
+      color: #e8e8e8;
+    }
+
+    .auth-gate-fields input:focus {
+      outline: none;
+      border-color: rgba(233, 69, 96, 0.55);
+    }
+
+    .auth-gate-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.25rem;
+    }
+
+    .btn-auth-gate-primary {
+      padding: 0.55rem 1.1rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      color: #1a1a2e;
+      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+      transition: opacity 0.2s, transform 0.15s;
+    }
+
+    .btn-auth-gate-primary:hover {
+      opacity: 0.95;
+    }
+
+    .btn-auth-gate-secondary {
+      padding: 0.55rem 1.1rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(232, 232, 232, 0.95);
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .btn-auth-gate-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.32);
+    }
+
+    .auth-gate .auth-error {
+      font-size: 0.82rem;
+      color: #ff8a8a;
+      margin: 0.75rem 0 0;
+      line-height: 1.4;
+    }
+
+    .link-auth-gate-skip {
+      display: block;
+      width: 100%;
+      margin-top: 1.25rem;
+      padding: 0;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(232, 232, 232, 0.5);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 0.15em;
+    }
+
+    .link-auth-gate-skip:hover {
+      color: rgba(233, 69, 96, 0.95);
+    }
+
     .layout {
       flex: 1;
       display: flex;
@@ -69,6 +278,97 @@
       margin: 0 auto;
       padding: 2rem;
       min-height: 0;
+    }
+
+    .question-sidebar {
+      display: none;
+      flex-direction: column;
+      width: 280px;
+      flex-shrink: 0;
+      max-height: min(70vh, 560px);
+      padding: 1rem 1.1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      min-height: 0;
+    }
+
+    .layout.mode-one .question-sidebar {
+      display: flex;
+    }
+
+    .question-sidebar-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.75;
+      margin-bottom: 0.75rem;
+    }
+
+    .one-question-bank {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .one-question-bank-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      opacity: 0.6;
+    }
+
+    .one-question-bank label {
+      font-size: 0.85rem;
+      line-height: 1.35;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.45rem;
+    }
+
+    .one-question-bank input {
+      margin-top: 0.2rem;
+      flex-shrink: 0;
+    }
+
+    .one-q-text-compact {
+      display: none;
+    }
+
+    .btn-new-question {
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.65rem 1rem;
+      border-radius: 10px;
+      border: 1px solid rgba(233, 69, 96, 0.45);
+      background: rgba(233, 69, 96, 0.15);
+      color: #e8e8e8;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .btn-new-question:hover {
+      background: rgba(233, 69, 96, 0.28);
+      border-color: rgba(233, 69, 96, 0.65);
+    }
+
+    .dict-add-list-row {
+      font-size: 0.85rem;
+      color: rgba(232, 232, 232, 0.65);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem 1rem;
+    }
+
+    .dict-add-list-row label {
+      cursor: pointer;
+      font-weight: 500;
     }
 
     .chat-main {
@@ -161,8 +461,15 @@
       border-radius: 12px;
       resize: none;
       min-height: 52px;
-      max-height: 120px;
       transition: border-color 0.2s, background 0.2s;
+    }
+
+    #userInput.user-input {
+      max-height: min(55vh, 480px);
+    }
+
+    #toolsInput.user-input {
+      max-height: 120px;
     }
 
     .user-input::placeholder {
@@ -385,6 +692,85 @@
       .layout {
         flex-direction: column;
       }
+
+      .layout.mode-one {
+        gap: 0.6rem;
+        padding: 1rem 1rem 1.25rem;
+      }
+
+      .layout.mode-one .question-sidebar {
+        width: 100%;
+        max-height: none;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        column-gap: 0.65rem;
+        row-gap: 0.35rem;
+        padding: 0.4rem 0.55rem;
+      }
+
+      .layout.mode-one .question-sidebar-title {
+        margin-bottom: 0;
+        font-size: 0.68rem;
+        letter-spacing: 0.06em;
+        flex: 0 0 auto;
+      }
+
+      .layout.mode-one .one-question-bank {
+        flex: 1 1 auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.3rem 0.85rem;
+        margin-bottom: 0;
+        min-width: 0;
+      }
+
+      .layout.mode-one .one-question-bank-label {
+        display: none;
+      }
+
+      .layout.mode-one .one-question-bank label {
+        font-size: 0.76rem;
+        line-height: 1.2;
+        white-space: nowrap;
+      }
+
+      .layout.mode-one .one-q-text-full {
+        display: none;
+      }
+
+      .layout.mode-one .one-q-text-compact {
+        display: inline;
+      }
+
+      .layout.mode-one .btn-new-question {
+        flex: 0 0 auto;
+        padding: 0.35rem 0.6rem;
+        font-size: 0.76rem;
+        margin-left: auto;
+      }
+
+      .layout.mode-one .chat-main {
+        flex: 1;
+        min-height: 0;
+        gap: 0.85rem;
+      }
+
+      .layout.mode-one .messages {
+        min-height: min(52vh, 420px);
+      }
+
+      .header {
+        flex-wrap: wrap;
+      }
+
+      .header-modes {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 0.75rem;
+        justify-content: flex-start;
+      }
     }
 
     @media (max-width: 640px) {
@@ -394,6 +780,35 @@
 
       .layout {
         padding: 1rem;
+      }
+
+      .layout.mode-one {
+        padding: 0.65rem 0.75rem 1rem;
+        gap: 0.45rem;
+      }
+
+      .layout.mode-one .question-sidebar {
+        padding: 0.35rem 0.45rem;
+        column-gap: 0.45rem;
+      }
+
+      .layout.mode-one .question-sidebar-title {
+        font-size: 0.62rem;
+      }
+
+      .layout.mode-one .one-question-bank label {
+        font-size: 0.72rem;
+      }
+
+      .layout.mode-one .btn-new-question {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 0.15rem;
+        text-align: center;
+      }
+
+      .layout.mode-one .messages {
+        min-height: min(58vh, 480px);
       }
 
       .input-row {
@@ -422,12 +837,54 @@
   </style>
 </head>
 <body>
+  <div class="auth-boot" id="authBoot" aria-busy="true" aria-live="polite">Loading…</div>
+  <div class="auth-gate" id="authGate" hidden>
+    <a href="index.html" class="btn-back auth-gate-back">← Menu</a>
+    <div class="auth-gate-card">
+      <h2 class="auth-gate-title">Sign in or create an account</h2>
+      <p class="auth-gate-intro">Use the same account as in Vocabulary Practice so your dictionary stays in sync. New here? Enter email and password, then tap Sign up.</p>
+      <div class="auth-gate-fields">
+        <label for="gateEmail">Email</label>
+        <input type="email" id="gateEmail" autocomplete="email" placeholder="you@example.com" aria-label="Email">
+        <label for="gatePassword">Password</label>
+        <input type="password" id="gatePassword" autocomplete="new-password" placeholder="At least 6 characters" aria-label="Password">
+      </div>
+      <div class="auth-gate-actions">
+        <button type="button" class="btn-auth-gate-primary" id="gateSignIn">Sign in</button>
+        <button type="button" class="btn-auth-gate-secondary" id="gateSignUp">Sign up</button>
+      </div>
+      <p class="auth-error" id="gateAuthError" hidden></p>
+      <button type="button" class="link-auth-gate-skip" id="gateContinueLocal">Continue without an account (this browser only)</button>
+    </div>
+  </div>
+
+  <div class="app-shell" id="appShell" hidden>
   <header class="header">
     <a href="index.html" class="btn-back">← Menu</a>
     <h1>HR Interview</h1>
+    <div class="header-modes" role="group" aria-label="Interview mode">
+      <span class="header-modes-label">Mode</span>
+      <button type="button" class="mode-pill active" id="modeFull" data-mode="full">Full interview</button>
+      <button type="button" class="mode-pill" id="modeOne" data-mode="one">One question</button>
+    </div>
   </header>
 
-  <main class="layout">
+  <main class="layout mode-full" id="mainLayout">
+    <aside class="question-sidebar" id="questionSidebar" aria-label="One question practice: pick question type, then new random question">
+      <div class="question-sidebar-title">One question</div>
+      <div class="one-question-bank" role="group" aria-label="Question type">
+        <div class="one-question-bank-label">Question type</div>
+        <label>
+          <input type="radio" name="oneQuestionBank" value="general" checked>
+          <span class="one-q-text-full">General questions</span><span class="one-q-text-compact">General</span>
+        </label>
+        <label>
+          <input type="radio" name="oneQuestionBank" value="company">
+          <span class="one-q-text-full">Company-specific</span><span class="one-q-text-compact">Company</span>
+        </label>
+      </div>
+      <button type="button" class="btn-new-question" id="btnNewQuestion">New random question</button>
+    </aside>
     <section class="chat-main">
       <div class="messages" id="messages">
         <!-- Сообщения от HR -->
@@ -476,10 +933,20 @@
       </div>
     </section>
   </main>
+  </div>
 
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics-compat.js"></script>
+  <script src="dictionary-firebase.js"></script>
   <script src="api-config.js"></script>
   <script>
     const messagesEl = document.getElementById('messages');
+    const mainLayoutEl = document.getElementById('mainLayout');
+    const modeFullBtn = document.getElementById('modeFull');
+    const modeOneBtn = document.getElementById('modeOne');
+    const btnNewQuestion = document.getElementById('btnNewQuestion');
     const userInputEl = document.getElementById('userInput');
     const toolsInputEl = document.getElementById('toolsInput');
     const btnSend = document.getElementById('btnSend');
@@ -605,10 +1072,54 @@
 
     const FIRST_HR_MESSAGE = 'Hello! Please tell us a little about yourself.';
 
-    const conversationHistory = [
-      { role: 'system', content: HR_SYSTEM_PROMPT },
-      { role: 'assistant', content: FIRST_HR_MESSAGE }
+    const GENERAL_ONE_QUESTIONS = [
+      'Tell me about yourself.',
+      'Tell me about a product you built or led.',
+      'Tell me about a failure.',
+      'Describe a conflict with stakeholders.',
+      'Tell me about a time you influenced without authority.',
+      "What's your favorite product and why?",
+      'How do you identify user needs?',
+      'How do you approach product strategy?',
+      'What metrics would you track for a product?',
+      'How do you measure success?',
+      'Tell me about a data-driven decision you made.',
+      'What would you do if a key metric drops?',
+      'How do you prioritize features?',
+      'How do you decide what not to build?',
+      'How do you work with engineers?',
+      'How would you incorporate AI into a product?',
+      'What AI tools do you use in your work?'
     ];
+
+    const COMPANY_ONE_QUESTIONS = [
+      'Why do you want to work at this company?',
+      'Why are you interested in this role?',
+      'What do you know about our company?',
+      'What excites you about our product?',
+      'How do you see our company evolving in the next few years?',
+      'How would you improve our product?',
+      "What's the biggest problem with our product today?",
+      'What feature would you build next for our product?',
+      'How would you increase engagement for our product?',
+      'How would you monetize our product better?',
+      'Who are our main competitors and how do we compare?',
+      'What metrics would you track for our product?',
+      'What is our target user and what are their biggest pain points?',
+      'How would you launch our product in a new market?'
+    ];
+
+    var interviewMode = 'full';
+    var oneModeCurrentQuestion = null;
+
+    function createInitialConversationHistory() {
+      return [
+        { role: 'system', content: HR_SYSTEM_PROMPT },
+        { role: 'assistant', content: FIRST_HR_MESSAGE }
+      ];
+    }
+
+    var conversationHistory = createInitialConversationHistory();
 
     function addHrMessage(text, options) {
       const { loading = false, error = false } = options || {};
@@ -688,6 +1199,81 @@
       return div.innerHTML;
     }
 
+    function getSelectedOneQuestionBank() {
+      var el = document.querySelector('input[name="oneQuestionBank"]:checked');
+      return el && el.value === 'company' ? 'company' : 'general';
+    }
+
+    function getOneQuestionPool() {
+      return getSelectedOneQuestionBank() === 'company' ? COMPANY_ONE_QUESTIONS : GENERAL_ONE_QUESTIONS;
+    }
+
+    function pickRandomFromPool(pool, avoidText) {
+      if (!pool || pool.length === 0) return '';
+      if (pool.length === 1) return pool[0];
+      var q;
+      var n = 0;
+      do {
+        q = pool[Math.floor(Math.random() * pool.length)];
+        n++;
+      } while (q === avoidText && n < 40);
+      return q;
+    }
+
+    function issueRandomOneQuestion() {
+      if (interviewMode !== 'one') return;
+      var pool = getOneQuestionPool();
+      var q = pickRandomFromPool(pool, oneModeCurrentQuestion);
+      oneModeCurrentQuestion = q;
+      addHrMessage(q);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      userInputEl.focus();
+    }
+
+    function updateModeUi() {
+      var isFull = interviewMode === 'full';
+      modeFullBtn.classList.toggle('active', isFull);
+      modeOneBtn.classList.toggle('active', !isFull);
+      mainLayoutEl.classList.toggle('mode-full', isFull);
+      mainLayoutEl.classList.toggle('mode-one', !isFull);
+    }
+
+    function setInterviewMode(mode) {
+      var next = mode === 'one' ? 'one' : 'full';
+      if (next === interviewMode) return;
+      interviewMode = next;
+      messagesEl.innerHTML = '';
+      oneModeCurrentQuestion = null;
+
+      if (interviewMode === 'full') {
+        conversationHistory = createInitialConversationHistory();
+        addHrMessage(FIRST_HR_MESSAGE);
+      } else {
+        conversationHistory = [];
+      }
+
+      updateModeUi();
+
+      if (interviewMode === 'one') {
+        issueRandomOneQuestion();
+      }
+    }
+
+    modeFullBtn.addEventListener('click', function () { setInterviewMode('full'); });
+    modeOneBtn.addEventListener('click', function () { setInterviewMode('one'); });
+
+    btnNewQuestion.addEventListener('click', function () {
+      if (interviewMode !== 'one') return;
+      issueRandomOneQuestion();
+    });
+
+    document.querySelectorAll('input[name="oneQuestionBank"]').forEach(function (radio) {
+      radio.addEventListener('change', function () {
+        if (interviewMode !== 'one') return;
+        issueRandomOneQuestion();
+      });
+    });
+
     const API_TIMEOUT_MS = 60000;
 
     function fetchWithTimeout(url, options) {
@@ -704,6 +1290,9 @@
     }
 
     function getDictionary() {
+      if (typeof DictionaryFirebase !== 'undefined' && DictionaryFirebase.getDictionary) {
+        return DictionaryFirebase.getDictionary();
+      }
       try {
         var raw = localStorage.getItem(DICT_STORAGE_KEY);
         var list = raw ? JSON.parse(raw) : [];
@@ -714,6 +1303,10 @@
     }
 
     function saveDictionary(list) {
+      if (typeof DictionaryFirebase !== 'undefined' && DictionaryFirebase.saveDictionary) {
+        DictionaryFirebase.saveDictionary(list);
+        return;
+      }
       try {
         localStorage.setItem(DICT_STORAGE_KEY, JSON.stringify(list));
       } catch (_) {}
@@ -963,14 +1556,33 @@
       return result;
     }
 
+    async function runDualFeedback(userMsgEl, hrQuestion, userAnswer) {
+      var skillsPromise = getAnswerAnalysisWithRetry(hrQuestion, userAnswer);
+      var engPromise = getEnglishFeedbackWithRetry(hrQuestion, userAnswer);
+      var results = await Promise.allSettled([skillsPromise, engPromise]);
+      var skillsResult = results[0].status === 'fulfilled' ? results[0].value : { score: null, description: (results[0].reason && results[0].reason.message) ? results[0].reason.message : 'Feedback could not be loaded.' };
+      var engResult = results[1].status === 'fulfilled' ? results[1].value : { score: null, description: (results[1].reason && results[1].reason.message) ? results[1].reason.message : 'Feedback could not be loaded.' };
+      attachFeedbackBlock(userMsgEl, 'Skills feedback', skillsResult);
+      attachFeedbackBlock(userMsgEl, 'Eng feedback', engResult);
+    }
+
     async function sendUserMessage() {
       const text = userInputEl.value.trim();
       if (!text) return;
 
+      if (interviewMode === 'one') {
+        if (!oneModeCurrentQuestion) {
+          addHrMessage('No question loaded. Switch mode or click "New random question".', { error: true });
+          return;
+        }
+      }
+
       const userMsgEl = addUserMessage(text);
-      conversationHistory.push({ role: 'user', content: text });
+      if (interviewMode === 'full') {
+        conversationHistory.push({ role: 'user', content: text });
+      }
       userInputEl.value = '';
-      userInputEl.style.height = 'auto';
+      fitUserAnswerInputHeight();
 
       if (!getOpenAiApiKey()) {
         addHrMessage('Add your OpenAI API key in Settings (main menu).', { error: true });
@@ -978,6 +1590,14 @@
       }
 
       btnSend.disabled = true;
+
+      if (interviewMode === 'one') {
+        var q = oneModeCurrentQuestion;
+        await runDualFeedback(userMsgEl, q, text);
+        btnSend.disabled = false;
+        return;
+      }
+
       addHrMessage('Thinking...', { loading: true });
 
       try {
@@ -986,13 +1606,7 @@
         updateLastHrMessage(reply);
 
         const hrQuestion = conversationHistory[conversationHistory.length - 3]?.content || FIRST_HR_MESSAGE;
-        var skillsPromise = getAnswerAnalysisWithRetry(hrQuestion, text);
-        var engPromise = getEnglishFeedbackWithRetry(hrQuestion, text);
-        var results = await Promise.allSettled([skillsPromise, engPromise]);
-        var skillsResult = results[0].status === 'fulfilled' ? results[0].value : { score: null, description: (results[0].reason && results[0].reason.message) ? results[0].reason.message : 'Feedback could not be loaded.' };
-        var engResult = results[1].status === 'fulfilled' ? results[1].value : { score: null, description: (results[1].reason && results[1].reason.message) ? results[1].reason.message : 'Feedback could not be loaded.' };
-        attachFeedbackBlock(userMsgEl, 'Skills feedback', skillsResult);
-        attachFeedbackBlock(userMsgEl, 'Eng feedback', engResult);
+        await runDualFeedback(userMsgEl, hrQuestion, text);
       } catch (err) {
         const msg = err.message || 'Could not get response';
         updateLastHrMessage('Error: ' + msg, true);
@@ -1009,9 +1623,23 @@
       }
     });
 
-    userInputEl.addEventListener('input', function () {
-      this.style.height = 'auto';
-      this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+    function userAnswerInputMaxPx() {
+      return Math.min(Math.round(window.innerHeight * 0.55), 480);
+    }
+
+    function fitUserAnswerInputHeight() {
+      var el = userInputEl;
+      if (!el) return;
+      el.style.height = 'auto';
+      var maxPx = userAnswerInputMaxPx();
+      var sh = el.scrollHeight;
+      el.style.height = Math.min(sh, maxPx) + 'px';
+      el.style.overflowY = sh > maxPx ? 'auto' : 'hidden';
+    }
+
+    userInputEl.addEventListener('input', fitUserAnswerInputHeight);
+    window.addEventListener('resize', function () {
+      fitUserAnswerInputHeight();
     });
 
     toolsInputEl.addEventListener('input', function () {
@@ -1021,7 +1649,102 @@
 
     btnAddWord.addEventListener('click', addWordToDictionary);
 
-    addHrMessage(FIRST_HR_MESSAGE);
+    var interviewAppStarted = false;
+
+    function hideInterviewAuthBoot() {
+      var boot = document.getElementById('authBoot');
+      if (boot) boot.hidden = true;
+    }
+
+    function syncInterviewAuthGate() {
+      var gate = document.getElementById('authGate');
+      var shell = document.getElementById('appShell');
+      if (!gate || !shell) return;
+      var df = typeof DictionaryFirebase !== 'undefined' ? DictionaryFirebase : null;
+      var skip = df && df.isLocalSessionSkip && df.isLocalSessionSkip();
+      if (!df || !df.isFirebaseAvailable || !df.isFirebaseAvailable()) {
+        if (skip) {
+          gate.hidden = true;
+          shell.hidden = false;
+        } else {
+          gate.hidden = false;
+          shell.hidden = true;
+        }
+        return;
+      }
+      var u = df.getCurrentUser();
+      if (u || skip) {
+        gate.hidden = true;
+        shell.hidden = false;
+      } else {
+        gate.hidden = false;
+        shell.hidden = true;
+      }
+    }
+
+    function startInterviewAppOnce() {
+      if (interviewAppStarted) return;
+      interviewAppStarted = true;
+      updateModeUi();
+      addHrMessage(FIRST_HR_MESSAGE);
+      fitUserAnswerInputHeight();
+    }
+
+    function onInterviewAuthUi(user) {
+      hideInterviewAuthBoot();
+      syncInterviewAuthGate();
+      var df = typeof DictionaryFirebase !== 'undefined' ? DictionaryFirebase : null;
+      if (!df || !df.isFirebaseAvailable || !df.isFirebaseAvailable()) {
+        if (df && df.isLocalSessionSkip()) {
+          startInterviewAppOnce();
+        }
+        return;
+      }
+      if (user || df.isLocalSessionSkip()) {
+        startInterviewAppOnce();
+      }
+    }
+
+    if (typeof DictionaryFirebase !== 'undefined' && DictionaryFirebase.isFirebaseAvailable && DictionaryFirebase.isFirebaseAvailable()) {
+      DictionaryFirebase.bindAuthUI({
+        email: document.getElementById('gateEmail'),
+        password: document.getElementById('gatePassword'),
+        signIn: document.getElementById('gateSignIn'),
+        signUp: document.getElementById('gateSignUp'),
+        signOut: null,
+        loggedOut: null,
+        loggedIn: null,
+        userEmail: null,
+        error: document.getElementById('gateAuthError')
+      });
+    }
+
+    var gateContinueLocalInterview = document.getElementById('gateContinueLocal');
+    if (gateContinueLocalInterview) {
+      gateContinueLocalInterview.addEventListener('click', function () {
+        hideInterviewAuthBoot();
+        if (typeof DictionaryFirebase !== 'undefined' && DictionaryFirebase.setLocalSessionSkip) {
+          DictionaryFirebase.setLocalSessionSkip();
+        }
+        syncInterviewAuthGate();
+        startInterviewAppOnce();
+      });
+    }
+
+    if (typeof DictionaryFirebase !== 'undefined' && DictionaryFirebase.onAuthUiChange) {
+      DictionaryFirebase.onAuthUiChange(onInterviewAuthUi);
+    } else {
+      hideInterviewAuthBoot();
+      syncInterviewAuthGate();
+      var df0 = typeof DictionaryFirebase !== 'undefined' ? DictionaryFirebase : null;
+      if (!df0 || !df0.isFirebaseAvailable || !df0.isFirebaseAvailable()) {
+        if (df0 && df0.isLocalSessionSkip()) {
+          startInterviewAppOnce();
+        }
+      } else if (df0.getCurrentUser() || df0.isLocalSessionSkip()) {
+        startInterviewAppOnce();
+      }
+    }
   </script>
 </body>
 </html>

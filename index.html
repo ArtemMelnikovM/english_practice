@@ -17,11 +17,190 @@
     body {
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       font-family: 'DM Sans', sans-serif;
       background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
       color: #e8e8e8;
+    }
+
+    .auth-gate {
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.25rem 3rem;
+      box-sizing: border-box;
+    }
+
+    .auth-gate[hidden] {
+      display: none !important;
+    }
+
+    .app-shell {
+      width: 100%;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .app-shell[hidden] {
+      display: none !important;
+    }
+
+    .auth-boot {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: rgba(232, 232, 232, 0.55);
+      font-size: 0.95rem;
+      font-style: italic;
+    }
+
+    .auth-boot[hidden] {
+      display: none !important;
+    }
+
+    .auth-gate-card {
+      width: 100%;
+      max-width: 420px;
+      padding: 1.75rem 1.5rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+    }
+
+    .auth-gate-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .auth-gate-intro {
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: rgba(232, 232, 232, 0.65);
+      margin-bottom: 1.25rem;
+    }
+
+    .auth-gate-fields label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(232, 232, 232, 0.55);
+      margin-bottom: 0.35rem;
+    }
+
+    .auth-gate-fields input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.55rem 0.75rem;
+      margin-bottom: 0.85rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(0, 0, 0, 0.28);
+      color: #e8e8e8;
+    }
+
+    .auth-gate-fields input:focus {
+      outline: none;
+      border-color: rgba(233, 69, 96, 0.55);
+    }
+
+    .auth-gate-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.25rem;
+    }
+
+    .btn-auth-gate-primary {
+      padding: 0.55rem 1.1rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      color: #1a1a2e;
+      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+      transition: opacity 0.2s, transform 0.15s;
+    }
+
+    .btn-auth-gate-primary:hover {
+      opacity: 0.95;
+    }
+
+    .btn-auth-gate-secondary {
+      padding: 0.55rem 1.1rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(232, 232, 232, 0.95);
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .btn-auth-gate-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.32);
+    }
+
+    .auth-gate .auth-error {
+      font-size: 0.82rem;
+      color: #ff8a8a;
+      margin: 0.75rem 0 0;
+      line-height: 1.4;
+    }
+
+    .link-auth-gate-skip {
+      display: block;
+      width: 100%;
+      margin-top: 1.25rem;
+      padding: 0;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(232, 232, 232, 0.5);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 0.15em;
+    }
+
+    .link-auth-gate-skip:hover {
+      color: rgba(233, 69, 96, 0.95);
+    }
+
+    .auth-gate-settings {
+      display: block;
+      margin-top: 1rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(233, 69, 96, 0.95);
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .auth-gate-settings:hover {
+      text-decoration: underline;
     }
 
     .container {
@@ -133,42 +312,150 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="top-bar">
-      <a href="settings.html" class="settings-link">Settings</a>
-    </div>
-    <h1>Practice Mode</h1>
-    <p class="subtitle">Choose a mode to start practicing</p>
-
-    <div class="modes">
-      <a href="interview.html" class="mode-card">
-        <div class="mode-icon">💼</div>
-        <div class="mode-title">English HR Interview</div>
-        <div class="mode-desc">Practice job interviews in English with AI-powered HR. Get feedback on your answers and English skills.</div>
-        <span class="mode-badge">Available</span>
-      </a>
-
-      <a href="vocabulary.html" class="mode-card">
-        <div class="mode-icon">📚</div>
-        <div class="mode-title">Vocabulary Practice</div>
-        <div class="mode-desc">Practice translating sentences using words from your dictionary. Get error analysis and B2-C1 alternatives.</div>
-        <span class="mode-badge">Available</span>
-      </a>
-
-      <div class="mode-card coming-soon">
-        <div class="mode-icon">🎯</div>
-        <div class="mode-title">Technical Interview</div>
-        <div class="mode-desc">Practice technical questions and coding challenges with detailed explanations.</div>
-        <span class="mode-badge">Coming soon</span>
+  <div class="auth-boot" id="authBoot" aria-busy="true" aria-live="polite">Loading…</div>
+  <div class="auth-gate" id="authGate" hidden>
+    <div class="auth-gate-card">
+      <h2 class="auth-gate-title">Sign in or create an account</h2>
+      <p class="auth-gate-intro">Sign in to sync your vocabulary across devices. New here? Enter email and password, then tap Sign up.</p>
+      <div class="auth-gate-fields">
+        <label for="gateEmail">Email</label>
+        <input type="email" id="gateEmail" autocomplete="email" placeholder="you@example.com" aria-label="Email">
+        <label for="gatePassword">Password</label>
+        <input type="password" id="gatePassword" autocomplete="new-password" placeholder="At least 6 characters" aria-label="Password">
       </div>
+      <div class="auth-gate-actions">
+        <button type="button" class="btn-auth-gate-primary" id="gateSignIn">Sign in</button>
+        <button type="button" class="btn-auth-gate-secondary" id="gateSignUp">Sign up</button>
+      </div>
+      <p class="auth-error" id="gateAuthError" hidden></p>
+      <button type="button" class="link-auth-gate-skip" id="gateContinueLocal">Continue without an account (this browser only)</button>
+      <a href="settings.html" class="auth-gate-settings">Settings — API key &amp; account</a>
+    </div>
+  </div>
 
-      <div class="mode-card coming-soon">
-        <div class="mode-icon">🗣️</div>
-        <div class="mode-title">Small Talk Practice</div>
-        <div class="mode-desc">Improve your conversational English with everyday topics and scenarios.</div>
-        <span class="mode-badge">Coming soon</span>
+  <div class="app-shell" id="appShell" hidden>
+    <div class="container">
+      <div class="top-bar">
+        <a href="settings.html" class="settings-link">Settings</a>
+      </div>
+      <h1>Practice Mode</h1>
+      <p class="subtitle">Choose a mode to start practicing</p>
+
+      <div class="modes">
+        <a href="interview.html" class="mode-card">
+          <div class="mode-icon">💼</div>
+          <div class="mode-title">English HR Interview</div>
+          <div class="mode-desc">Practice job interviews in English with AI-powered HR. Get feedback on your answers and English skills.</div>
+          <span class="mode-badge">Available</span>
+        </a>
+
+        <a href="vocabulary.html" class="mode-card">
+          <div class="mode-icon">📚</div>
+          <div class="mode-title">Vocabulary Practice</div>
+          <div class="mode-desc">Practice translating sentences using words from your dictionary. Get error analysis and B2-C1 alternatives.</div>
+          <span class="mode-badge">Available</span>
+        </a>
+
+        <div class="mode-card coming-soon">
+          <div class="mode-icon">🎯</div>
+          <div class="mode-title">Technical Interview</div>
+          <div class="mode-desc">Practice technical questions and coding challenges with detailed explanations.</div>
+          <span class="mode-badge">Coming soon</span>
+        </div>
+
+        <div class="mode-card coming-soon">
+          <div class="mode-icon">🗣️</div>
+          <div class="mode-title">Small Talk Practice</div>
+          <div class="mode-desc">Improve your conversational English with everyday topics and scenarios.</div>
+          <span class="mode-badge">Coming soon</span>
+        </div>
       </div>
     </div>
   </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics-compat.js"></script>
+  <script src="dictionary-firebase.js"></script>
+  <script>
+    (function () {
+      function hideIndexAuthBoot() {
+        var boot = document.getElementById('authBoot');
+        if (boot) boot.hidden = true;
+      }
+
+      function syncIndexAuthGate() {
+        var gate = document.getElementById('authGate');
+        var shell = document.getElementById('appShell');
+        if (!gate || !shell) return;
+        var df = typeof DictionaryFirebase !== 'undefined' ? DictionaryFirebase : null;
+        var skip = df && df.isLocalSessionSkip && df.isLocalSessionSkip();
+        if (!df || !df.isFirebaseAvailable || !df.isFirebaseAvailable()) {
+          if (skip) {
+            gate.hidden = true;
+            shell.hidden = false;
+          } else {
+            gate.hidden = false;
+            shell.hidden = true;
+          }
+          return;
+        }
+        var u = df.getCurrentUser();
+        if (u || skip) {
+          gate.hidden = true;
+          shell.hidden = false;
+        } else {
+          gate.hidden = false;
+          shell.hidden = true;
+        }
+      }
+
+      function onIndexAuthUi() {
+        hideIndexAuthBoot();
+        syncIndexAuthGate();
+      }
+
+      if (typeof DictionaryFirebase !== 'undefined' && DictionaryFirebase.isFirebaseAvailable && DictionaryFirebase.isFirebaseAvailable()) {
+        DictionaryFirebase.bindAuthUI({
+          email: document.getElementById('gateEmail'),
+          password: document.getElementById('gatePassword'),
+          signIn: document.getElementById('gateSignIn'),
+          signUp: document.getElementById('gateSignUp'),
+          signOut: null,
+          loggedOut: null,
+          loggedIn: null,
+          userEmail: null,
+          error: document.getElementById('gateAuthError')
+        });
+      }
+
+      var gateContinueLocal = document.getElementById('gateContinueLocal');
+      if (gateContinueLocal) {
+        gateContinueLocal.addEventListener('click', function () {
+          hideIndexAuthBoot();
+          if (typeof DictionaryFirebase !== 'undefined' && DictionaryFirebase.setLocalSessionSkip) {
+            DictionaryFirebase.setLocalSessionSkip();
+          }
+          syncIndexAuthGate();
+        });
+      }
+
+      if (typeof DictionaryFirebase !== 'undefined' && DictionaryFirebase.onAuthUiChange) {
+        DictionaryFirebase.onAuthUiChange(onIndexAuthUi);
+      } else {
+        hideIndexAuthBoot();
+        syncIndexAuthGate();
+        var df0 = typeof DictionaryFirebase !== 'undefined' ? DictionaryFirebase : null;
+        if (!df0 || !df0.isFirebaseAvailable || !df0.isFirebaseAvailable()) {
+          if (df0 && df0.isLocalSessionSkip()) {
+            syncIndexAuthGate();
+          }
+        } else if (df0.getCurrentUser() || df0.isLocalSessionSkip()) {
+          syncIndexAuthGate();
+        }
+      }
+    })();
+  </script>
 </body>
 </html>
