@@ -65,9 +65,205 @@
     }
 
     .header h1 {
-      font-size: 1.5rem;
+      flex: 1;
+      min-width: 0;
       font-weight: 700;
       letter-spacing: -0.02em;
+      white-space: nowrap;
+      /* 25% smaller than clamp(1rem, 5.2vw, 1.5rem) */
+      font-size: clamp(0.75rem, 3.9vw, 1.125rem);
+    }
+
+    .btn-add-word-header {
+      width: 2rem;
+      height: 2rem;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: 1px solid rgba(233, 69, 96, 0.5);
+      background: rgba(233, 69, 96, 0.2);
+      color: #e8e8e8;
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 1;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .btn-add-word-header:hover {
+      background: rgba(233, 69, 96, 0.3);
+      border-color: rgba(233, 69, 96, 0.68);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    .btn-dictionary-settings {
+      flex-shrink: 0;
+      width: 2rem;
+      height: 2rem;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.08);
+      color: #e8e8e8;
+      font-size: 1rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .btn-dictionary-settings:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.32);
+    }
+
+    .btn-dictionary-settings[hidden] {
+      display: none !important;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.55);
+      box-sizing: border-box;
+    }
+
+    .modal-overlay[hidden] {
+      display: none !important;
+    }
+
+    .modal-dialog {
+      width: 100%;
+      max-width: 420px;
+      max-height: min(88vh, 640px);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(145deg, #1e2740 0%, #16213e 100%);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 16px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      flex-shrink: 0;
+    }
+
+    .modal-header h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .modal-close {
+      width: 2rem;
+      height: 2rem;
+      padding: 0;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #e8e8e8;
+      font-size: 1.25rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .modal-body {
+      padding: 1rem 1rem 1.15rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .modal-body .dictionary-practice-filter,
+    .modal-body .dictionary-subtype-wrap {
+      margin-bottom: 0;
+    }
+
+    .modal-body .phrasal-topic-wrap {
+      margin-bottom: 0;
+    }
+
+    .modal-footer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      flex-shrink: 0;
+    }
+
+    .btn-modal-cancel {
+      padding: 0.5rem 0.95rem;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: rgba(232, 232, 232, 0.95);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .btn-modal-cancel:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .btn-modal-apply {
+      padding: 0.5rem 1.1rem;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+    }
+
+    .btn-modal-apply:hover {
+      opacity: 0.95;
+    }
+
+    .panel-practice-focus {
+      display: flex;
+      flex-direction: column;
+      min-height: min(72vh, calc(100vh - 10rem));
+    }
+
+    .panel-practice-focus .practice-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
     }
 
     .auth-gate {
@@ -922,48 +1118,62 @@
     }
 
     .practice-mode-selector {
-      display: flex;
-      flex-wrap: nowrap;
-      gap: 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.7rem;
       margin-bottom: 1rem;
-      padding: 0.2rem;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 10px;
+    }
+
+    .practice-mode-selector[hidden] {
+      display: none !important;
+    }
+
+    .practice-mode-nav {
+      display: none;
+      margin-bottom: 0.9rem;
+    }
+
+    .practice-mode-nav.visible {
+      display: block;
+    }
+
+    .practice-mode-nav-title {
+      font-size: 0.9rem;
+      opacity: 0.8;
     }
 
     .practice-mode-option {
       position: relative;
-      flex: 1 1 0;
-      min-width: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.42rem 0.3rem;
+      display: block;
+      padding: 0.95rem 1rem;
       margin: 0;
-      border: none;
-      border-radius: 8px;
-      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.06);
       cursor: pointer;
-      transition: background 0.2s, color 0.2s;
+      text-align: left;
+      transition: transform 0.2s, background 0.2s, border-color 0.2s, box-shadow 0.2s;
       -webkit-tap-highlight-color: transparent;
     }
 
     .practice-mode-option:hover {
-      background: rgba(255, 255, 255, 0.06);
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(233, 69, 96, 0.5);
+      box-shadow: 0 8px 24px rgba(233, 69, 96, 0.2);
     }
 
     .practice-mode-option:has(input:checked) {
-      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
-      box-shadow: 0 1px 6px rgba(233, 69, 96, 0.35);
+      border-color: rgba(233, 69, 96, 0.75);
+      box-shadow: 0 0 0 1px rgba(233, 69, 96, 0.2);
     }
 
     .practice-mode-option:has(input:checked):hover {
-      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+      background: rgba(255, 255, 255, 0.1);
     }
 
-    .practice-mode-option:has(input:checked) .practice-mode-label {
-      color: #1a1a2e;
+    .practice-mode-option:has(input:checked) .practice-mode-title {
+      color: #ffffff;
     }
 
     .practice-mode-option input {
@@ -978,39 +1188,54 @@
       border: 0;
     }
 
-    .practice-mode-option input:focus-visible + .practice-mode-label {
+    .practice-mode-option input:focus-visible + .practice-mode-card {
       outline: 2px solid rgba(233, 69, 96, 0.8);
       outline-offset: 2px;
-      border-radius: 4px;
+      border-radius: 10px;
     }
 
-    .practice-mode-option:has(input:checked) input:focus-visible + .practice-mode-label {
-      outline-color: rgba(26, 26, 46, 0.9);
+    .practice-mode-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      column-gap: 0.75rem;
+      row-gap: 0.18rem;
+      align-items: start;
     }
 
-    .practice-mode-label {
-      font-size: 0.74rem;
-      font-weight: 600;
+    .practice-mode-icon {
+      font-size: 1.2rem;
       line-height: 1.2;
-      color: rgba(232, 232, 232, 0.92);
-      text-align: center;
-      hyphens: auto;
-      overflow-wrap: anywhere;
+      margin-top: 0.03rem;
     }
 
-    @media (min-width: 400px) {
-      .practice-mode-label {
-        font-size: 0.82rem;
-      }
+    .practice-mode-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+      line-height: 1.25;
+      color: #e8e8e8;
+      text-align: left;
+    }
+
+    .practice-mode-desc {
+      grid-column: 1 / -1;
+      font-size: 0.84rem;
+      line-height: 1.35;
+      color: rgba(232, 232, 232, 0.72);
+      text-align: left;
     }
 
     @media (min-width: 520px) {
-      .practice-mode-option {
-        padding: 0.5rem 0.5rem;
+      .practice-mode-selector {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
 
-      .practice-mode-label {
-        font-size: 0.88rem;
+      .practice-mode-card {
+        grid-template-columns: 1fr;
+        row-gap: 0.25rem;
+      }
+
+      .practice-mode-desc {
+        grid-column: auto;
       }
     }
 
@@ -1372,6 +1597,20 @@
       color: rgba(232, 232, 232, 0.6);
       font-style: italic;
     }
+
+    .practice-area .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 12rem;
+      padding: 1.5rem 1rem;
+      box-sizing: border-box;
+      font-size: 0.98rem;
+      font-style: normal;
+      font-weight: 500;
+      color: rgba(232, 232, 232, 0.88);
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -1398,71 +1637,16 @@
 
   <div class="app-shell" id="appShell" hidden>
   <header class="header">
-    <a href="index.html" class="btn-back">← Menu</a>
+    <a href="index.html" class="btn-back" id="headerBackBtn" aria-label="Back to menu">← Menu</a>
     <h1>Vocabulary Practice</h1>
+    <div class="header-actions">
+      <button type="button" class="btn-dictionary-settings" id="btnPracticeSettings" hidden aria-label="Practice settings" aria-controls="practiceSettingsModal" title="Practice settings">⚙</button>
+      <button type="button" class="btn-add-word-header" id="btnTogglePracticeAdd" aria-expanded="false" aria-controls="practiceAddSection" aria-label="Add word">+</button>
+    </div>
   </header>
 
-  <div class="tabs">
-    <button class="tab active" data-tab="dictionary">Dictionary</button>
-    <button class="tab" data-tab="practice">Practice</button>
-  </div>
-
   <main class="content">
-    <div class="panel active" id="panelDictionary">
-      <section id="dictAddSection" class="dictionary-section dictionary-section-add" aria-labelledby="dictAddHeading" hidden>
-        <div class="dictionary-add-header">
-          <h2 class="dictionary-section-title" id="dictAddHeading">Add a word</h2>
-          <button type="button" class="btn-dictionary-add-close" id="btnCloseDictAdd">Close</button>
-        </div>
-        <div class="dictionary-add">
-          <input type="text" class="dictionary-input" id="dictInput" placeholder="Enter a word, phrase, or sentence...">
-          <button class="btn-add" id="btnAddWord">Add</button>
-        </div>
-        <div class="dictionary-add-meta">
-          <label class="dictionary-field-label" for="addWordListDictionarySelect">Add to list</label>
-          <select id="addWordListDictionarySelect" class="dictionary-select" aria-label="Dictionary list for new word">
-            <option value="it">IT</option>
-            <option value="general" selected>General</option>
-          </select>
-        </div>
-      </section>
-
-      <section class="dictionary-section dictionary-section-list" aria-labelledby="dictListHeading">
-        <div class="dictionary-list-head">
-          <h2 class="dictionary-section-title dictionary-section-title--inline" id="dictListHeading">Your words</h2>
-          <button type="button" class="btn-dictionary-add-open" id="btnToggleDictAdd" aria-expanded="false" aria-controls="dictAddSection">Add word</button>
-        </div>
-        <div class="dictionary-list-controls">
-          <input type="search" class="dictionary-input dictionary-input--compact dictionary-search-input" id="dictSearchInput" placeholder="Search…" autocomplete="off" enterkeyhint="search">
-          <div class="dictionary-list-controls-filters">
-            <div class="dictionary-filter-inline">
-              <label class="dictionary-field-label dictionary-field-label--inline" for="dictWordListFilter">List</label>
-              <select id="dictWordListFilter" class="dictionary-select dictionary-select--compact" aria-label="Filter by word list">
-                <option value="it" selected>IT</option>
-                <option value="general">General</option>
-              </select>
-            </div>
-            <div class="dictionary-filter-inline">
-              <span class="dictionary-field-label dictionary-field-label--inline" id="dictStatusLabel">Status</span>
-              <div class="dictionary-learning-toggle dictionary-learning-toggle--compact" role="group" aria-labelledby="dictStatusLabel">
-                <span class="dictionary-learning-side dictionary-learning-side--learning">Learning</span>
-                <label class="dictionary-switch dictionary-switch--compact">
-                  <input type="checkbox" id="dictViewLearnedToggle" aria-label="Switch between learning and learned words">
-                  <span class="dictionary-switch-slider"></span>
-                </label>
-                <span class="dictionary-learning-side dictionary-learning-side--learned">Learned</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="dictionary-list" id="dictList"></div>
-      </section>
-    </div>
-
-    <div class="panel" id="panelPractice">
-      <div class="practice-panel-toolbar">
-        <button type="button" class="btn-dictionary-add-open" id="btnTogglePracticeAdd" aria-expanded="false" aria-controls="practiceAddSection">Add word</button>
-      </div>
+    <div class="panel active" id="panelPractice">
       <section id="practiceAddSection" class="dictionary-section dictionary-section-add" aria-labelledby="practiceAddHeading" hidden>
         <div class="dictionary-add-header">
           <h2 class="dictionary-section-title" id="practiceAddHeading">Add a word</h2>
@@ -1480,102 +1664,135 @@
           </select>
         </div>
       </section>
-      <div class="practice-mode-selector" role="radiogroup" aria-label="Practice mode">
-        <label class="practice-mode-option" title="Practice words and phrases you saved">
-          <input type="radio" name="practiceMode" value="dictionary" aria-label="Dictionary — practice words and phrases you saved">
-          <span class="practice-mode-label">Dictionary</span>
-        </label>
-        <label class="practice-mode-option" title="Translate short Russian prompts; choose a topic below">
-          <input type="radio" name="practiceMode" value="general" aria-label="General — translate Russian prompts; pick a topic below">
-          <span class="practice-mode-label">General</span>
-        </label>
-        <label class="practice-mode-option" title="Popular phrasal verbs in context">
-          <input type="radio" name="practiceMode" value="phrasal" aria-label="Phrasal — practice popular phrasal verbs in context">
-          <span class="practice-mode-label">Phrasal</span>
-        </label>
+      <div class="practice-mode-selector" id="practiceModeSelector" role="group" aria-label="Practice mode">
+        <a href="vocabulary-dictionary.html" class="practice-mode-option" title="Practice words and phrases you saved" aria-label="Dictionary — practice words and phrases you saved">
+          <span class="practice-mode-card">
+            <span class="practice-mode-icon" aria-hidden="true">📚</span>
+            <span class="practice-mode-title">Dictionary</span>
+            <span class="practice-mode-desc">Practice words and phrases from your saved dictionary.</span>
+          </span>
+        </a>
+        <a href="vocabulary-general.html" class="practice-mode-option" title="Translate short Russian prompts; topic in Practice settings (⚙)" aria-label="General — translate Russian prompts; topic in Practice settings">
+          <span class="practice-mode-card">
+            <span class="practice-mode-icon" aria-hidden="true">🌐</span>
+            <span class="practice-mode-title">General</span>
+            <span class="practice-mode-desc">Translate short Russian prompts; choose the topic in Practice settings (⚙).</span>
+          </span>
+        </a>
+        <a href="vocabulary-phrasal.html" class="practice-mode-option" title="Popular phrasal verbs in context" aria-label="Phrasal — practice popular phrasal verbs in context">
+          <span class="practice-mode-card">
+            <span class="practice-mode-icon" aria-hidden="true">🗣️</span>
+            <span class="practice-mode-title">Phrasal</span>
+            <span class="practice-mode-desc">Train common phrasal verbs in realistic context prompts.</span>
+          </span>
+        </a>
       </div>
-      <div class="phrasal-topic-wrap" id="generalTopicWrap" hidden>
-        <div class="phrasal-topic-row">
-          <label class="dictionary-field-label dictionary-field-label--inline" for="generalTopicSelect">Topic</label>
-          <select id="generalTopicSelect" class="dictionary-select dictionary-select--compact" aria-label="Topic for General practice">
-            <option value="general">General</option>
-            <option value="it_interview">IT interview</option>
-            <option value="business">Business &amp; work</option>
-            <option value="travel">Travel &amp; tourism</option>
-            <option value="daily_life">Daily life</option>
-            <option value="education">Education &amp; learning</option>
-            <option value="health">Health &amp; lifestyle</option>
-            <option value="entertainment">Entertainment &amp; culture</option>
-            <option value="environment">Environment &amp; society</option>
-            <option value="relationships">Relationships &amp; social</option>
-          </select>
-        </div>
-      </div>
-      <div class="dictionary-practice-filter" id="dictionaryPracticeFilterWrap" hidden>
-        <div class="dictionary-subtype-label">Words from list</div>
-        <div class="dictionary-view-toggle">
-          <button class="dictionary-view-btn" id="btnPracticeDictIT" type="button">IT</button>
-          <button class="dictionary-view-btn active" id="btnPracticeDictGeneral" type="button">General</button>
-        </div>
-      </div>
-      <div class="dictionary-subtype-wrap" id="dictionarySubtypeWrap" hidden>
-        <div class="dictionary-subtype-label">Dictionary practice</div>
-        <div class="dictionary-subtype-options">
-          <label class="dictionary-subtype-option">
-            <input type="radio" name="dictionarySubtype" value="sentence" checked>
-            <span class="dictionary-subtype-title">Full sentence</span>
-            <span class="dictionary-subtype-desc">Translate a Russian interview-style sentence into English</span>
-          </label>
-          <label class="dictionary-subtype-option">
-            <input type="radio" name="dictionarySubtype" value="word">
-            <span class="dictionary-subtype-title">Word or phrase only</span>
-            <span class="dictionary-subtype-desc">See the Russian word/phrase and two Russian context sentences; type the English word or phrase</span>
-          </label>
-        </div>
-      </div>
-      <div class="phrasal-topic-wrap" id="dictionarySentenceTopicWrap" hidden>
-        <div class="phrasal-topic-row">
-          <label class="dictionary-field-label dictionary-field-label--inline" for="dictionarySentenceTopicSelect">Topic</label>
-          <select id="dictionarySentenceTopicSelect" class="dictionary-select dictionary-select--compact" aria-label="Topic for Dictionary full sentence">
-            <option value="general">General</option>
-            <option value="it_interview">IT interview</option>
-            <option value="business">Business &amp; work</option>
-            <option value="travel">Travel &amp; tourism</option>
-            <option value="daily_life">Daily life</option>
-            <option value="education">Education &amp; learning</option>
-            <option value="health">Health &amp; lifestyle</option>
-            <option value="entertainment">Entertainment &amp; culture</option>
-            <option value="environment">Environment &amp; society</option>
-            <option value="relationships">Relationships &amp; social</option>
-          </select>
-        </div>
-      </div>
-      <div class="phrasal-topic-wrap" id="phrasalTopicWrap" hidden>
-        <div class="phrasal-topic-row">
-          <label class="dictionary-field-label dictionary-field-label--inline" for="phrasalListSelect">Phrasal list</label>
-          <select id="phrasalListSelect" class="dictionary-select dictionary-select--compact" aria-label="Which phrasal verb list to practice">
-            <option value="general">Spoken English — 100 common</option>
-            <option value="it_pm">IT &amp; Product — 100 for PMs</option>
-          </select>
-        </div>
-        <div class="phrasal-topic-row">
-          <label class="dictionary-field-label dictionary-field-label--inline" for="phrasalTopicSelect">Topic</label>
-          <select id="phrasalTopicSelect" class="dictionary-select dictionary-select--compact" aria-label="Topic for phrasal prompts">
-            <option value="general">General</option>
-            <option value="it">IT &amp; tech</option>
-            <option value="travelling">Travelling</option>
-            <option value="business">Business &amp; career</option>
-            <option value="health">Health &amp; lifestyle</option>
-            <option value="education">Education</option>
-            <option value="hobbies">Hobbies &amp; leisure</option>
-            <option value="environment">Environment</option>
-            <option value="social">Relationships</option>
-          </select>
-        </div>
+      <div class="practice-mode-nav" id="practiceModeNav">
+        <div class="practice-mode-nav-title" id="practiceModeNavTitle"></div>
       </div>
       <div class="practice-area" id="practiceArea"></div>
     </div>
   </main>
+
+  <div class="modal-overlay" id="practiceSettingsModal" hidden role="presentation">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="practiceSettingsTitle" aria-hidden="true">
+      <div class="modal-header">
+        <h2 id="practiceSettingsTitle">Practice settings</h2>
+        <button type="button" class="modal-close" id="btnClosePracticeSettings" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body">
+        <div id="practiceSettingsDictionaryWrap" class="practice-settings-mode-section">
+        <div class="dictionary-practice-filter" id="dictionaryPracticeFilterWrap">
+          <div class="dictionary-subtype-label">Words from list</div>
+          <div class="dictionary-view-toggle">
+            <button class="dictionary-view-btn" id="btnPracticeDictIT" type="button">IT</button>
+            <button class="dictionary-view-btn active" id="btnPracticeDictGeneral" type="button">General</button>
+          </div>
+        </div>
+        <div class="dictionary-subtype-wrap" id="dictionarySubtypeWrap">
+          <div class="dictionary-subtype-label">Dictionary practice</div>
+          <div class="dictionary-subtype-options">
+            <label class="dictionary-subtype-option">
+              <input type="radio" name="dictionarySubtype" value="sentence" checked>
+              <span class="dictionary-subtype-title">Full sentence</span>
+              <span class="dictionary-subtype-desc">Translate a Russian interview-style sentence into English</span>
+            </label>
+            <label class="dictionary-subtype-option">
+              <input type="radio" name="dictionarySubtype" value="word">
+              <span class="dictionary-subtype-title">Word or phrase only</span>
+              <span class="dictionary-subtype-desc">See the Russian word/phrase and two Russian context sentences; type the English word or phrase</span>
+            </label>
+          </div>
+        </div>
+        <div class="phrasal-topic-wrap" id="dictionarySentenceTopicWrap">
+          <div class="phrasal-topic-row">
+            <label class="dictionary-field-label dictionary-field-label--inline" for="dictionarySentenceTopicSelect">Topic</label>
+            <select id="dictionarySentenceTopicSelect" class="dictionary-select dictionary-select--compact" aria-label="Topic for Dictionary full sentence">
+              <option value="general">General</option>
+              <option value="it_interview">IT interview</option>
+              <option value="business">Business &amp; work</option>
+              <option value="travel">Travel &amp; tourism</option>
+              <option value="daily_life">Daily life</option>
+              <option value="education">Education &amp; learning</option>
+              <option value="health">Health &amp; lifestyle</option>
+              <option value="entertainment">Entertainment &amp; culture</option>
+              <option value="environment">Environment &amp; society</option>
+              <option value="relationships">Relationships &amp; social</option>
+            </select>
+          </div>
+        </div>
+        </div>
+        <div id="practiceSettingsGeneralWrap" class="practice-settings-mode-section" hidden>
+          <div class="phrasal-topic-wrap">
+            <div class="phrasal-topic-row">
+              <label class="dictionary-field-label dictionary-field-label--inline" for="generalTopicSelect">Topic</label>
+              <select id="generalTopicSelect" class="dictionary-select dictionary-select--compact" aria-label="Topic for General practice">
+                <option value="general">General</option>
+                <option value="it_interview">IT interview</option>
+                <option value="business">Business &amp; work</option>
+                <option value="travel">Travel &amp; tourism</option>
+                <option value="daily_life">Daily life</option>
+                <option value="education">Education &amp; learning</option>
+                <option value="health">Health &amp; lifestyle</option>
+                <option value="entertainment">Entertainment &amp; culture</option>
+                <option value="environment">Environment &amp; society</option>
+                <option value="relationships">Relationships &amp; social</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div id="practiceSettingsPhrasalWrap" class="practice-settings-mode-section" hidden>
+          <div class="phrasal-topic-wrap">
+            <div class="phrasal-topic-row">
+              <label class="dictionary-field-label dictionary-field-label--inline" for="phrasalListSelect">Phrasal list</label>
+              <select id="phrasalListSelect" class="dictionary-select dictionary-select--compact" aria-label="Which phrasal verb list to practice">
+                <option value="general">Spoken English — 100 common</option>
+                <option value="it_pm">IT &amp; Product — 100 for PMs</option>
+              </select>
+            </div>
+            <div class="phrasal-topic-row">
+              <label class="dictionary-field-label dictionary-field-label--inline" for="phrasalTopicSelect">Topic</label>
+              <select id="phrasalTopicSelect" class="dictionary-select dictionary-select--compact" aria-label="Topic for phrasal prompts">
+                <option value="general">General</option>
+                <option value="it">IT &amp; tech</option>
+                <option value="travelling">Travelling</option>
+                <option value="business">Business &amp; career</option>
+                <option value="health">Health &amp; lifestyle</option>
+                <option value="education">Education</option>
+                <option value="hobbies">Hobbies &amp; leisure</option>
+                <option value="environment">Environment</option>
+                <option value="social">Relationships</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-modal-cancel" id="btnCancelPracticeSettings">Cancel</button>
+        <button type="button" class="btn-modal-apply" id="btnApplyPracticeSettings">Apply</button>
+      </div>
+    </div>
+  </div>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
@@ -1833,6 +2050,18 @@
 
     const tabs = document.querySelectorAll('.tab');
     const panels = document.querySelectorAll('.panel');
+    const practiceModeSelector = document.getElementById('practiceModeSelector');
+    const practiceModeNav = document.getElementById('practiceModeNav');
+    const practiceModeNavTitle = document.getElementById('practiceModeNavTitle');
+    const headerBackBtn = document.getElementById('headerBackBtn');
+    const forcedPracticeMode = (function () {
+      try {
+        var m = new URLSearchParams(window.location.search).get('mode');
+        return (m === 'dictionary' || m === 'general' || m === 'phrasal') ? m : '';
+      } catch (_) {
+        return '';
+      }
+    })();
     const dictInput = document.getElementById('dictInput');
     const dictSearchInput = document.getElementById('dictSearchInput');
     const dictWordListFilter = document.getElementById('dictWordListFilter');
@@ -1853,13 +2082,20 @@
     const dictionaryPracticeFilterWrap = document.getElementById('dictionaryPracticeFilterWrap');
     const btnPracticeDictIT = document.getElementById('btnPracticeDictIT');
     const btnPracticeDictGeneral = document.getElementById('btnPracticeDictGeneral');
-    const generalTopicWrap = document.getElementById('generalTopicWrap');
     const generalTopicSelect = document.getElementById('generalTopicSelect');
     const dictionarySentenceTopicWrap = document.getElementById('dictionarySentenceTopicWrap');
     const dictionarySentenceTopicSelect = document.getElementById('dictionarySentenceTopicSelect');
-    const phrasalTopicWrap = document.getElementById('phrasalTopicWrap');
     const phrasalListSelect = document.getElementById('phrasalListSelect');
     const phrasalTopicSelect = document.getElementById('phrasalTopicSelect');
+    const panelPractice = document.getElementById('panelPractice');
+    const practiceSettingsModal = document.getElementById('practiceSettingsModal');
+    const practiceSettingsDictionaryWrap = document.getElementById('practiceSettingsDictionaryWrap');
+    const practiceSettingsGeneralWrap = document.getElementById('practiceSettingsGeneralWrap');
+    const practiceSettingsPhrasalWrap = document.getElementById('practiceSettingsPhrasalWrap');
+    const btnPracticeSettings = document.getElementById('btnPracticeSettings');
+    const btnClosePracticeSettings = document.getElementById('btnClosePracticeSettings');
+    const btnCancelPracticeSettings = document.getElementById('btnCancelPracticeSettings');
+    const btnApplyPracticeSettings = document.getElementById('btnApplyPracticeSettings');
 
     let currentWordId = null;
     let currentWord = null;
@@ -1877,23 +2113,150 @@
     let currentPhrasalId = null;
     let expandedWordId = null;
     const shownTranslationById = {};
+    /** Snapshot while practice settings modal is open (revert on Cancel / overlay / Escape). */
+    let practiceSettingsSnapshot = null;
+
+    function syncPracticeSettingsModalSections() {
+      if (!practiceSettingsDictionaryWrap || !practiceSettingsGeneralWrap || !practiceSettingsPhrasalWrap) return;
+      practiceSettingsDictionaryWrap.hidden = practiceMode !== 'dictionary';
+      practiceSettingsGeneralWrap.hidden = practiceMode !== 'general';
+      practiceSettingsPhrasalWrap.hidden = practiceMode !== 'phrasal';
+    }
+
+    function syncDictionaryModalFieldsVisibility() {
+      if (practiceMode !== 'dictionary') return;
+      if (dictionarySubtypeWrap) dictionarySubtypeWrap.hidden = false;
+      if (dictionaryPracticeFilterWrap) dictionaryPracticeFilterWrap.hidden = false;
+      if (dictionarySentenceTopicWrap) {
+        dictionarySentenceTopicWrap.hidden = !(getCurrentDictionarySubtype() === 'sentence');
+      }
+    }
 
     function syncPracticePanelAuxUi() {
-      if (dictionarySubtypeWrap) {
-        dictionarySubtypeWrap.hidden = practiceMode !== 'dictionary';
+      if (practiceMode === 'dictionary') {
+        syncDictionaryModalFieldsVisibility();
       }
-      if (dictionaryPracticeFilterWrap) {
-        dictionaryPracticeFilterWrap.hidden = practiceMode !== 'dictionary';
+    }
+
+    function setPracticeSettingsModalOpen(open) {
+      if (!practiceSettingsModal) return;
+      practiceSettingsModal.hidden = !open;
+      practiceSettingsModal.setAttribute('aria-hidden', open ? 'false' : 'true');
+      var dialog = practiceSettingsModal.querySelector('.modal-dialog');
+      if (dialog) dialog.setAttribute('aria-hidden', open ? 'false' : 'true');
+    }
+
+    function takePracticeSettingsSnapshot() {
+      if (practiceMode === 'dictionary') {
+        return {
+          mode: 'dictionary',
+          practiceDictionaryWordList: practiceDictionaryWordList,
+          dictionarySubtype: getCurrentDictionarySubtype(),
+          sentenceTopic:
+            dictionarySentenceTopicSelect && dictionarySentenceTopicSelect.value
+              ? dictionarySentenceTopicSelect.value
+              : 'general'
+        };
       }
-      if (generalTopicWrap) {
-        generalTopicWrap.hidden = practiceMode !== 'general';
+      if (practiceMode === 'general') {
+        return {
+          mode: 'general',
+          generalTopic:
+            generalTopicSelect && generalTopicSelect.value ? generalTopicSelect.value : 'general'
+        };
       }
-      if (dictionarySentenceTopicWrap) {
-        dictionarySentenceTopicWrap.hidden = !(practiceMode === 'dictionary' && getCurrentDictionarySubtype() === 'sentence');
+      if (practiceMode === 'phrasal') {
+        return {
+          mode: 'phrasal',
+          phrasalList: getSelectedPhrasalList(),
+          phrasalTopic:
+            phrasalTopicSelect && phrasalTopicSelect.value ? phrasalTopicSelect.value : 'general'
+        };
       }
-      if (phrasalTopicWrap) {
-        phrasalTopicWrap.hidden = practiceMode !== 'phrasal';
+      return null;
+    }
+
+    function practiceSettingsSnapshotEqual(a, b) {
+      if (!a || !b || a.mode !== b.mode) return false;
+      if (a.mode === 'dictionary') {
+        return (
+          a.practiceDictionaryWordList === b.practiceDictionaryWordList &&
+          a.dictionarySubtype === b.dictionarySubtype &&
+          a.sentenceTopic === b.sentenceTopic
+        );
       }
+      if (a.mode === 'general') {
+        return a.generalTopic === b.generalTopic;
+      }
+      if (a.mode === 'phrasal') {
+        return a.phrasalList === b.phrasalList && a.phrasalTopic === b.phrasalTopic;
+      }
+      return false;
+    }
+
+    function restorePracticeSettingsSnapshot() {
+      if (!practiceSettingsSnapshot) return;
+      var s = practiceSettingsSnapshot;
+      if (s.mode === 'dictionary') {
+        setPracticeDictionaryWordList(s.practiceDictionaryWordList);
+        document.querySelectorAll('input[name="dictionarySubtype"]').forEach(function (r) {
+          r.checked = r.value === s.dictionarySubtype;
+        });
+        dictionaryPracticeSubtype = s.dictionarySubtype;
+        if (dictionarySentenceTopicSelect) dictionarySentenceTopicSelect.value = s.sentenceTopic;
+        syncDictionaryModalFieldsVisibility();
+      } else if (s.mode === 'general') {
+        if (generalTopicSelect) generalTopicSelect.value = s.generalTopic;
+      } else if (s.mode === 'phrasal') {
+        if (phrasalListSelect) phrasalListSelect.value = s.phrasalList;
+        if (phrasalTopicSelect) phrasalTopicSelect.value = s.phrasalTopic;
+      }
+      syncPracticePanelAuxUi();
+    }
+
+    function closePracticeSettingsModal(revert) {
+      if (revert) restorePracticeSettingsSnapshot();
+      practiceSettingsSnapshot = null;
+      setPracticeSettingsModalOpen(false);
+    }
+
+    function applyPracticeSettingsFromModal() {
+      if (!practiceSettingsSnapshot) {
+        setPracticeSettingsModalOpen(false);
+        return;
+      }
+      var before = practiceSettingsSnapshot;
+      var currentState = takePracticeSettingsSnapshot();
+      practiceSettingsSnapshot = null;
+      setPracticeSettingsModalOpen(false);
+      if (practiceMode === 'dictionary') {
+        saveDictionarySentenceTopicPreference();
+        dictionaryPracticeSubtype = getCurrentDictionarySubtype();
+      } else if (practiceMode === 'general') {
+        saveGeneralTopicPreference();
+      } else if (practiceMode === 'phrasal') {
+        savePhrasalListPreference();
+        savePhrasalTopicPreference();
+      }
+      if (currentState && !practiceSettingsSnapshotEqual(before, currentState)) {
+        loadPractice();
+      }
+    }
+
+    function updatePracticeSettingsButton() {
+      if (!btnPracticeSettings) return;
+      btnPracticeSettings.hidden =
+        practiceMode !== 'dictionary' &&
+        practiceMode !== 'general' &&
+        practiceMode !== 'phrasal';
+    }
+
+    function updatePanelPracticeFocus() {
+      if (!panelPractice) return;
+      panelPractice.classList.toggle(
+        'panel-practice-focus',
+        practiceMode === 'dictionary' || practiceMode === 'general' || practiceMode === 'phrasal'
+      );
     }
 
     function getSelectedGeneralTopic() {
@@ -1980,57 +2343,109 @@
       } catch (_) {}
     }
 
-    document.querySelectorAll('input[name="practiceMode"]').forEach(function (radio) {
-      radio.addEventListener('change', function () {
-        practiceMode = this.value;
-        syncPracticePanelAuxUi();
-        loadPractice();
+    function setModeNavTitle() {
+      if (!practiceModeNavTitle) return;
+      if (practiceMode === 'dictionary') {
+        practiceModeNavTitle.textContent = '';
+      } else if (practiceMode === 'general') {
+        practiceModeNavTitle.textContent = 'General mode';
+      } else if (practiceMode === 'phrasal') {
+        practiceModeNavTitle.textContent = 'Phrasal mode';
+      } else {
+        practiceModeNavTitle.textContent = '';
+      }
+    }
+
+    function updateHeaderBack() {
+      if (!headerBackBtn) return;
+      if (practiceMode) {
+        headerBackBtn.textContent = '← Modes';
+        headerBackBtn.href = 'vocabulary.html';
+        headerBackBtn.setAttribute('aria-label', 'Back to mode selection');
+      } else {
+        headerBackBtn.textContent = '← Menu';
+        headerBackBtn.href = 'index.html';
+        headerBackBtn.setAttribute('aria-label', 'Back to menu');
+      }
+    }
+
+    if (headerBackBtn) {
+      headerBackBtn.addEventListener('click', function (e) {
+        if (practiceMode) {
+          e.preventDefault();
+          showPracticeInitialState();
+        }
       });
+    }
+
+    function enterPracticeMode(mode) {
+      var next = mode === 'dictionary' || mode === 'general' || mode === 'phrasal' ? mode : '';
+      if (!next) return;
+      practiceMode = next;
+      if (practiceModeSelector) practiceModeSelector.hidden = true;
+      if (practiceModeNav) {
+        if (practiceMode === 'dictionary') {
+          practiceModeNav.classList.remove('visible');
+        } else {
+          practiceModeNav.classList.add('visible');
+        }
+      }
+      setModeNavTitle();
+      updateHeaderBack();
+      updatePracticeSettingsButton();
+      updatePanelPracticeFocus();
+      syncPracticePanelAuxUi();
+      loadPractice();
+    }
+
+    if (btnPracticeSettings) {
+      btnPracticeSettings.addEventListener('click', function () {
+        practiceSettingsSnapshot = takePracticeSettingsSnapshot();
+        syncPracticeSettingsModalSections();
+        if (practiceMode === 'dictionary') {
+          syncDictionaryModalFieldsVisibility();
+        }
+        setPracticeSettingsModalOpen(true);
+      });
+    }
+    if (btnClosePracticeSettings) {
+      btnClosePracticeSettings.addEventListener('click', function () {
+        closePracticeSettingsModal(true);
+      });
+    }
+    if (btnCancelPracticeSettings) {
+      btnCancelPracticeSettings.addEventListener('click', function () {
+        closePracticeSettingsModal(true);
+      });
+    }
+    if (btnApplyPracticeSettings) {
+      btnApplyPracticeSettings.addEventListener('click', function () {
+        applyPracticeSettingsFromModal();
+      });
+    }
+    if (practiceSettingsModal) {
+      practiceSettingsModal.addEventListener('click', function (e) {
+        if (e.target === practiceSettingsModal) {
+          closePracticeSettingsModal(true);
+        }
+      });
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && practiceSettingsModal && !practiceSettingsModal.hidden) {
+        closePracticeSettingsModal(true);
+      }
     });
 
     document.querySelectorAll('input[name="dictionarySubtype"]').forEach(function (radio) {
       radio.addEventListener('change', function () {
         dictionaryPracticeSubtype = this.value;
         syncPracticePanelAuxUi();
-        if (practiceMode === 'dictionary') {
-          loadPractice();
-        }
       });
     });
 
-    if (generalTopicSelect) {
-      generalTopicSelect.addEventListener('change', function () {
-        saveGeneralTopicPreference();
-        if (practiceMode === 'general') {
-          loadPractice();
-        }
-      });
-    }
-
     if (dictionarySentenceTopicSelect) {
       dictionarySentenceTopicSelect.addEventListener('change', function () {
-        saveDictionarySentenceTopicPreference();
-        if (practiceMode === 'dictionary' && getCurrentDictionarySubtype() === 'sentence') {
-          loadPractice();
-        }
-      });
-    }
-
-    if (phrasalTopicSelect) {
-      phrasalTopicSelect.addEventListener('change', function () {
-        savePhrasalTopicPreference();
-        if (practiceMode === 'phrasal') {
-          loadPractice();
-        }
-      });
-    }
-
-    if (phrasalListSelect) {
-      phrasalListSelect.addEventListener('change', function () {
-        savePhrasalListPreference();
-        if (practiceMode === 'phrasal') {
-          loadPractice();
-        }
+        syncDictionaryModalFieldsVisibility();
       });
     }
 
@@ -2040,7 +2455,8 @@
         panels.forEach(function (p) { p.classList.remove('active'); });
         tab.classList.add('active');
         var panelId = 'panel' + tab.dataset.tab.charAt(0).toUpperCase() + tab.dataset.tab.slice(1);
-        document.getElementById(panelId).classList.add('active');
+        var panelEl = document.getElementById(panelId);
+        if (panelEl) panelEl.classList.add('active');
         if (tab.dataset.tab === 'practice') {
           showPracticeInitialState();
         }
@@ -2249,6 +2665,7 @@
     }
 
     function renderDictionary() {
+      if (!dictList) return;
       var list = getDictionary();
       list = list.filter(function (item) {
         return dictionaryView === 'learned' ? !!item.learned : !item.learned;
@@ -2363,19 +2780,22 @@
       });
     }
 
-    btnAddWord.addEventListener('click', function () {
-      addWord(dictInput.value, getSelectedWordListDictionary());
-      dictInput.value = '';
-    });
-
-    dictInput.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
+    if (btnAddWord && dictInput) {
+      btnAddWord.addEventListener('click', function () {
         addWord(dictInput.value, getSelectedWordListDictionary());
         dictInput.value = '';
-      }
-    });
+      });
+      dictInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          addWord(dictInput.value, getSelectedWordListDictionary());
+          dictInput.value = '';
+        }
+      });
+    }
 
-    dictSearchInput.addEventListener('input', renderDictionary);
+    if (dictSearchInput) {
+      dictSearchInput.addEventListener('input', renderDictionary);
+    }
 
     function setDictAddOpen(open) {
       if (!dictAddSection || !btnToggleDictAdd) return;
@@ -2433,12 +2853,7 @@
 
     document.addEventListener('keydown', function (e) {
       if (e.key !== 'Escape') return;
-      var dictPanel = document.getElementById('panelDictionary');
       var practicePanel = document.getElementById('panelPractice');
-      if (dictPanel && dictPanel.classList.contains('active') && dictAddSection && !dictAddSection.hidden) {
-        setDictAddOpen(false);
-        return;
-      }
       if (practicePanel && practicePanel.classList.contains('active') && practiceAddSection && !practiceAddSection.hidden) {
         setPracticeAddOpen(false);
       }
@@ -2462,12 +2877,10 @@
 
     btnPracticeDictIT.addEventListener('click', function () {
       setPracticeDictionaryWordList('it');
-      loadPractice();
     });
 
     btnPracticeDictGeneral.addEventListener('click', function () {
       setPracticeDictionaryWordList('general');
-      loadPractice();
     });
 
     btnAddPracticeWord.addEventListener('click', function () {
@@ -2530,6 +2943,11 @@
       restoreGeneralTopic();
       restoreDictionarySentenceTopic();
       renderDictionary();
+      if (forcedPracticeMode) {
+        enterPracticeMode(forcedPracticeMode);
+      } else {
+        showPracticeInitialState();
+      }
     }
 
     function onVocabAuthUi(user) {
@@ -2885,28 +3303,30 @@
 
     function showPracticeInitialState() {
       practiceMode = null;
-      document.querySelectorAll('input[name="practiceMode"]').forEach(function (radio) {
-        radio.checked = false;
-      });
+      practiceSettingsSnapshot = null;
+      if (practiceModeSelector) practiceModeSelector.hidden = false;
+      if (practiceModeNav) practiceModeNav.classList.remove('visible');
+      if (practiceModeNavTitle) practiceModeNavTitle.textContent = '';
+      setPracticeSettingsModalOpen(false);
+      updatePracticeSettingsButton();
+      updatePanelPracticeFocus();
+      updateHeaderBack();
+      if (practiceAddSection && !practiceAddSection.hidden) {
+        setPracticeAddOpen(false);
+      }
       if (dictionarySubtypeWrap) {
         dictionarySubtypeWrap.hidden = true;
       }
       if (dictionaryPracticeFilterWrap) {
         dictionaryPracticeFilterWrap.hidden = true;
       }
-      if (generalTopicWrap) {
-        generalTopicWrap.hidden = true;
+      if (dictionarySentenceTopicWrap) {
+        dictionarySentenceTopicWrap.hidden = true;
       }
-      if (phrasalTopicWrap) {
-        phrasalTopicWrap.hidden = true;
-      }
-      document.querySelectorAll('.practice-mode-option').forEach(function (opt) {
-        opt.classList.remove('selected');
-      });
       practiceArea.innerHTML =
         '<div class="practice-empty">' +
         '<div class="practice-empty-icon" aria-hidden="true">&#8593;</div>' +
-        '<div class="practice-empty-text">Select a practice mode above to start</div>' +
+        '<div class="practice-empty-text">Choose a mode card to start</div>' +
         '</div>';
     }
 
@@ -2941,12 +3361,8 @@
             '<div class="practice-empty-icon" aria-hidden="true">&#128218;</div>' +
             '<div class="practice-empty-text">No learning words in the ' +
             (practiceDictionaryWordList === 'it' ? 'IT' : 'General') +
-            ' list. Add words in the Dictionary tab (choose the same list) or switch the filter above.</div>' +
-            '<button class="btn-go-dictionary" id="btnGoDictionary">Go to Dictionary</button>' +
+            ' list. Add words on the main screen Dictionary and choose the same list, or open Practice settings (⚙) to switch the list.</div>' +
             '</div>';
-          document.getElementById('btnGoDictionary').addEventListener('click', function () {
-            tabs[0].click();
-          });
           return;
         }
       }
@@ -2957,19 +3373,24 @@
           practiceArea.innerHTML =
             '<div class="practice-empty">' +
             '<div class="practice-empty-text">Every phrasal verb from this list is already in your dictionary (learning or learned). ' +
-            'Remove some in the Dictionary tab or switch the other phrasal list above.</div>' +
-            '<button class="btn-go-dictionary" id="btnGoPhrasalDictionary">Go to Dictionary</button>' +
+            'Remove some on the main screen Dictionary or open Practice settings (⚙) to switch the phrasal list.</div>' +
             '</div>';
-          document.getElementById('btnGoPhrasalDictionary').addEventListener('click', function () {
-            tabs[0].click();
-          });
           return;
         }
       }
 
-      practiceArea.innerHTML = '<div class="loading">Generating practice...</div>';
+      practiceArea.innerHTML = '<div class="loading" role="status" aria-live="polite">Generating practice…</div>';
+      practiceArea.setAttribute('aria-busy', 'true');
 
       try {
+        if (practiceMode === 'dictionary') {
+          await new Promise(function (resolve) {
+            requestAnimationFrame(function () {
+              requestAnimationFrame(resolve);
+            });
+          });
+        }
+
         var hintHtml = '';
         var wordOnlyHintHtml = '';
         var promptInnerHtml = '';
@@ -3135,6 +3556,8 @@
         });
       } catch (err) {
         practiceArea.innerHTML = '<div class="practice-empty"><div class="practice-empty-text">Error: ' + escapeHtml(err.message) + '</div></div>';
+      } finally {
+        practiceArea.removeAttribute('aria-busy');
       }
     }
 
