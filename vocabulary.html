@@ -1533,6 +1533,23 @@
           </label>
         </div>
       </div>
+      <div class="phrasal-topic-wrap" id="dictionarySentenceTopicWrap" hidden>
+        <div class="phrasal-topic-row">
+          <label class="dictionary-field-label dictionary-field-label--inline" for="dictionarySentenceTopicSelect">Topic</label>
+          <select id="dictionarySentenceTopicSelect" class="dictionary-select dictionary-select--compact" aria-label="Topic for Dictionary full sentence">
+            <option value="general">General</option>
+            <option value="it_interview">IT interview</option>
+            <option value="business">Business &amp; work</option>
+            <option value="travel">Travel &amp; tourism</option>
+            <option value="daily_life">Daily life</option>
+            <option value="education">Education &amp; learning</option>
+            <option value="health">Health &amp; lifestyle</option>
+            <option value="entertainment">Entertainment &amp; culture</option>
+            <option value="environment">Environment &amp; society</option>
+            <option value="relationships">Relationships &amp; social</option>
+          </select>
+        </div>
+      </div>
       <div class="phrasal-topic-wrap" id="phrasalTopicWrap" hidden>
         <div class="phrasal-topic-row">
           <label class="dictionary-field-label dictionary-field-label--inline" for="phrasalListSelect">Phrasal list</label>
@@ -1572,6 +1589,7 @@
     const PHRASAL_TOPIC_KEY = 'vocabulary-phrasal-topic';
     const PHRASAL_LIST_KEY = 'vocabulary-phrasal-wordlist';
     const GENERAL_TOPIC_KEY = 'vocabulary-general-topic';
+    const DICT_SENTENCE_TOPIC_KEY = 'vocabulary-dictionary-sentence-topic';
     const API_TIMEOUT_MS = 60000;
 
     /** API-facing descriptions for General practice (keys match select option values). */
@@ -1837,6 +1855,8 @@
     const btnPracticeDictGeneral = document.getElementById('btnPracticeDictGeneral');
     const generalTopicWrap = document.getElementById('generalTopicWrap');
     const generalTopicSelect = document.getElementById('generalTopicSelect');
+    const dictionarySentenceTopicWrap = document.getElementById('dictionarySentenceTopicWrap');
+    const dictionarySentenceTopicSelect = document.getElementById('dictionarySentenceTopicSelect');
     const phrasalTopicWrap = document.getElementById('phrasalTopicWrap');
     const phrasalListSelect = document.getElementById('phrasalListSelect');
     const phrasalTopicSelect = document.getElementById('phrasalTopicSelect');
@@ -1868,6 +1888,9 @@
       if (generalTopicWrap) {
         generalTopicWrap.hidden = practiceMode !== 'general';
       }
+      if (dictionarySentenceTopicWrap) {
+        dictionarySentenceTopicWrap.hidden = !(practiceMode === 'dictionary' && getCurrentDictionarySubtype() === 'sentence');
+      }
       if (phrasalTopicWrap) {
         phrasalTopicWrap.hidden = practiceMode !== 'phrasal';
       }
@@ -1890,6 +1913,26 @@
         var saved = localStorage.getItem(GENERAL_TOPIC_KEY);
         if (!saved || !GENERAL_TOPIC_DESCRIPTIONS[saved]) return;
         if (generalTopicSelect) generalTopicSelect.value = saved;
+      } catch (_) {}
+    }
+
+    function getSelectedDictionarySentenceTopic() {
+      var el = dictionarySentenceTopicSelect;
+      var v = el && el.value ? el.value : 'general';
+      return GENERAL_TOPIC_DESCRIPTIONS[v] ? v : 'general';
+    }
+
+    function saveDictionarySentenceTopicPreference() {
+      try {
+        localStorage.setItem(DICT_SENTENCE_TOPIC_KEY, getSelectedDictionarySentenceTopic());
+      } catch (_) {}
+    }
+
+    function restoreDictionarySentenceTopic() {
+      try {
+        var saved = localStorage.getItem(DICT_SENTENCE_TOPIC_KEY);
+        if (!saved || !GENERAL_TOPIC_DESCRIPTIONS[saved]) return;
+        if (dictionarySentenceTopicSelect) dictionarySentenceTopicSelect.value = saved;
       } catch (_) {}
     }
 
@@ -1948,6 +1991,7 @@
     document.querySelectorAll('input[name="dictionarySubtype"]').forEach(function (radio) {
       radio.addEventListener('change', function () {
         dictionaryPracticeSubtype = this.value;
+        syncPracticePanelAuxUi();
         if (practiceMode === 'dictionary') {
           loadPractice();
         }
@@ -1958,6 +2002,15 @@
       generalTopicSelect.addEventListener('change', function () {
         saveGeneralTopicPreference();
         if (practiceMode === 'general') {
+          loadPractice();
+        }
+      });
+    }
+
+    if (dictionarySentenceTopicSelect) {
+      dictionarySentenceTopicSelect.addEventListener('change', function () {
+        saveDictionarySentenceTopicPreference();
+        if (practiceMode === 'dictionary' && getCurrentDictionarySubtype() === 'sentence') {
           loadPractice();
         }
       });
@@ -2016,6 +2069,16 @@
         .trim()
         .toLowerCase()
         .replace(/\s+/g, ' ');
+    }
+
+    function maskWordForHint(text) {
+      var t = String(text || '').trim();
+      if (!t) return '';
+      return t.split(/\s+/).map(function (part) {
+        var n = part.length;
+        if (n <= 2) return part;
+        return part.charAt(0) + '.'.repeat(n - 2) + part.charAt(n - 1);
+      }).join(' ');
     }
 
     /** Any saved dictionary row (IT or General, learning or learned). */
@@ -2465,6 +2528,7 @@
       restorePhrasalList();
       restorePhrasalTopic();
       restoreGeneralTopic();
+      restoreDictionarySentenceTopic();
       renderDictionary();
     }
 
@@ -2569,8 +2633,10 @@
       };
     }
 
-    async function generatePracticePrompt(word) {
-      var systemPrompt = 'You generate practice sentences for English learners. Given a word, phrase, or sentence in English, create a realistic interview answer in RUSSIAN that naturally uses the concept or meaning of the given word/phrase. The sentence should be something a job candidate might say. Reply with valid JSON only: {"russian": "the russian sentence", "english_word": "the original word/phrase"}';
+    async function generatePracticePrompt(word, topicKey) {
+      var tk = GENERAL_TOPIC_DESCRIPTIONS[topicKey] ? topicKey : 'general';
+      var topicDesc = GENERAL_TOPIC_DESCRIPTIONS[tk];
+      var systemPrompt = 'You generate practice sentences for English learners. Given a word, phrase, or sentence in English, create ONE realistic interview-style sentence in RUSSIAN that naturally uses the concept or meaning of the given word/phrase. The sentence must fit this topic: ' + topicDesc + '. Return exactly one sentence only, no lists, no second sentence, and no more than 15 words. Reply with valid JSON only: {"russian": "the russian sentence", "english_word": "the original word/phrase"}';
       var response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -2581,7 +2647,7 @@
           model: 'gpt-5-mini-2025-08-07',
           messages: [
             { role: 'system', content: systemPrompt },
-            { role: 'user', content: 'Word/phrase: ' + word }
+            { role: 'user', content: 'Topic: ' + topicDesc + '\nWord/phrase: ' + word + '\nConstraints: one sentence, max 15 words.' }
           ],
           response_format: { type: 'json_object' }
         })
@@ -2738,7 +2804,7 @@
 
     async function checkWordOnlyAnswer(expectedEn, userAnswer, russianWord, examplesRu) {
       var ctx = (examplesRu || []).map(function (s, i) { return (i + 1) + '. ' + s; }).join('\n');
-      var systemPrompt = 'You evaluate vocabulary recall for job-interview English. The learner saw a Russian word/phrase and two Russian context sentences, and must type the matching English word or phrase from their dictionary.\n\nExpected English is the authoritative answer (may be multi-word). Accept: correct spelling variants, obvious inflections of the same lemma if the dictionary entry is a single word, and minor articles only if they do not change the headword.\n\nReply with JSON only: {"is_correct": boolean, "message": "string"}\n\nIf is_correct is true: message = one short positive line (English).\n\nIf is_correct is false: message (English, structured paragraphs) MUST cover:\n1) Whether the learner\'s answer could still be acceptable in this interview context if it is close in meaning (say yes/no and briefly why).\n2) If it is not acceptable, why not.\n3) Semantic difference between the expected English and what the learner wrote.\n4) Practical usage: when to use the expected item vs the learner\'s word (register, collocations, typical interview phrases).';
+      var systemPrompt = 'You evaluate vocabulary recall for job-interview English. The learner saw a Russian word/phrase and two Russian context sentences, and must type the matching English word or phrase from their dictionary.\n\nExpected English is the authoritative answer (may be multi-word). Accept: correct spelling variants, obvious inflections of the same lemma if the dictionary entry is a single word, and minor articles only if they do not change the headword.\n\nReply with JSON only: {"is_correct": boolean, "message": "string", "synonyms": ["...", "...", "..."]}\n\nIf is_correct is true:\n- message = one short positive line (English).\n- synonyms = exactly 3 of the most common/popular near-synonyms for the expected English item in professional/everyday interview context.\n\nIf is_correct is false:\n- message (English, structured paragraphs) MUST cover:\n1) Whether the learner\'s answer could still be acceptable in this interview context if it is close in meaning (say yes/no and briefly why).\n2) If it is not acceptable, why not.\n3) Semantic difference between the expected English and what the learner wrote.\n4) Practical usage: when to use the expected item vs the learner\'s word (register, collocations, typical interview phrases).\n- synonyms = []';
       var userContent =
         'Russian word/phrase shown:\n' + russianWord +
         '\n\nRussian context sentences:\n' + ctx +
@@ -2766,9 +2832,14 @@
       var data = await response.json();
       var content = data.choices?.[0]?.message?.content?.trim() || '';
       var parsed = JSON.parse(content);
+      var syn = Array.isArray(parsed.synonyms) ? parsed.synonyms : [];
       return {
         isCorrect: !!parsed.is_correct,
-        message: typeof parsed.message === 'string' ? parsed.message : ''
+        message: typeof parsed.message === 'string' ? parsed.message : '',
+        synonyms: syn
+          .map(function (s) { return String(s || '').trim(); })
+          .filter(Boolean)
+          .slice(0, 3)
       };
     }
 
@@ -2900,6 +2971,7 @@
 
       try {
         var hintHtml = '';
+        var wordOnlyHintHtml = '';
         var promptInnerHtml = '';
         var textareaPlaceholder = 'Type your English translation...';
         currentWordRuDisplay = '';
@@ -2916,7 +2988,7 @@
 
           hintHtml =
             '<div class="practice-hint">' +
-            '<button type="button" class="practice-hint-toggle" id="hintToggle">Show hint</button>' +
+            '<button type="button" class="practice-hint-toggle" id="hintToggle">Show word</button>' +
             '<div class="practice-hint-content" id="hintContent">English in dictionary: ' + escapeHtml(currentWord) + '</div>' +
             '</div>';
 
@@ -2934,15 +3006,23 @@
             currentExamplesRu = wordPack.examplesRu || [];
             var ex0 = escapeHtml(currentExamplesRu[0] || '—');
             var ex1 = escapeHtml(currentExamplesRu[1] || '—');
+            var maskedHint = maskWordForHint(currentWord);
+            wordOnlyHintHtml =
+              '<div class="practice-hint">' +
+              '<button type="button" class="practice-hint-toggle" id="wordOnlyHintToggle">Show hint</button>' +
+              '<div class="practice-hint-content" id="wordOnlyHintContent">' + escapeHtml(maskedHint || currentWord) + '</div>' +
+              '</div>';
             promptInnerHtml =
               '<div class="practice-label">Russian word or phrase</div>' +
               '<div class="practice-text">' + escapeHtml(currentWordRuDisplay) + '</div>' +
               '<div class="practice-label" style="margin-top:1rem;">Context (Russian)</div>' +
               '<p class="practice-mode-desc" style="margin-top:0.35rem;">Two interview-style sentences using this vocabulary</p>' +
-              '<ol class="practice-context-list"><li>' + ex0 + '</li><li>' + ex1 + '</li></ol>';
+              '<ol class="practice-context-list"><li>' + ex0 + '</li><li>' + ex1 + '</li></ol>' +
+              wordOnlyHintHtml;
             currentPromptRu = currentWordRuDisplay;
           } else {
-            var result = await generatePracticePrompt(currentWord);
+            var dictTopic = getSelectedDictionarySentenceTopic();
+            var result = await generatePracticePrompt(currentWord, dictTopic);
             currentPromptRu = result.russian;
             promptInnerHtml =
               '<div class="practice-label">Translate to English:</div>' +
@@ -3006,8 +3086,18 @@
             var content = document.getElementById('hintContent');
             var expanded = toggle.classList.toggle('expanded');
             content.classList.toggle('visible', expanded);
-            toggle.textContent = expanded ? 'Hide hint' : 'Show hint';
+            toggle.textContent = expanded ? 'Hide word' : 'Show word';
           });
+          var wordOnlyHintToggle = document.getElementById('wordOnlyHintToggle');
+          if (wordOnlyHintToggle) {
+            wordOnlyHintToggle.addEventListener('click', function () {
+              var toggle = document.getElementById('wordOnlyHintToggle');
+              var content = document.getElementById('wordOnlyHintContent');
+              var expanded = toggle.classList.toggle('expanded');
+              content.classList.toggle('visible', expanded);
+              toggle.textContent = expanded ? 'Hide hint' : 'Show hint';
+            });
+          }
         }
         if (practiceMode === 'phrasal') {
           document.getElementById('phrasalTargetToggle').addEventListener('click', function () {
@@ -3072,10 +3162,16 @@
           );
           var okMsg = (wRes.message && wRes.message.trim()) ? wRes.message.trim() : 'Correct — well done!';
           if (wRes.isCorrect) {
+            var syn = Array.isArray(wRes.synonyms) ? wRes.synonyms : [];
+            var synText = syn.length ? syn.join(', ') : 'No alternatives available.';
             feedbackBlock.innerHTML =
               '<div class="feedback-section">' +
               '<div class="feedback-section-title correct">Correct</div>' +
               '<div class="feedback-content">' + escapeHtml(okMsg) + '</div>' +
+              '</div>' +
+              '<div class="feedback-section">' +
+              '<div class="feedback-section-title alternatives">3 common synonyms</div>' +
+              '<div class="feedback-content">' + escapeHtml(synText) + '</div>' +
               '</div>';
           } else {
             var badMsg = (wRes.message && wRes.message.trim()) ? wRes.message.trim() : 'See explanation below.';

@@ -71,6 +71,49 @@
       letter-spacing: -0.02em;
     }
 
+    .selected-scenario-wrap {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 0.25rem;
+    }
+
+    .selected-scenario-toggle {
+      align-self: flex-start;
+      padding: 0.45rem 0.75rem;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(232, 232, 232, 0.95);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .selected-scenario-toggle:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .selected-scenario-details {
+      max-width: 860px;
+      padding: 0.75rem 0.9rem;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      background: rgba(0, 0, 0, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      color: rgba(232, 232, 232, 0.9);
+      display: none;
+    }
+
+    .selected-scenario-details.expanded {
+      display: block;
+    }
+
     .header-modes {
       margin-left: auto;
       display: flex;
@@ -432,6 +475,69 @@
       color: #ff6b6b;
     }
 
+    .scenario-card {
+      margin-top: 0.25rem;
+      padding: 0.85rem 0.9rem;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .scenario-card-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.7;
+      margin-bottom: 0.45rem;
+    }
+
+    .scenario-card-main {
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .scenario-card-desc {
+      color: rgba(232, 232, 232, 0.9);
+    }
+
+    .scenario-card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 0.8rem;
+    }
+
+    .btn-scenario-primary,
+    .btn-scenario-secondary {
+      padding: 0.55rem 0.9rem;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: opacity 0.2s, background 0.2s, border-color 0.2s;
+    }
+
+    .btn-scenario-primary {
+      border: none;
+      color: #1a1a2e;
+      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+    }
+
+    .btn-scenario-secondary {
+      color: rgba(232, 232, 232, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .btn-scenario-primary:hover,
+    .btn-scenario-secondary:hover {
+      opacity: 0.95;
+    }
+
     .input-block {
       display: flex;
       flex-direction: column;
@@ -575,6 +681,26 @@
 
     .dict-status.dict-status-ok {
       color: rgba(144, 238, 144, 0.85);
+    }
+
+    .tools-drawer {
+      display: block;
+    }
+
+    .tools-drawer-grab {
+      display: none;
+    }
+
+    .tools-drawer-handle {
+      width: 44px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(232, 232, 232, 0.45);
+      margin: 0.35rem auto 0.55rem;
+    }
+
+    .tools-drawer-title {
+      display: none;
     }
 
     .translation-panel {
@@ -814,6 +940,10 @@
         min-height: min(58vh, 480px);
       }
 
+      .chat-main {
+        padding-bottom: 3.25rem;
+      }
+
       .input-row {
         flex-direction: column;
         align-items: stretch;
@@ -834,6 +964,47 @@
       .user-input {
         flex: none;
         width: 100%;
+      }
+
+      .tools-drawer {
+        position: fixed;
+        left: 0.5rem;
+        right: 0.5rem;
+        bottom: 0.4rem;
+        z-index: 1200;
+        padding: 0.1rem 0.6rem 0.75rem;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(18, 24, 44, 0.98);
+        box-shadow: 0 -8px 22px rgba(0, 0, 0, 0.35);
+        transform: translateY(calc(100% - 44px));
+        transition: transform 0.22s ease;
+        max-height: min(68vh, 520px);
+        overflow-y: auto;
+      }
+
+      .tools-drawer.open {
+        transform: translateY(0);
+      }
+
+      .tools-drawer-grab {
+        display: block;
+        position: sticky;
+        top: 0;
+        background: rgba(18, 24, 44, 0.98);
+        padding-top: 0.2rem;
+        cursor: pointer;
+      }
+
+      .tools-drawer-title {
+        display: block;
+        text-align: center;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: rgba(232, 232, 232, 0.72);
+        margin-bottom: 0.15rem;
       }
     }
 
@@ -869,6 +1040,10 @@
       <span class="header-modes-label">Mode</span>
       <button type="button" class="mode-pill active" id="modeFull" data-mode="full">Full interview</button>
       <button type="button" class="mode-pill" id="modeOne" data-mode="one">One question</button>
+    </div>
+    <div class="selected-scenario-wrap" id="selectedScenarioWrap" hidden>
+      <button type="button" class="selected-scenario-toggle" id="selectedScenarioToggle"></button>
+      <div class="selected-scenario-details" id="selectedScenarioDetails"></div>
     </div>
   </header>
 
@@ -908,7 +1083,11 @@
         </div>
       </div>
 
-      <div class="input-block">
+      <div class="input-block tools-drawer" id="toolsDrawer">
+        <div class="tools-drawer-grab" id="toolsDrawerGrab" aria-label="Toggle translate and vocabulary panel" role="button" tabindex="0">
+          <div class="tools-drawer-handle"></div>
+          <div class="tools-drawer-title">Translate &amp; vocabulary</div>
+        </div>
         <label class="input-block-label" for="toolsInput">Translate &amp; vocabulary</label>
         <div class="input-row">
           <textarea
@@ -958,8 +1137,14 @@
     const translationPanel = document.getElementById('translationPanel');
     const translationPanelBody = document.getElementById('translationPanelBody');
     const dictStatusEl = document.getElementById('dictStatus');
+    const toolsDrawerEl = document.getElementById('toolsDrawer');
+    const toolsDrawerGrabEl = document.getElementById('toolsDrawerGrab');
+    const selectedScenarioWrapEl = document.getElementById('selectedScenarioWrap');
+    const selectedScenarioToggleEl = document.getElementById('selectedScenarioToggle');
+    const selectedScenarioDetailsEl = document.getElementById('selectedScenarioDetails');
 
     const DICT_STORAGE_KEY = 'hr-interview-examples';
+    const ONE_QUESTION_PROGRESS_STORAGE_KEY = 'hr-interview-one-question-progress-v1';
 
     const TRANSLATION_SYSTEM_PROMPT =
       'You help candidates prepare for English job interviews. The user will send text that may be in Russian (or mixed). ' +
@@ -1070,13 +1255,20 @@
 
     btnTranslate.addEventListener('click', runTranslate);
 
-    const HR_SYSTEM_PROMPT =
+    const HR_SYSTEM_PROMPT_BASE =
       'You are an HR specialist conducting a job interview. Conduct the dialogue in English: ask relevant questions, react to the candidate\'s answers, and ask follow-up or next questions. Be polite and professional. Keep your replies brief, one or two sentences, in the style of an interviewer.';
 
     const FIRST_HR_MESSAGE = 'Hello! Please tell us a little about yourself.';
 
     const GENERAL_ONE_QUESTIONS = [
       'Tell me about yourself.',
+      'What made you choose this particular career path?',
+      'What do you consider to be your biggest strengths? And your weaknesses?',
+      'Why did you decide to change jobs?',
+      'Is there anything you dislike about your current job?',
+      'How well do you work under pressure?',
+      "Could you give me an example of a problem you've managed to overcome?",
+      'What do you expect to achieve five years from now?',
       'Tell me about a product you built or led.',
       'Tell me about a failure.',
       'Describe a conflict with stakeholders.',
@@ -1098,7 +1290,10 @@
     const COMPANY_ONE_QUESTIONS = [
       'Why do you want to work at this company?',
       'Why are you interested in this role?',
+      'How did you find out about this position?',
       'What do you know about our company?',
+      'What skills do you have that are relevant to this position?',
+      'Why should we hire you?',
       'What excites you about our product?',
       'How do you see our company evolving in the next few years?',
       'How would you improve our product?',
@@ -1112,12 +1307,128 @@
       'How would you launch our product in a new market?'
     ];
 
+    const INTERVIEW_SCENARIOS = [
+      {
+        company: 'Stripe',
+        role: 'Product Manager, Checkout',
+        summary: 'You own the checkout conversion funnel: reduce payment drop-off, improve payment method coverage, and balance user experience with fraud risk.',
+        expectations: 'Prioritization with clear metrics, close work with engineering and design, and strong experimentation mindset.'
+      },
+      {
+        company: 'Notion',
+        role: 'Product Manager, AI Writing Assistant',
+        summary: 'You lead AI writing features: improve answer quality, editing flows, and user trust while keeping latency low.',
+        expectations: 'Strong product judgment, fast hypothesis testing, and ability to translate user pain into roadmap decisions.'
+      },
+      {
+        company: 'Revolut',
+        role: 'Product Manager, Personal Finance',
+        summary: 'You are responsible for budgeting and spending insights: increase active usage and help users make better financial decisions.',
+        expectations: 'Data-driven prioritization, ownership of key product KPIs, and proactive cross-functional communication.'
+      },
+      {
+        company: 'Miro',
+        role: 'Product Manager, Collaboration Workflows',
+        summary: 'You improve team collaboration scenarios: smoother async workflows, better templates, and clearer project handoffs.',
+        expectations: 'User research depth, problem framing skills, and ability to align multiple stakeholders around outcomes.'
+      },
+      {
+        company: 'Duolingo',
+        role: 'Product Manager, Growth',
+        summary: 'You drive activation and retention: optimize onboarding, improve habit loops, and increase long-term learner engagement.',
+        expectations: 'Experimentation rigor, lifecycle thinking, and clear communication of trade-offs and impact.'
+      }
+    ];
+
     var interviewMode = 'full';
     var oneModeCurrentQuestion = null;
+    var selectedInterviewScenario = null;
+    var oneModeScenarioCardEl = null;
+    var oneQuestionProgressMap = {};
+    var oneQuestionProgressLoadPromise = null;
+    var oneQuestionProgressLoadedUid = '';
+    var isToolsDrawerOpen = false;
+    var toolsDrawerTouchStartY = null;
+    var toolsDrawerTouchDeltaY = 0;
+
+    function isMobileViewport() {
+      return window.matchMedia('(max-width: 640px)').matches;
+    }
+
+    function setToolsDrawerOpen(nextOpen) {
+      isToolsDrawerOpen = !!nextOpen;
+      if (!toolsDrawerEl) return;
+      toolsDrawerEl.classList.toggle('open', isToolsDrawerOpen);
+    }
+
+    function toggleToolsDrawer() {
+      if (!isMobileViewport()) return;
+      setToolsDrawerOpen(!isToolsDrawerOpen);
+    }
+
+    function initToolsDrawer() {
+      if (!toolsDrawerEl || !toolsDrawerGrabEl) return;
+      if (!isMobileViewport()) {
+        setToolsDrawerOpen(true);
+      } else {
+        setToolsDrawerOpen(false);
+      }
+
+      toolsDrawerGrabEl.addEventListener('click', toggleToolsDrawer);
+      toolsDrawerGrabEl.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleToolsDrawer();
+        }
+      });
+
+      toolsDrawerGrabEl.addEventListener('touchstart', function (e) {
+        if (!isMobileViewport()) return;
+        toolsDrawerTouchStartY = e.touches[0].clientY;
+        toolsDrawerTouchDeltaY = 0;
+      }, { passive: true });
+
+      toolsDrawerGrabEl.addEventListener('touchmove', function (e) {
+        if (!isMobileViewport() || toolsDrawerTouchStartY == null) return;
+        toolsDrawerTouchDeltaY = e.touches[0].clientY - toolsDrawerTouchStartY;
+      }, { passive: true });
+
+      toolsDrawerGrabEl.addEventListener('touchend', function () {
+        if (!isMobileViewport()) return;
+        if (toolsDrawerTouchDeltaY < -24) setToolsDrawerOpen(true);
+        if (toolsDrawerTouchDeltaY > 24) setToolsDrawerOpen(false);
+        toolsDrawerTouchStartY = null;
+        toolsDrawerTouchDeltaY = 0;
+      });
+    }
+
+    function renderSelectedScenarioBadge() {
+      if (!selectedScenarioWrapEl || !selectedScenarioToggleEl || !selectedScenarioDetailsEl) return;
+      if (!selectedInterviewScenario) {
+        selectedScenarioWrapEl.hidden = true;
+        selectedScenarioToggleEl.textContent = '';
+        selectedScenarioDetailsEl.textContent = '';
+        selectedScenarioDetailsEl.classList.remove('expanded');
+        return;
+      }
+      selectedScenarioWrapEl.hidden = false;
+      selectedScenarioToggleEl.textContent = selectedInterviewScenario.role + ' at ' + selectedInterviewScenario.company;
+      selectedScenarioDetailsEl.textContent = selectedInterviewScenario.summary + ' Expectations: ' + selectedInterviewScenario.expectations;
+      selectedScenarioDetailsEl.classList.remove('expanded');
+    }
+
+    function buildScenarioSystemPrompt() {
+      if (!selectedInterviewScenario) return HR_SYSTEM_PROMPT_BASE;
+      return HR_SYSTEM_PROMPT_BASE +
+        ' The candidate is interviewing for this role: ' +
+        selectedInterviewScenario.role + ' at ' + selectedInterviewScenario.company + '. ' +
+        'Role context: ' + selectedInterviewScenario.summary + ' ' +
+        'Expectations: ' + selectedInterviewScenario.expectations;
+    }
 
     function createInitialConversationHistory() {
       return [
-        { role: 'system', content: HR_SYSTEM_PROMPT },
+        { role: 'system', content: buildScenarioSystemPrompt() },
         { role: 'assistant', content: FIRST_HR_MESSAGE }
       ];
     }
@@ -1211,23 +1522,161 @@
       return getSelectedOneQuestionBank() === 'company' ? COMPANY_ONE_QUESTIONS : GENERAL_ONE_QUESTIONS;
     }
 
-    function pickRandomFromPool(pool, avoidText) {
+    function getSignedInUid() {
+      var df = typeof DictionaryFirebase !== 'undefined' ? DictionaryFirebase : null;
+      if (!df || !df.getCurrentUser) return '';
+      var user = df.getCurrentUser();
+      return user && user.uid ? user.uid : '';
+    }
+
+    function oneQuestionProgressRef(uid) {
+      if (!uid || typeof firebase === 'undefined' || !firebase.firestore) return null;
+      return firebase.firestore().collection('users').doc(uid).collection('sync').doc('interviewOneQuestionProgress');
+    }
+
+    function getOneQuestionProgressMap() {
+      try {
+        var raw = localStorage.getItem(ONE_QUESTION_PROGRESS_STORAGE_KEY);
+        var parsed = raw ? JSON.parse(raw) : {};
+        return parsed && typeof parsed === 'object' ? parsed : {};
+      } catch (_) {
+        return {};
+      }
+    }
+
+    function saveOneQuestionProgressMap(map) {
+      try {
+        localStorage.setItem(ONE_QUESTION_PROGRESS_STORAGE_KEY, JSON.stringify(map || {}));
+      } catch (_) {}
+    }
+
+    function loadOneQuestionProgressMap() {
+      var uid = getSignedInUid();
+      var localMap = getOneQuestionProgressMap();
+      oneQuestionProgressMap = localMap;
+      if (!uid) {
+        oneQuestionProgressLoadedUid = '';
+        return Promise.resolve(oneQuestionProgressMap);
+      }
+      if (oneQuestionProgressLoadedUid === uid) {
+        return Promise.resolve(oneQuestionProgressMap);
+      }
+      if (oneQuestionProgressLoadPromise) return oneQuestionProgressLoadPromise;
+
+      var ref = oneQuestionProgressRef(uid);
+      if (!ref) {
+        oneQuestionProgressLoadedUid = uid;
+        return Promise.resolve(oneQuestionProgressMap);
+      }
+
+      oneQuestionProgressLoadPromise = ref.get().then(function (snap) {
+        var cloudMap = snap.exists ? ((snap.data() && snap.data().entries) || {}) : {};
+        cloudMap = cloudMap && typeof cloudMap === 'object' ? cloudMap : {};
+        var hasCloud = Object.keys(cloudMap).length > 0;
+        var hasLocal = Object.keys(localMap).length > 0;
+
+        if (hasCloud) {
+          oneQuestionProgressMap = cloudMap;
+          saveOneQuestionProgressMap(cloudMap);
+        } else if (hasLocal) {
+          oneQuestionProgressMap = localMap;
+          ref.set({
+            version: 1,
+            entries: localMap,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          }).catch(function () {});
+        } else {
+          oneQuestionProgressMap = {};
+        }
+        oneQuestionProgressLoadedUid = uid;
+        return oneQuestionProgressMap;
+      }).catch(function () {
+        oneQuestionProgressLoadedUid = uid;
+        oneQuestionProgressMap = localMap;
+        return oneQuestionProgressMap;
+      }).finally(function () {
+        oneQuestionProgressLoadPromise = null;
+      });
+
+      return oneQuestionProgressLoadPromise;
+    }
+
+    function saveOneQuestionProgressMapWithSync(map) {
+      oneQuestionProgressMap = map || {};
+      saveOneQuestionProgressMap(oneQuestionProgressMap);
+      var uid = getSignedInUid();
+      var ref = oneQuestionProgressRef(uid);
+      if (!uid || !ref) return;
+      ref.set({
+        version: 1,
+        entries: oneQuestionProgressMap,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }).catch(function () {});
+    }
+
+    function makeOneQuestionKey(bank, questionText) {
+      return String(bank || 'general') + '::' + String(questionText || '');
+    }
+
+    function markOneQuestionPracticed(questionText) {
+      var q = String(questionText || '').trim();
+      if (!q) return;
+      var bank = getSelectedOneQuestionBank();
+      var key = makeOneQuestionKey(bank, q);
+      var progress = oneQuestionProgressMap && typeof oneQuestionProgressMap === 'object'
+        ? { ...oneQuestionProgressMap }
+        : getOneQuestionProgressMap();
+      progress[key] = {
+        lastPracticed: new Date().toISOString()
+      };
+      saveOneQuestionProgressMapWithSync(progress);
+    }
+
+    function pickPrioritizedQuestion(pool, bank, avoidText) {
       if (!pool || pool.length === 0) return '';
       if (pool.length === 1) return pool[0];
-      var q;
-      var n = 0;
-      do {
-        q = pool[Math.floor(Math.random() * pool.length)];
-        n++;
-      } while (q === avoidText && n < 40);
-      return q;
+
+      var avoid = String(avoidText || '');
+      var available = pool.filter(function (q) { return q !== avoid; });
+      if (!available.length) available = pool.slice();
+
+      var progress = oneQuestionProgressMap && typeof oneQuestionProgressMap === 'object'
+        ? oneQuestionProgressMap
+        : getOneQuestionProgressMap();
+      var neverPracticed = available.filter(function (q) {
+        var key = makeOneQuestionKey(bank, q);
+        var rec = progress[key];
+        return !rec || !rec.lastPracticed;
+      });
+      if (neverPracticed.length > 0) {
+        return neverPracticed[Math.floor(Math.random() * neverPracticed.length)];
+      }
+
+      var sorted = available.slice().sort(function (a, b) {
+        var aRec = progress[makeOneQuestionKey(bank, a)];
+        var bRec = progress[makeOneQuestionKey(bank, b)];
+        var aTs = new Date(aRec.lastPracticed).getTime();
+        var bTs = new Date(bRec.lastPracticed).getTime();
+        if (isNaN(aTs)) return -1;
+        if (isNaN(bTs)) return 1;
+        return aTs - bTs;
+      });
+      return sorted[0] || '';
     }
 
     function issueRandomOneQuestion() {
       if (interviewMode !== 'one') return;
       var pool = getOneQuestionPool();
-      var q = pickRandomFromPool(pool, oneModeCurrentQuestion);
+      var bank = getSelectedOneQuestionBank();
+      var q = pickPrioritizedQuestion(pool, bank, oneModeCurrentQuestion);
       oneModeCurrentQuestion = q;
+      if (oneModeScenarioCardEl && oneModeScenarioCardEl.parentNode) {
+        oneModeScenarioCardEl.parentNode.removeChild(oneModeScenarioCardEl);
+        oneModeScenarioCardEl = null;
+      }
+      if (selectedInterviewScenario) {
+        oneModeScenarioCardEl = addScenarioContextCard();
+      }
       addHrMessage(q);
       messagesEl.scrollTop = messagesEl.scrollHeight;
       userInputEl.focus();
@@ -1247,6 +1696,14 @@
       interviewMode = next;
       messagesEl.innerHTML = '';
       oneModeCurrentQuestion = null;
+      oneModeScenarioCardEl = null;
+
+      if (!selectedInterviewScenario) {
+        conversationHistory = [];
+        updateModeUi();
+        renderScenarioSelectionCard(false);
+        return;
+      }
 
       if (interviewMode === 'full') {
         conversationHistory = createInitialConversationHistory();
@@ -1261,6 +1718,89 @@
         issueRandomOneQuestion();
       }
     }
+
+    function pickRandomScenario(avoidKey) {
+      if (!INTERVIEW_SCENARIOS.length) return null;
+      if (INTERVIEW_SCENARIOS.length === 1) return INTERVIEW_SCENARIOS[0];
+      var item = null;
+      var i = 0;
+      do {
+        item = INTERVIEW_SCENARIOS[Math.floor(Math.random() * INTERVIEW_SCENARIOS.length)];
+        i++;
+      } while (item && (item.company + '|' + item.role) === avoidKey && i < 40);
+      return item;
+    }
+
+    function addScenarioContextCard() {
+      if (!selectedInterviewScenario) return null;
+      var div = document.createElement('div');
+      div.className = 'message hr';
+      div.innerHTML =
+        '<div class="message-label">Role context</div>' +
+        '<div class="message-text">' +
+          '<div class="scenario-card">' +
+            '<div class="scenario-card-main">' + escapeHtml(selectedInterviewScenario.role) + ' at ' + escapeHtml(selectedInterviewScenario.company) + '</div>' +
+            '<div class="scenario-card-desc">' + escapeHtml(selectedInterviewScenario.summary + ' ' + selectedInterviewScenario.expectations) + '</div>' +
+          '</div>' +
+        '</div>';
+      messagesEl.appendChild(div);
+      return div;
+    }
+
+    function beginInterviewFlow() {
+      messagesEl.innerHTML = '';
+      oneModeCurrentQuestion = null;
+      oneModeScenarioCardEl = null;
+      conversationHistory = createInitialConversationHistory();
+      if (interviewMode === 'full') {
+        addHrMessage(FIRST_HR_MESSAGE);
+      } else {
+        issueRandomOneQuestion();
+      }
+      updateModeUi();
+      userInputEl.focus();
+    }
+
+    function renderScenarioSelectionCard(forceNew) {
+      var prevKey = selectedInterviewScenario ? (selectedInterviewScenario.company + '|' + selectedInterviewScenario.role) : '';
+      var scenario = pickRandomScenario(forceNew ? prevKey : '');
+      if (!scenario) return;
+      selectedInterviewScenario = scenario;
+      renderSelectedScenarioBadge();
+      messagesEl.innerHTML = '';
+      oneModeScenarioCardEl = null;
+
+      var card = document.createElement('div');
+      card.className = 'message hr';
+      card.innerHTML =
+        '<div class="message-label">HR</div>' +
+        '<div class="message-text">' +
+          'First, choose your interview target. Here is a suggested option:' +
+          '<div class="scenario-card">' +
+            '<div class="scenario-card-title">Suggested company and role</div>' +
+            '<div class="scenario-card-main">' + escapeHtml(scenario.role) + ' at ' + escapeHtml(scenario.company) + '</div>' +
+            '<div class="scenario-card-desc">' + escapeHtml(scenario.summary) + '</div>' +
+            '<div class="scenario-card-desc">' + escapeHtml('Expectations: ' + scenario.expectations) + '</div>' +
+            '<div class="scenario-card-actions">' +
+              '<button type="button" class="btn-scenario-primary" id="btnUseScenario">Continue with this option</button>' +
+              '<button type="button" class="btn-scenario-secondary" id="btnNewScenario">Generate another</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+
+      messagesEl.appendChild(card);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      var btnUse = card.querySelector('#btnUseScenario');
+      var btnNew = card.querySelector('#btnNewScenario');
+      btnUse.addEventListener('click', beginInterviewFlow);
+      btnNew.addEventListener('click', function () {
+        renderScenarioSelectionCard(true);
+      });
+    }
+
+    selectedScenarioToggleEl.addEventListener('click', function () {
+      selectedScenarioDetailsEl.classList.toggle('expanded');
+    });
 
     modeFullBtn.addEventListener('click', function () { setInterviewMode('full'); });
     modeOneBtn.addEventListener('click', function () { setInterviewMode('one'); });
@@ -1441,7 +1981,7 @@
     }
 
     const ANALYSIS_SYSTEM_PROMPT =
-      'You are an HR evaluator. Given the interview question and the candidate\'s answer, provide a score from 1 to 5 (from an HR perspective: 1 = very weak, 5 = excellent) and a short description. Take into account that this is an interviewer–candidate dialogue, answers should be concise, cover necessary details, and avoid unnecessary information. In the description explain why this score, and list main strengths and weaknesses of the answer. Reply with a single JSON object on one line, no markdown, no code blocks. Example: {"score": 4, "description": "Clear structure and relevant experience. Could add more concrete examples."}';
+      'You are an HR evaluator. Given role context, interview question, and candidate answer, provide a score from 1 to 5 (1 = very weak, 5 = excellent) and a short description. Evaluate not only answer quality, but also role-fit. If the role context emphasizes specific competencies (for example analytics, experimentation, stakeholder management), and the answer ignores or weakly covers them, reduce the score accordingly and explicitly mention this mismatch in the feedback. Take into account that this is an interviewer-candidate dialogue: answers should be concise, relevant, and specific. In the description explain why this score, list main strengths/weaknesses, and include at least one role-fit comment. Reply with a single JSON object on one line, no markdown, no code blocks. Example: {"score": 3, "description": "Clear communication, but weak role-fit: the answer highlights UX strengths while not addressing analytics expected for this role."}';
 
     const ENG_ANALYSIS_SYSTEM_PROMPT =
       'You are an English language evaluator for job interviews. Given the candidate\'s answer, evaluate their English level with a score from 1 to 5 (1 = very weak, 5 = native-like). In the description you MUST: (1) Quote or clearly point to each place where there was a grammar, vocabulary, or style error; (2) For each error, suggest the correct or better way to say it—more grammatically correct, more natural, or more professional. Do not check the punctuation marks and the style of writing numbers (for example, 8 or eight). Be specific: e.g. "In \'I have work there\' use \'I have worked there\' or \'I worked there\'." Reply with a single JSON object: {"score": number 1-5, "description": "your detailed feedback with exact error locations and corrections"}';
@@ -1472,7 +2012,18 @@
     }
 
     async function getAnswerAnalysis(hrQuestion, userAnswer) {
-      var userContent = 'Question: ' + hrQuestion + '\n\nCandidate\'s answer: ' + userAnswer;
+      var roleContext = selectedInterviewScenario
+        ? (
+          'Company: ' + selectedInterviewScenario.company + '\n' +
+          'Role: ' + selectedInterviewScenario.role + '\n' +
+          'Role scope: ' + selectedInterviewScenario.summary + '\n' +
+          'Role expectations: ' + selectedInterviewScenario.expectations
+        )
+        : 'Company: not specified\nRole: not specified\nRole scope: not specified\nRole expectations: not specified';
+      var userContent =
+        'Role context:\n' + roleContext +
+        '\n\nQuestion: ' + hrQuestion +
+        '\n\nCandidate\'s answer: ' + userAnswer;
       const response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -1572,6 +2123,10 @@
     async function sendUserMessage() {
       const text = userInputEl.value.trim();
       if (!text) return;
+      if (!selectedInterviewScenario) {
+        addHrMessage('Please choose a company and role first.');
+        return;
+      }
 
       if (interviewMode === 'one') {
         if (!oneModeCurrentQuestion) {
@@ -1581,6 +2136,9 @@
       }
 
       const userMsgEl = addUserMessage(text);
+      if (interviewMode === 'one') {
+        markOneQuestionPracticed(oneModeCurrentQuestion);
+      }
       if (interviewMode === 'full') {
         conversationHistory.push({ role: 'user', content: text });
       }
@@ -1643,6 +2201,11 @@
     userInputEl.addEventListener('input', fitUserAnswerInputHeight);
     window.addEventListener('resize', function () {
       fitUserAnswerInputHeight();
+      if (!isMobileViewport()) {
+        setToolsDrawerOpen(true);
+      } else if (!toolsDrawerEl.classList.contains('open')) {
+        setToolsDrawerOpen(false);
+      }
     });
 
     toolsInputEl.addEventListener('input', function () {
@@ -1688,13 +2251,18 @@
     function startInterviewAppOnce() {
       if (interviewAppStarted) return;
       interviewAppStarted = true;
+      loadOneQuestionProgressMap();
       updateModeUi();
-      addHrMessage(FIRST_HR_MESSAGE);
+      renderScenarioSelectionCard(false);
       fitUserAnswerInputHeight();
+      initToolsDrawer();
     }
 
     function onInterviewAuthUi(user) {
       hideInterviewAuthBoot();
+      oneQuestionProgressLoadedUid = '';
+      oneQuestionProgressLoadPromise = null;
+      loadOneQuestionProgressMap();
       syncInterviewAuthGate();
       var df = typeof DictionaryFirebase !== 'undefined' ? DictionaryFirebase : null;
       if (!df || !df.isFirebaseAvailable || !df.isFirebaseAvailable()) {
