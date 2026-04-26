@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-title" content="English Practice">
+  <link rel="icon" type="image/png" href="apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
+  <title>Custom topic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'DM Sans', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #e8e8e8;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.5rem 0.85rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(232, 232, 232, 0.9);
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+    }
+
+    .header h1 {
+      font-size: 1.45rem;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1.25rem 1rem 2rem;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 1rem;
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .panel-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .panel-subtitle {
+      font-size: 0.9rem;
+      line-height: 1.45;
+      color: rgba(232, 232, 232, 0.75);
+    }
+
+    .field {
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .field label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(232, 232, 232, 0.7);
+    }
+
+    .field textarea {
+      width: 100%;
+      min-height: 110px;
+      resize: vertical;
+      padding: 0.7rem 0.8rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: #e8e8e8;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+    }
+
+    .field textarea:focus {
+      outline: none;
+      border-color: rgba(233, 69, 96, 0.55);
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn-primary {
+      padding: 0.58rem 1rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .chat-shell[hidden] {
+      display: none !important;
+    }
+
+    .chat-shell {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .practice-shell[hidden] {
+      display: none !important;
+    }
+
+    .practice-shell {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .practice-card {
+      padding: 1rem;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .practice-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: rgba(232, 232, 232, 0.7);
+    }
+
+    .practice-prompt {
+      font-size: 1rem;
+      line-height: 1.55;
+      color: rgba(232, 232, 232, 0.97);
+      white-space: pre-wrap;
+    }
+
+    .hint-wrap {
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .hint-text {
+      padding: 0.7rem 0.75rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(0, 0, 0, 0.22);
+      color: rgba(232, 232, 232, 0.85);
+      line-height: 1.45;
+      white-space: pre-wrap;
+    }
+
+    .hint-text[hidden] {
+      display: none !important;
+    }
+
+    .practice-answer {
+      width: 100%;
+      min-height: 96px;
+      resize: vertical;
+      padding: 0.7rem 0.8rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: #e8e8e8;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+    }
+
+    .practice-answer:focus {
+      outline: none;
+      border-color: rgba(233, 69, 96, 0.55);
+    }
+
+    .practice-actions {
+      display: flex;
+      gap: 0.55rem;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .feedback {
+      padding: 0.75rem 0.8rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(0, 0, 0, 0.22);
+      font-size: 0.92rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    .messages {
+      min-height: 380px;
+      max-height: min(62vh, 620px);
+      overflow-y: auto;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .message {
+      max-width: 92%;
+      padding: 0.85rem 0.95rem;
+      border-radius: 12px;
+      word-break: break-word;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .message-text {
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+
+    .message.you {
+      align-self: flex-end;
+      background: rgba(233, 69, 96, 0.18);
+      border-color: rgba(233, 69, 96, 0.34);
+    }
+
+    .message.assistant {
+      align-self: flex-start;
+    }
+
+    .message-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      opacity: 0.72;
+      margin-bottom: 0.35rem;
+    }
+
+    .chat-input-wrap {
+      display: flex;
+      gap: 0.7rem;
+      align-items: flex-start;
+    }
+
+    .chat-input {
+      flex: 1;
+      min-height: 60px;
+      max-height: 220px;
+      resize: vertical;
+      padding: 0.7rem 0.8rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: #e8e8e8;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+    }
+
+    .chat-input:focus {
+      outline: none;
+      border-color: rgba(233, 69, 96, 0.55);
+    }
+
+    .chat-input-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .btn-secondary {
+      padding: 0.58rem 1rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: rgba(232, 232, 232, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 10px;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .status {
+      font-size: 0.83rem;
+      color: rgba(232, 232, 232, 0.72);
+      min-height: 1.2rem;
+    }
+
+    @media (max-width: 720px) {
+      .header {
+        padding: 1rem;
+      }
+
+      .wrap {
+        padding: 1rem 0.8rem 1.4rem;
+      }
+
+      .chat-input-wrap {
+        flex-direction: column;
+      }
+
+      .chat-input-actions {
+        width: 100%;
+        flex-direction: row;
+      }
+
+      .chat-input-actions .btn-primary,
+      .chat-input-actions .btn-secondary {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a href="index.html" class="btn-back">← Menu</a>
+    <h1>Custom topic</h1>
+  </header>
+
+  <main class="wrap">
+    <section class="panel" id="setupPanel">
+      <div class="panel-title">Pick your own topic</div>
+      <div class="panel-subtitle">Write any topic you want to discuss and practice. You can be as specific as you want.</div>
+      <div class="field">
+        <label for="customTopicInput">Topic</label>
+        <textarea id="customTopicInput" placeholder="Example: Product analytics for retention in B2B SaaS"></textarea>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn-primary" id="btnContinue">Continue</button>
+      </div>
+    </section>
+
+    <section class="chat-shell" id="chatShell" hidden>
+      <div class="messages" id="messages"></div>
+      <div class="chat-input-wrap">
+        <textarea id="chatInput" class="chat-input" placeholder="Ask a follow-up question about this topic..."></textarea>
+        <div class="chat-input-actions">
+          <button type="button" class="btn-primary" id="btnSend">Send</button>
+          <button type="button" class="btn-secondary" id="btnFlowContinue">Continue</button>
+        </div>
+      </div>
+      <div class="status" id="statusText"></div>
+    </section>
+
+    <section class="practice-shell" id="practiceShell" hidden>
+      <div class="practice-card">
+        <div class="practice-label">Translate to English</div>
+        <div class="practice-prompt" id="practicePromptRu"></div>
+        <div class="hint-wrap">
+          <button type="button" class="btn-secondary" id="btnShowHint">Show hint</button>
+          <div class="hint-text" id="practiceHint" hidden></div>
+        </div>
+        <textarea id="practiceAnswerInput" class="practice-answer" placeholder="Type your English translation..."></textarea>
+        <div class="practice-actions">
+          <button type="button" class="btn-secondary" id="btnCheckPractice">Check</button>
+          <button type="button" class="btn-primary" id="btnNextPractice">Next</button>
+        </div>
+        <div class="feedback" id="practiceFeedback" hidden></div>
+      </div>
+      <div class="status" id="practiceStatus"></div>
+    </section>
+  </main>
+
+  <script src="api-config.js"></script>
+  <script>
+    (function () {
+      var setupPanel = document.getElementById('setupPanel');
+      var chatShell = document.getElementById('chatShell');
+      var customTopicInput = document.getElementById('customTopicInput');
+      var btnContinue = document.getElementById('btnContinue');
+      var messagesEl = document.getElementById('messages');
+      var chatInput = document.getElementById('chatInput');
+      var btnSend = document.getElementById('btnSend');
+      var btnFlowContinue = document.getElementById('btnFlowContinue');
+      var statusText = document.getElementById('statusText');
+      var practiceShell = document.getElementById('practiceShell');
+      var practicePromptRu = document.getElementById('practicePromptRu');
+      var btnShowHint = document.getElementById('btnShowHint');
+      var practiceHint = document.getElementById('practiceHint');
+      var practiceAnswerInput = document.getElementById('practiceAnswerInput');
+      var btnCheckPractice = document.getElementById('btnCheckPractice');
+      var btnNextPractice = document.getElementById('btnNextPractice');
+      var practiceFeedback = document.getElementById('practiceFeedback');
+      var practiceStatus = document.getElementById('practiceStatus');
+
+      var selectedTopic = '';
+      var conversationHistory = [];
+      var currentPracticeExercise = null;
+
+      var CUSTOM_TOPIC_SYSTEM_PROMPT =
+        'You are a supportive English tutor and discussion partner. The user gives a topic they want to practice. ' +
+        'Start with a concise, useful first response in English that explains the topic simply and gives a practical angle for discussion. ' +
+        'Then continue the conversation based on user follow-up questions. Keep answers clear, practical, and friendly. ' +
+        'Always format responses for readability: use short paragraphs, line breaks, and when helpful use bullet points or numbered lists. Avoid one huge paragraph. ' +
+        'Do not end with invitations to practice or extra calls to action; respond only to the asked topic or question.';
+
+      function setStatus(text) {
+        if (!statusText) return;
+        statusText.textContent = text || '';
+      }
+
+      function setPracticeStatus(text) {
+        if (!practiceStatus) return;
+        practiceStatus.textContent = text || '';
+      }
+
+      function escapeHtml(str) {
+        var div = document.createElement('div');
+        div.textContent = str == null ? '' : String(str);
+        return div.innerHTML;
+      }
+
+      function addMessage(role, text) {
+        if (!messagesEl) return;
+        var kind = role === 'user' ? 'you' : 'assistant';
+        var label = role === 'user' ? 'You' : 'Assistant';
+        var el = document.createElement('div');
+        el.className = 'message ' + kind;
+        var bodyHtml = escapeHtml(text).replace(/\n/g, '<br>');
+        el.innerHTML =
+          '<span class="message-label">' + escapeHtml(label) + '</span>' +
+          '<div class="message-text">' + bodyHtml + '</div>';
+        messagesEl.appendChild(el);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+
+      function stripEndingCallToAction(text) {
+        var raw = String(text || '').trim();
+        if (!raw) return raw;
+        var patterns = [
+          /\n?\s*if you want[, ]+i can[\s\S]*$/i,
+          /\n?\s*if you'd like[, ]+i can[\s\S]*$/i,
+          /\n?\s*let me know if you want[\s\S]*$/i,
+          /\n?\s*i can also[\s\S]*$/i
+        ];
+        for (var i = 0; i < patterns.length; i++) {
+          raw = raw.replace(patterns[i], '').trim();
+        }
+        return raw;
+      }
+
+      function switchToChat() {
+        setupPanel.hidden = true;
+        chatShell.hidden = false;
+        practiceShell.hidden = true;
+      }
+
+      function switchToPractice() {
+        setupPanel.hidden = true;
+        chatShell.hidden = true;
+        practiceShell.hidden = false;
+      }
+
+      function fetchWithTimeout(url, options) {
+        var API_TIMEOUT_MS = 60000;
+        var ctrl = new AbortController();
+        var id = setTimeout(function () { ctrl.abort(); }, API_TIMEOUT_MS);
+        return fetch(url, Object.assign({}, options, { signal: ctrl.signal })).then(function (r) {
+          clearTimeout(id);
+          return r;
+        }, function (err) {
+          clearTimeout(id);
+          if (err && err.name === 'AbortError') throw new Error('Request timed out');
+          throw err;
+        });
+      }
+
+      async function requestAssistantReply() {
+        var response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getOpenAiApiKey()
+          },
+          body: JSON.stringify({
+            model: 'gpt-5-mini-2025-08-07',
+            messages: conversationHistory
+          })
+        });
+        if (!response.ok) {
+          var err = await response.json().catch(function () { return { error: { message: response.statusText } }; });
+          throw new Error((err && err.error && err.error.message) ? err.error.message : 'Request failed');
+        }
+        var data = await response.json();
+        var content = data && data.choices && data.choices[0] && data.choices[0].message
+          ? String(data.choices[0].message.content || '').trim()
+          : '';
+        content = stripEndingCallToAction(content);
+        if (!content) throw new Error('Empty response from ChatGPT');
+        return content;
+      }
+
+      async function generatePracticeExercise() {
+        var contextSnippet = conversationHistory.slice(-6).map(function (m) {
+          return (m.role === 'assistant' ? 'Assistant: ' : 'User: ') + m.content;
+        }).join('\n');
+        var response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getOpenAiApiKey()
+          },
+          body: JSON.stringify({
+            model: 'gpt-5-mini-2025-08-07',
+            messages: [
+              {
+                role: 'system',
+                content:
+                  'You generate short translation practice tasks for Russian-speaking English learners. ' +
+                  'Return JSON only with keys: russian_prompt (1-2 natural Russian sentences), hint (brief guidance what language pattern/rule is practiced), reference_answer (one strong English translation).'
+              },
+              {
+                role: 'user',
+                content:
+                  'Topic: ' + selectedTopic + '\n' +
+                  'Recent discussion:\n' + contextSnippet + '\n\n' +
+                  'Create one practice item aligned to this topic.'
+              }
+            ],
+            response_format: { type: 'json_object' }
+          })
+        });
+        if (!response.ok) {
+          var err = await response.json().catch(function () { return { error: { message: response.statusText } }; });
+          throw new Error((err && err.error && err.error.message) ? err.error.message : 'Failed to generate practice');
+        }
+        var data = await response.json();
+        var content = data && data.choices && data.choices[0] && data.choices[0].message
+          ? String(data.choices[0].message.content || '').trim()
+          : '';
+        var parsed = JSON.parse(content || '{}');
+        return {
+          russian_prompt: String(parsed.russian_prompt || '').trim(),
+          hint: String(parsed.hint || '').trim(),
+          reference_answer: String(parsed.reference_answer || '').trim()
+        };
+      }
+
+      async function checkPracticeAnswer(russianPrompt, userAnswer, referenceAnswer) {
+        var response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getOpenAiApiKey()
+          },
+          body: JSON.stringify({
+            model: 'gpt-5-mini-2025-08-07',
+            messages: [
+              {
+                role: 'system',
+                content:
+                  'You evaluate English translations from Russian. Focus on meaning and natural interview-appropriate English. ' +
+                  'Reply with JSON only: {"score":1-5,"feedback":"short feedback in English","improved":"one improved English translation"}'
+              },
+              {
+                role: 'user',
+                content:
+                  'Russian prompt: ' + russianPrompt + '\n' +
+                  'User translation: ' + userAnswer + '\n' +
+                  'Reference translation: ' + referenceAnswer
+              }
+            ],
+            response_format: { type: 'json_object' }
+          })
+        });
+        if (!response.ok) {
+          var err = await response.json().catch(function () { return { error: { message: response.statusText } }; });
+          throw new Error((err && err.error && err.error.message) ? err.error.message : 'Failed to check answer');
+        }
+        var data = await response.json();
+        var content = data && data.choices && data.choices[0] && data.choices[0].message
+          ? String(data.choices[0].message.content || '').trim()
+          : '';
+        var parsed = JSON.parse(content || '{}');
+        var score = Number(parsed.score);
+        if (isNaN(score)) score = 3;
+        score = Math.max(1, Math.min(5, Math.round(score)));
+        return {
+          score: score,
+          feedback: String(parsed.feedback || '').trim(),
+          improved: String(parsed.improved || '').trim()
+        };
+      }
+
+      async function loadPracticeExercise() {
+        if (!getOpenAiApiKey()) {
+          setPracticeStatus('Add your OpenAI API key in Settings first.');
+          return;
+        }
+        btnCheckPractice.disabled = true;
+        btnNextPractice.disabled = true;
+        setPracticeStatus('Generating practice task...');
+        practiceFeedback.hidden = true;
+        practiceFeedback.textContent = '';
+        practiceHint.hidden = true;
+        btnShowHint.textContent = 'Show hint';
+        try {
+          currentPracticeExercise = await generatePracticeExercise();
+          if (!currentPracticeExercise.russian_prompt) {
+            throw new Error('Empty practice prompt');
+          }
+          practicePromptRu.textContent = currentPracticeExercise.russian_prompt;
+          practiceHint.textContent = currentPracticeExercise.hint || 'Focus on natural sentence structure and precise meaning.';
+          practiceAnswerInput.value = '';
+          setPracticeStatus('');
+          practiceAnswerInput.focus();
+        } catch (err) {
+          setPracticeStatus(err && err.message ? err.message : 'Could not load practice task');
+        } finally {
+          btnCheckPractice.disabled = false;
+          btnNextPractice.disabled = false;
+        }
+      }
+
+      async function startTopicChat() {
+        selectedTopic = (customTopicInput.value || '').trim();
+        if (!selectedTopic) {
+          setStatus('Enter a topic first.');
+          customTopicInput.focus();
+          return;
+        }
+        if (!getOpenAiApiKey()) {
+          setStatus('Add your OpenAI API key in Settings first.');
+          return;
+        }
+
+        btnContinue.disabled = true;
+        setStatus('Preparing first response...');
+        switchToChat();
+
+        conversationHistory = [
+          { role: 'system', content: CUSTOM_TOPIC_SYSTEM_PROMPT },
+          { role: 'user', content: 'Topic: ' + selectedTopic + '\nPlease start the discussion with a helpful first response.' }
+        ];
+
+        try {
+          var firstReply = await requestAssistantReply();
+          conversationHistory.push({ role: 'assistant', content: firstReply });
+          addMessage('assistant', firstReply);
+          setStatus('');
+          chatInput.focus();
+        } catch (err) {
+          addMessage('assistant', 'Could not generate the first response: ' + (err && err.message ? err.message : 'unknown error'));
+          setStatus('You can try again from Menu.');
+        } finally {
+          btnContinue.disabled = false;
+        }
+      }
+
+      async function sendChatMessage() {
+        var text = (chatInput.value || '').trim();
+        if (!text) return;
+        if (!getOpenAiApiKey()) {
+          setStatus('Add your OpenAI API key in Settings first.');
+          return;
+        }
+
+        addMessage('user', text);
+        conversationHistory.push({ role: 'user', content: text });
+        chatInput.value = '';
+        btnSend.disabled = true;
+        setStatus('Assistant is thinking...');
+        try {
+          var reply = await requestAssistantReply();
+          conversationHistory.push({ role: 'assistant', content: reply });
+          addMessage('assistant', reply);
+          setStatus('');
+        } catch (err) {
+          addMessage('assistant', 'Error: ' + (err && err.message ? err.message : 'request failed'));
+          setStatus('Try sending your question again.');
+        } finally {
+          btnSend.disabled = false;
+        }
+      }
+
+      btnContinue.addEventListener('click', startTopicChat);
+      customTopicInput.addEventListener('keydown', function (e) {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+          startTopicChat();
+        }
+      });
+
+      btnSend.addEventListener('click', sendChatMessage);
+      chatInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          sendChatMessage();
+        }
+      });
+
+      btnFlowContinue.addEventListener('click', function () {
+        switchToPractice();
+        loadPracticeExercise();
+      });
+
+      btnShowHint.addEventListener('click', function () {
+        var willShow = practiceHint.hidden;
+        practiceHint.hidden = !willShow;
+        btnShowHint.textContent = willShow ? 'Hide hint' : 'Show hint';
+      });
+
+      btnCheckPractice.addEventListener('click', async function () {
+        var answer = (practiceAnswerInput.value || '').trim();
+        if (!currentPracticeExercise || !currentPracticeExercise.russian_prompt) {
+          setPracticeStatus('Generate an exercise first.');
+          return;
+        }
+        if (!answer) {
+          setPracticeStatus('Enter your translation first.');
+          practiceAnswerInput.focus();
+          return;
+        }
+        if (!getOpenAiApiKey()) {
+          setPracticeStatus('Add your OpenAI API key in Settings first.');
+          return;
+        }
+        btnCheckPractice.disabled = true;
+        setPracticeStatus('Checking your answer...');
+        try {
+          var result = await checkPracticeAnswer(
+            currentPracticeExercise.russian_prompt,
+            answer,
+            currentPracticeExercise.reference_answer
+          );
+          var feedbackText = 'Score: ' + result.score + '/5';
+          if (result.feedback) feedbackText += '\n\n' + result.feedback;
+          if (result.improved) feedbackText += '\n\nImproved translation:\n' + result.improved;
+          practiceFeedback.textContent = feedbackText;
+          practiceFeedback.hidden = false;
+          setPracticeStatus('');
+        } catch (err) {
+          setPracticeStatus(err && err.message ? err.message : 'Could not check answer');
+        } finally {
+          btnCheckPractice.disabled = false;
+        }
+      });
+
+      btnNextPractice.addEventListener('click', function () {
+        loadPracticeExercise();
+      });
+    })();
+  </script>
+</body>
+</html>

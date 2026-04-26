@@ -12,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    [hidden] { display: none !important; }
     body {
       min-height: 100vh;
       font-family: 'DM Sans', sans-serif;
@@ -24,6 +25,23 @@
       gap: 1rem;
       padding: 1.5rem 2rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .header-spacer { flex: 1; }
+    .header-actions {
+      display: inline-flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .btn-header-icon {
+      width: 38px;
+      height: 38px;
+      min-width: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      font-size: 1rem;
+      line-height: 1;
     }
     .btn-back {
       display: inline-flex;
@@ -47,7 +65,7 @@
     }
     .controls {
       display: grid;
-      grid-template-columns: 1fr auto auto;
+      grid-template-columns: 1fr;
       gap: 0.6rem;
       margin-bottom: 1rem;
     }
@@ -73,6 +91,17 @@
       border: 1px solid rgba(255, 255, 255, 0.12);
       background: rgba(255, 255, 255, 0.05);
     }
+    .item-main {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.8rem;
+      cursor: pointer;
+    }
+    .item-main:hover .item-text {
+      text-decoration: underline;
+      text-underline-offset: 0.12em;
+    }
     .item-head {
       display: flex;
       align-items: center;
@@ -83,7 +112,95 @@
     .item-meta { opacity: 0.72; font-size: 0.8rem; margin-top: 0.3rem; }
     .item-actions { display: flex; gap: 0.45rem; }
     .btn-sm { padding: 0.38rem 0.55rem; font-size: 0.8rem; }
+    .btn-icon {
+      width: 32px;
+      min-width: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.32rem;
+      line-height: 1;
+    }
+    .btn-toggle-translation {
+      margin-bottom: 0.7rem;
+    }
+    .item-extra {
+      display: none;
+      margin-top: 0.7rem;
+      padding-top: 0.65rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .item-extra.visible { display: block; }
+    .extra-label {
+      opacity: 0.72;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.35rem;
+    }
+    .translation {
+      margin: 0.45rem 0 0.75rem;
+      padding: 0.5rem 0.65rem;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      white-space: pre-wrap;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+    .examples {
+      margin: 0;
+      padding-left: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .details-note {
+      opacity: 0.8;
+      font-size: 0.9rem;
+      line-height: 1.35;
+    }
     .empty { opacity: 0.72; padding: 0.5rem 0.2rem; }
+    .modal[hidden] { display: none; }
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(4, 8, 20, 0.72);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-dialog {
+      width: min(460px, 100%);
+      background: linear-gradient(180deg, rgba(26, 26, 46, 0.98), rgba(15, 52, 96, 0.98));
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 14px;
+      padding: 1rem;
+      box-shadow: 0 16px 44px rgba(0, 0, 0, 0.45);
+    }
+    .modal-title {
+      font-size: 1.05rem;
+      margin-bottom: 0.85rem;
+    }
+    .modal-field {
+      display: grid;
+      gap: 0.4rem;
+      margin-bottom: 0.7rem;
+    }
+    .modal-field label {
+      font-size: 0.82rem;
+      opacity: 0.8;
+      font-weight: 600;
+    }
+    .modal-actions {
+      margin-top: 0.9rem;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.55rem;
+    }
     @media (max-width: 720px) {
       .add-row, .controls { grid-template-columns: 1fr; }
       .header { padding: 1rem; }
@@ -96,9 +213,14 @@
   <header class="header">
     <a href="index.html" class="btn-back">← Menu</a>
     <h1>Dictionary</h1>
+    <div class="header-spacer"></div>
+    <div class="header-actions">
+      <button id="btnToggleAddRow" class="btn-header-icon" type="button" aria-label="Add word" title="Add word">＋</button>
+      <button id="btnOpenFilters" class="btn-header-icon" type="button" aria-label="Filters" title="Filters">⚙️</button>
+    </div>
   </header>
   <main class="wrap">
-    <div class="add-row">
+    <div id="addRow" class="add-row" hidden>
       <input id="addInput" type="text" placeholder="Add a word, phrase, or sentence...">
       <select id="addList">
         <option value="it">IT</option>
@@ -108,33 +230,72 @@
     </div>
     <div class="controls">
       <input id="searchInput" type="search" placeholder="Search..." autocomplete="off">
-      <select id="listFilter" aria-label="List filter">
-        <option value="it">IT</option>
-        <option value="general" selected>General</option>
-      </select>
-      <select id="statusFilter" aria-label="Status filter">
-        <option value="learning" selected>Learning</option>
-        <option value="learned">Learned</option>
-      </select>
     </div>
     <div class="list" id="dictList"></div>
   </main>
+  <div id="filtersModal" class="modal" hidden aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="filtersModalTitle">
+      <h2 id="filtersModalTitle" class="modal-title">Dictionary Filters</h2>
+      <div class="modal-field">
+        <label for="listFilterModal">Word List</label>
+        <select id="listFilterModal" aria-label="List filter">
+          <option value="all" selected>All</option>
+          <option value="it">IT</option>
+          <option value="general">General</option>
+        </select>
+      </div>
+      <div class="modal-field">
+        <label for="statusFilterModal">Status</label>
+        <select id="statusFilterModal" aria-label="Status filter">
+          <option value="all" selected>All</option>
+          <option value="learning">Learning</option>
+          <option value="learned">Learned</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button id="btnCancelFilters" type="button">Cancel</button>
+        <button id="btnApplyFilters" class="btn-primary" type="button">Apply</button>
+      </div>
+    </div>
+  </div>
 
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics-compat.js"></script>
+  <script src="api-config.js"></script>
   <script src="dictionary-firebase.js"></script>
   <script>
     (function () {
       var STORAGE_KEY = 'hr-interview-examples';
+      var API_TIMEOUT_MS = 30000;
       var addInput = document.getElementById('addInput');
       var addList = document.getElementById('addList');
       var btnAdd = document.getElementById('btnAdd');
+      var addRow = document.getElementById('addRow');
+      var btnToggleAddRow = document.getElementById('btnToggleAddRow');
       var searchInput = document.getElementById('searchInput');
-      var listFilter = document.getElementById('listFilter');
-      var statusFilter = document.getElementById('statusFilter');
+      var btnOpenFilters = document.getElementById('btnOpenFilters');
+      var filtersModal = document.getElementById('filtersModal');
+      var listFilterModal = document.getElementById('listFilterModal');
+      var statusFilterModal = document.getElementById('statusFilterModal');
+      var btnApplyFilters = document.getElementById('btnApplyFilters');
+      var btnCancelFilters = document.getElementById('btnCancelFilters');
       var dictList = document.getElementById('dictList');
+      var expandedWordId = null;
+      var shownTranslationById = {};
+      var generatingDetailsById = {};
+      var currentListFilter = 'all';
+      var currentStatusFilter = 'all';
+
+      function normalizeWordId(id) {
+        if (id === null || id === undefined) return '';
+        return String(id);
+      }
+
+      function isSameWordId(a, b) {
+        return normalizeWordId(a) === normalizeWordId(b);
+      }
 
       function getDictionary() {
         if (typeof DictionaryFirebase !== 'undefined' && DictionaryFirebase.getDictionary) {
@@ -160,20 +321,119 @@
       }
 
       function formatDate(iso) {
-        if (!iso) return 'Not practiced yet';
+        if (!iso) return '-';
         var d = new Date(iso);
-        if (isNaN(d.getTime())) return 'Not practiced yet';
+        if (isNaN(d.getTime())) return '-';
         return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+      }
+
+      function fetchWithTimeout(url, options) {
+        var ctrl = new AbortController();
+        var id = setTimeout(function () { ctrl.abort(); }, API_TIMEOUT_MS);
+        return fetch(url, Object.assign({}, options, { signal: ctrl.signal })).then(function (r) {
+          clearTimeout(id);
+          return r;
+        }, function (err) {
+          clearTimeout(id);
+          if (err && err.name === 'AbortError') throw new Error('Request timed out');
+          throw err;
+        });
+      }
+
+      async function generateDictionaryDetails(word) {
+        if (typeof getOpenAiApiKey !== 'function' || !getOpenAiApiKey()) {
+          return null;
+        }
+        var systemPrompt = 'You are an English-Russian vocabulary assistant for interview preparation. Given one English word or phrase, return JSON only with: (1) top 3 most common/popular Russian meanings, (2) exactly 3 concise interview-style example sentences in English that naturally use this word/phrase. Keep examples B1-C1 and professional. JSON format: {"translations_ru":["...","...","..."],"examples_en":["...","...","..."]}';
+        var response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getOpenAiApiKey()
+          },
+          body: JSON.stringify({
+            model: 'gpt-5-mini-2025-08-07',
+            messages: [
+              { role: 'system', content: systemPrompt },
+              { role: 'user', content: 'Word/phrase: ' + word }
+            ],
+            response_format: { type: 'json_object' }
+          })
+        });
+        if (!response.ok) {
+          var err = await response.json().catch(function () {
+            return { error: { message: response.statusText || 'Failed to generate details' } };
+          });
+          throw new Error((err && err.error && err.error.message) || 'Failed to generate details');
+        }
+        var data = await response.json();
+        var content = data && data.choices && data.choices[0] && data.choices[0].message ? (data.choices[0].message.content || '').trim() : '';
+        var parsed = JSON.parse(content || '{}');
+        var ru = Array.isArray(parsed.translations_ru) ? parsed.translations_ru : [];
+        var en = Array.isArray(parsed.examples_en) ? parsed.examples_en : [];
+        return {
+          translationRu: ru.filter(Boolean).slice(0, 3),
+          examplesEn: en.filter(Boolean).slice(0, 3)
+        };
+      }
+
+      function needsDictionaryDetails(item) {
+        if (!item) return false;
+        var ruReady = Array.isArray(item.translationRu) && item.translationRu.length > 0;
+        var enReady = Array.isArray(item.examplesEn) && item.examplesEn.length > 0;
+        return !(ruReady && enReady);
+      }
+
+      async function ensureDictionaryDetails(itemId) {
+        var idKey = normalizeWordId(itemId);
+        if (!idKey || generatingDetailsById[idKey]) return;
+        var list = getDictionary();
+        var item = list.find(function (x) { return isSameWordId(x.id, idKey); });
+        if (!item || !needsDictionaryDetails(item)) return;
+        if (typeof getOpenAiApiKey !== 'function' || !getOpenAiApiKey()) return;
+
+        generatingDetailsById[idKey] = true;
+        item.detailsError = '';
+        saveDictionary(list);
+        render();
+
+        try {
+          var details = await generateDictionaryDetails(item.text || '');
+          if (!details) return;
+          var updated = getDictionary();
+          var target = updated.find(function (x) { return isSameWordId(x.id, idKey); });
+          if (!target) return;
+          target.translationRu = details.translationRu;
+          target.examplesEn = details.examplesEn;
+          target.detailsReady = true;
+          target.detailsError = '';
+          saveDictionary(updated);
+          render();
+        } catch (err) {
+          var failed = getDictionary();
+          var failedItem = failed.find(function (x) { return isSameWordId(x.id, idKey); });
+          if (!failedItem) return;
+          failedItem.detailsReady = false;
+          failedItem.detailsError = err && err.message ? err.message : 'Failed to generate details';
+          saveDictionary(failed);
+          render();
+        } finally {
+          delete generatingDetailsById[idKey];
+        }
       }
 
       function render() {
         var q = (searchInput.value || '').trim().toLowerCase();
-        var wl = listFilter.value === 'it' ? 'it' : 'general';
-        var learned = statusFilter.value === 'learned';
+        var wl = currentListFilter === 'it' ? 'it' : currentListFilter === 'general' ? 'general' : 'all';
+        var learnedFilter = currentStatusFilter === 'learned' ? 'learned' : currentStatusFilter === 'learning' ? 'learning' : 'all';
         var items = getDictionary().filter(function (item) {
           var itemList = item && item.wordList === 'it' ? 'it' : 'general';
-          if (itemList !== wl) return false;
-          if (!!item.learned !== learned) return false;
+          if (wl !== 'all' && itemList !== wl) return false;
+          if (learnedFilter !== 'all') {
+            var isLearned = !!item.learned;
+            if (learnedFilter === 'learned' && !isLearned) return false;
+            if (learnedFilter === 'learning' && isLearned) return false;
+          }
           if (!q) return true;
           return String(item.text || '').toLowerCase().indexOf(q) !== -1;
         });
@@ -184,29 +444,56 @@
         }
 
         dictList.innerHTML = items.map(function (item) {
-          var id = String(item.id);
+          if (!Array.isArray(item.translationRu)) item.translationRu = [];
+          if (!Array.isArray(item.examplesEn)) item.examplesEn = [];
+          var id = normalizeWordId(item.id);
+          var isExpanded = isSameWordId(expandedWordId, item.id);
+          var translationVisible = !!shownTranslationById[id];
+          var translationText = item.translationRu.length
+            ? item.translationRu.map(function (line, idx) { return (idx + 1) + '. ' + line; }).join('\n')
+            : 'No translation available.';
+          var examplesHtml = '';
+          if (item.examplesEn.length) {
+            examplesHtml = '<ol class="examples">' + item.examplesEn.map(function (example) {
+              return '<li>' + escapeHtml(example) + '</li>';
+            }).join('') + '</ol>';
+          } else if (generatingDetailsById[id]) {
+            examplesHtml = '<div class="details-note">Generating translation and examples...</div>';
+          } else if (item.detailsError) {
+            examplesHtml = '<div class="details-note">Could not load details: ' + escapeHtml(item.detailsError) + '</div>';
+          } else {
+            examplesHtml = '<div class="details-note">Generating translation and examples...</div>';
+          }
           return (
             '<div class="item" data-id="' + escapeHtml(id) + '">' +
-              '<div class="item-head">' +
+              '<div class="item-main" data-act="toggle-details">' +
                 '<div><div class="item-text">' + escapeHtml(item.text) + '</div><div class="item-meta">Last practiced: ' + escapeHtml(formatDate(item.lastPracticed)) + '</div></div>' +
                 '<div class="item-actions">' +
-                  '<button class="btn-sm" data-act="toggle">' + (item.learned ? 'Set learning' : 'Set learned') + '</button>' +
-                  '<button class="btn-sm" data-act="delete">Delete</button>' +
+                  '<button class="btn-sm" data-act="toggle">' + (item.learned ? 'Set learning' : 'Learned') + '</button>' +
+                  '<button class="btn-sm btn-icon" data-act="delete" aria-label="Delete word" title="Delete">🗑️</button>' +
                 '</div>' +
+              '</div>' +
+              '<div class="item-extra' + (isExpanded ? ' visible' : '') + '">' +
+                '<div class="extra-label">Word details</div>' +
+                '<button class="btn-sm btn-toggle-translation" data-act="toggle-translation">' + (translationVisible ? 'Hide translation' : 'Show translation') + '</button>' +
+                (translationVisible ? '<div class="translation">' + escapeHtml(translationText) + '</div>' : '') +
+                '<div class="extra-label">Interview examples</div>' +
+                examplesHtml +
               '</div>' +
             '</div>'
           );
         }).join('');
       }
 
-      function addWord() {
+      async function addWord() {
         var text = (addInput.value || '').trim();
         if (!text) return;
         var list = getDictionary();
         var exists = list.some(function (x) { return String(x.text || '').toLowerCase() === text.toLowerCase(); });
         if (exists) return;
+        var newId = Date.now();
         list.unshift({
-          id: Date.now(),
+          id: newId,
           text: text,
           wordList: addList.value === 'it' ? 'it' : 'general',
           createdAt: new Date().toISOString(),
@@ -218,31 +505,121 @@
         saveDictionary(list);
         addInput.value = '';
         render();
+
+        try {
+          var details = await generateDictionaryDetails(text);
+          if (!details) return;
+          var updated = getDictionary();
+          var item = updated.find(function (x) { return isSameWordId(x.id, newId); });
+          if (!item) return;
+          item.translationRu = details.translationRu;
+          item.examplesEn = details.examplesEn;
+          item.detailsReady = true;
+          item.detailsError = '';
+          saveDictionary(updated);
+          render();
+        } catch (err) {
+          var failed = getDictionary();
+          var failedItem = failed.find(function (x) { return isSameWordId(x.id, newId); });
+          if (!failedItem) return;
+          failedItem.detailsReady = false;
+          failedItem.detailsError = err && err.message ? err.message : 'Failed to generate details';
+          saveDictionary(failed);
+          render();
+        }
       }
 
       btnAdd.addEventListener('click', addWord);
       addInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') addWord(); });
       searchInput.addEventListener('input', render);
-      listFilter.addEventListener('change', render);
-      statusFilter.addEventListener('change', render);
+
+      function setAddRowOpen(open) {
+        if (!addRow || !btnToggleAddRow) return;
+        addRow.hidden = !open;
+        btnToggleAddRow.setAttribute('aria-pressed', open ? 'true' : 'false');
+        if (open && addInput) {
+          requestAnimationFrame(function () { addInput.focus(); });
+        }
+      }
+
+      btnToggleAddRow.addEventListener('click', function () {
+        setAddRowOpen(addRow.hidden);
+      });
+
+      function setFiltersModalOpen(open) {
+        if (!filtersModal) return;
+        filtersModal.hidden = !open;
+        filtersModal.setAttribute('aria-hidden', open ? 'false' : 'true');
+        if (open) {
+          listFilterModal.value = currentListFilter;
+          statusFilterModal.value = currentStatusFilter;
+        }
+      }
+
+      btnOpenFilters.addEventListener('click', function () {
+        setFiltersModalOpen(true);
+      });
+
+      btnCancelFilters.addEventListener('click', function () {
+        setFiltersModalOpen(false);
+      });
+
+      btnApplyFilters.addEventListener('click', function () {
+        currentListFilter =
+          listFilterModal.value === 'it' ? 'it' :
+          listFilterModal.value === 'general' ? 'general' : 'all';
+        currentStatusFilter =
+          statusFilterModal.value === 'learned' ? 'learned' :
+          statusFilterModal.value === 'learning' ? 'learning' : 'all';
+        expandedWordId = null;
+        render();
+        setFiltersModalOpen(false);
+      });
+
+      filtersModal.addEventListener('click', function (e) {
+        if (e.target === filtersModal) {
+          setFiltersModalOpen(false);
+        }
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && filtersModal && !filtersModal.hidden) {
+          setFiltersModalOpen(false);
+        }
+      });
 
       dictList.addEventListener('click', function (e) {
-        var btn = e.target && e.target.closest ? e.target.closest('button[data-act]') : null;
-        if (!btn) return;
-        var card = btn.closest('.item');
+        var target = e.target && e.target.closest ? e.target.closest('[data-act]') : null;
+        if (!target) return;
+        var card = target.closest('.item');
         if (!card) return;
-        var id = Number(card.getAttribute('data-id'));
+        var id = card.getAttribute('data-id');
         var list = getDictionary();
-        var item = list.find(function (x) { return Number(x.id) === id; });
+        var item = list.find(function (x) { return isSameWordId(x.id, id); });
         if (!item) return;
-        if (btn.getAttribute('data-act') === 'toggle') {
+        var action = target.getAttribute('data-act');
+        if (action === 'toggle-details') {
+          expandedWordId = isSameWordId(expandedWordId, id) ? null : id;
+          render();
+          if (isSameWordId(expandedWordId, id)) {
+            ensureDictionaryDetails(id);
+          }
+          return;
+        }
+        if (action === 'toggle-translation') {
+          shownTranslationById[id] = !shownTranslationById[id];
+          render();
+          return;
+        }
+        if (action === 'toggle') {
           item.learned = !item.learned;
           saveDictionary(list);
           render();
           return;
         }
-        if (btn.getAttribute('data-act') === 'delete') {
-          saveDictionary(list.filter(function (x) { return Number(x.id) !== id; }));
+        if (action === 'delete') {
+          saveDictionary(list.filter(function (x) { return !isSameWordId(x.id, id); }));
+          if (isSameWordId(expandedWordId, id)) expandedWordId = null;
           render();
         }
       });

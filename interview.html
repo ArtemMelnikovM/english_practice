@@ -17,6 +17,10 @@
       box-sizing: border-box;
     }
 
+    [hidden] {
+      display: none !important;
+    }
+
     body {
       min-height: 100vh;
       font-family: 'DM Sans', sans-serif;
@@ -153,6 +157,148 @@
       color: #1a1a2e;
       background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
       border-color: transparent;
+    }
+
+    .role-setup {
+      max-width: 920px;
+      width: 100%;
+      margin: 1rem auto 0;
+      padding: 0 1rem 1rem;
+    }
+
+    .role-setup-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 1rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .role-setup-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .role-setup-subtitle {
+      font-size: 0.86rem;
+      color: rgba(232, 232, 232, 0.75);
+      line-height: 1.45;
+    }
+
+    .role-setup-row {
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .role-setup-row + .role-setup-row {
+      margin-top: 0.2rem;
+    }
+
+    .role-setup-row label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(232, 232, 232, 0.65);
+    }
+
+    .role-setup-row input,
+    .role-setup-row textarea,
+    .role-setup-row select {
+      width: 100%;
+      padding: 0.58rem 0.72rem;
+      font-family: inherit;
+      font-size: 0.92rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(0, 0, 0, 0.25);
+      color: #e8e8e8;
+    }
+
+    .role-setup-row textarea {
+      resize: none;
+      overflow-y: hidden;
+      min-height: 5.5rem;
+    }
+
+    .role-setup-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 0.15rem;
+    }
+
+    .role-setup-choice {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin: 0.15rem 0;
+    }
+
+    .role-setup-section {
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .role-choice-btn {
+      padding: 0.5rem 0.85rem;
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 600;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.07);
+      color: rgba(232, 232, 232, 0.94);
+      cursor: pointer;
+    }
+
+    .role-choice-btn.active {
+      color: #1a1a2e;
+      border-color: transparent;
+      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+    }
+
+    .role-setup-section[hidden] {
+      display: none !important;
+    }
+
+    .btn-role-primary,
+    .btn-role-secondary {
+      padding: 0.5rem 0.85rem;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .btn-role-primary {
+      color: #1a1a2e;
+      border: none;
+      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+    }
+
+    .btn-role-secondary {
+      color: rgba(232, 232, 232, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .role-setup-preview {
+      font-size: 0.84rem;
+      line-height: 1.45;
+      color: rgba(232, 232, 232, 0.88);
+      padding: 0.7rem 0.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .role-setup-preview.role-setup-preview-error {
+      color: #ff8a8a;
+      border-color: rgba(255, 138, 138, 0.35);
     }
 
     .auth-gate {
@@ -800,6 +946,16 @@
       color: #f0c14b;
     }
 
+    .feedback-toggle--improved {
+      border-color: rgba(78, 205, 196, 0.45);
+      background: rgba(78, 205, 196, 0.12);
+    }
+
+    .feedback-toggle--improved:hover {
+      border-color: rgba(78, 205, 196, 0.65);
+      background: rgba(78, 205, 196, 0.18);
+    }
+
     .feedback-detail {
       margin-top: 0.5rem;
       padding: 1rem 1rem;
@@ -1006,6 +1162,17 @@
         color: rgba(232, 232, 232, 0.72);
         margin-bottom: 0.15rem;
       }
+
+      .role-setup-choice {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .role-choice-btn {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+      }
     }
 
   </style>
@@ -1036,7 +1203,7 @@
   <header class="header">
     <a href="index.html" class="btn-back">← Menu</a>
     <h1>HR Interview</h1>
-    <div class="header-modes" role="group" aria-label="Interview mode">
+    <div class="header-modes" id="headerModes" role="group" aria-label="Interview mode" hidden>
       <span class="header-modes-label">Mode</span>
       <button type="button" class="mode-pill active" id="modeFull" data-mode="full">Full interview</button>
       <button type="button" class="mode-pill" id="modeOne" data-mode="one">One question</button>
@@ -1047,7 +1214,53 @@
     </div>
   </header>
 
-  <main class="layout mode-full" id="mainLayout">
+  <section class="role-setup" id="roleSetup">
+    <div class="role-setup-card">
+      <div class="role-setup-title">Choose role context before interview</div>
+      <div class="role-setup-subtitle">Choose one option first: generated vacancy, your own vacancy, or continue without a specific vacancy.</div>
+
+      <div class="role-setup-choice" role="group" aria-label="Vacancy setup mode">
+        <button type="button" class="role-choice-btn active" id="btnChoiceGenerated">Generated vacancy</button>
+        <button type="button" class="role-choice-btn" id="btnChoiceCustom">Your vacancy</button>
+        <button type="button" class="role-choice-btn" id="btnChoiceNoRole">Without specific vacancy</button>
+      </div>
+
+      <div class="role-setup-section" id="generatedRoleSection">
+        <div class="role-setup-row">
+          <label for="roleSetupSelect">Generated vacancies</label>
+          <select id="roleSetupSelect" aria-label="Generated vacancies"></select>
+        </div>
+        <div class="role-setup-preview" id="roleSetupPreview" hidden></div>
+        <div class="role-setup-actions">
+          <button type="button" class="btn-role-secondary" id="btnGenerateVacancy">Generate new vacancy</button>
+          <button type="button" class="btn-role-primary" id="btnContinueGenerated">Continue</button>
+        </div>
+      </div>
+
+      <div class="role-setup-section" id="customRoleSection" hidden>
+        <div class="role-setup-row">
+          <label for="manualRoleInput">Vacancy title</label>
+          <input id="manualRoleInput" type="text" placeholder="e.g. Senior Product Manager">
+        </div>
+        <div class="role-setup-row">
+          <label for="manualResponsibilitiesInput">Vacancy description</label>
+          <textarea id="manualResponsibilitiesInput" rows="3" placeholder="Main responsibilities, focus areas, expected outcomes..."></textarea>
+        </div>
+        <div class="role-setup-actions">
+          <button type="button" class="btn-role-primary" id="btnContinueCustom">Continue</button>
+        </div>
+      </div>
+
+      <div class="role-setup-section" id="noRoleSection" hidden>
+        <div class="role-setup-subtitle">Interview will run with general HR context without role-specific details.</div>
+        <div class="role-setup-actions">
+          <button type="button" class="btn-role-secondary" id="btnContinueWithoutRole">Continue without specific vacancy</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="layout mode-full" id="mainLayout" hidden>
     <aside class="question-sidebar" id="questionSidebar" aria-label="One question practice: pick question type, then new random question">
       <div class="question-sidebar-title">One question</div>
       <div class="one-question-bank" role="group" aria-label="Question type">
@@ -1128,6 +1341,22 @@
     const mainLayoutEl = document.getElementById('mainLayout');
     const modeFullBtn = document.getElementById('modeFull');
     const modeOneBtn = document.getElementById('modeOne');
+    const headerModesEl = document.getElementById('headerModes');
+    const roleSetupEl = document.getElementById('roleSetup');
+    const generatedRoleSectionEl = document.getElementById('generatedRoleSection');
+    const customRoleSectionEl = document.getElementById('customRoleSection');
+    const noRoleSectionEl = document.getElementById('noRoleSection');
+    const btnChoiceGeneratedEl = document.getElementById('btnChoiceGenerated');
+    const btnChoiceCustomEl = document.getElementById('btnChoiceCustom');
+    const btnChoiceNoRoleEl = document.getElementById('btnChoiceNoRole');
+    const roleSetupSelectEl = document.getElementById('roleSetupSelect');
+    const roleSetupPreviewEl = document.getElementById('roleSetupPreview');
+    const btnGenerateVacancyEl = document.getElementById('btnGenerateVacancy');
+    const manualRoleInputEl = document.getElementById('manualRoleInput');
+    const manualResponsibilitiesInputEl = document.getElementById('manualResponsibilitiesInput');
+    const btnContinueGeneratedEl = document.getElementById('btnContinueGenerated');
+    const btnContinueCustomEl = document.getElementById('btnContinueCustom');
+    const btnContinueWithoutRoleEl = document.getElementById('btnContinueWithoutRole');
     const btnNewQuestion = document.getElementById('btnNewQuestion');
     const userInputEl = document.getElementById('userInput');
     const toolsInputEl = document.getElementById('toolsInput');
@@ -1343,6 +1572,8 @@
     var interviewMode = 'full';
     var oneModeCurrentQuestion = null;
     var selectedInterviewScenario = null;
+    /** Vacancies created via OpenAI in this session (shown in Generated vacancy list). */
+    var aiGeneratedInterviewScenarios = [];
     var oneModeScenarioCardEl = null;
     var oneQuestionProgressMap = {};
     var oneQuestionProgressLoadPromise = null;
@@ -1487,6 +1718,27 @@
       wrap.innerHTML =
         '<button type="button" class="feedback-toggle" title="' + escapeHtml(descRaw) + '">' + label + '</button>' +
         '<div class="feedback-detail">' + escapeHtml(desc) + '</div>';
+      const toggle = wrap.querySelector('.feedback-toggle');
+      const detail = wrap.querySelector('.feedback-detail');
+      toggle.addEventListener('click', function () {
+        detail.classList.toggle('expanded');
+      });
+      userMsgEl.appendChild(wrap);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function attachImprovedAnswerBlock(userMsgEl, improvedText) {
+      if (!userMsgEl) return;
+      var raw = (improvedText || '').trim();
+      if (!raw) return;
+      var formatted = formatFeedbackDescription(raw);
+      const wrap = document.createElement('div');
+      wrap.className = 'feedback-wrap feedback-wrap--improved';
+      wrap.innerHTML =
+        '<button type="button" class="feedback-toggle feedback-toggle--improved" title="Skills-based improved interview answer">' +
+        escapeHtml('Improved answer (Skills)') +
+        '</button>' +
+        '<div class="feedback-detail">' + escapeHtml(formatted) + '</div>';
       const toggle = wrap.querySelector('.feedback-toggle');
       const detail = wrap.querySelector('.feedback-detail');
       toggle.addEventListener('click', function () {
@@ -1698,13 +1950,6 @@
       oneModeCurrentQuestion = null;
       oneModeScenarioCardEl = null;
 
-      if (!selectedInterviewScenario) {
-        conversationHistory = [];
-        updateModeUi();
-        renderScenarioSelectionCard(false);
-        return;
-      }
-
       if (interviewMode === 'full') {
         conversationHistory = createInitialConversationHistory();
         addHrMessage(FIRST_HR_MESSAGE);
@@ -1761,40 +2006,95 @@
       userInputEl.focus();
     }
 
-    function renderScenarioSelectionCard(forceNew) {
-      var prevKey = selectedInterviewScenario ? (selectedInterviewScenario.company + '|' + selectedInterviewScenario.role) : '';
-      var scenario = pickRandomScenario(forceNew ? prevKey : '');
-      if (!scenario) return;
-      selectedInterviewScenario = scenario;
+    function scenarioLabel(s) {
+      return s.role + ' at ' + s.company;
+    }
+
+    function updateRoleSetupPreview(scenario) {
+      if (!roleSetupPreviewEl) return;
+      roleSetupPreviewEl.classList.remove('role-setup-preview-error');
+      if (!scenario) {
+        roleSetupPreviewEl.hidden = true;
+        roleSetupPreviewEl.textContent = '';
+        return;
+      }
+      roleSetupPreviewEl.hidden = false;
+      roleSetupPreviewEl.textContent = scenarioLabel(scenario) + '. ' + scenario.summary + ' Expectations: ' + scenario.expectations;
+    }
+
+    function allRoleSetupScenarios() {
+      return INTERVIEW_SCENARIOS.concat(aiGeneratedInterviewScenarios);
+    }
+
+    function getScenarioBySelectValue(value) {
+      var idx = Number(value);
+      var all = allRoleSetupScenarios();
+      if (isNaN(idx) || idx < 0 || idx >= all.length) return null;
+      return all[idx];
+    }
+
+    function populateRoleSetupSelect(selectedScenario) {
+      if (!roleSetupSelectEl) return;
+      var all = allRoleSetupScenarios();
+      roleSetupSelectEl.innerHTML = '';
+      all.forEach(function (scenario, idx) {
+        var opt = document.createElement('option');
+        opt.value = String(idx);
+        opt.textContent = scenarioLabel(scenario);
+        roleSetupSelectEl.appendChild(opt);
+      });
+      if (!all.length) return;
+      var selectedIdx = 0;
+      if (selectedScenario) {
+        var key = selectedScenario.company + '|' + selectedScenario.role;
+        var found = all.findIndex(function (s) {
+          return (s.company + '|' + s.role) === key;
+        });
+        if (found >= 0) selectedIdx = found;
+      }
+      roleSetupSelectEl.value = String(selectedIdx);
+      updateRoleSetupPreview(all[selectedIdx]);
+    }
+
+    function showInterviewMainUi(show) {
+      var on = !!show;
+      if (headerModesEl) headerModesEl.hidden = !on;
+      if (mainLayoutEl) mainLayoutEl.hidden = !on;
+      if (roleSetupEl) roleSetupEl.hidden = on;
+    }
+
+    function setRoleSetupChoice(mode) {
+      var m = mode === 'custom' ? 'custom' : mode === 'none' ? 'none' : 'generated';
+      if (btnChoiceGeneratedEl) btnChoiceGeneratedEl.classList.toggle('active', m === 'generated');
+      if (btnChoiceCustomEl) btnChoiceCustomEl.classList.toggle('active', m === 'custom');
+      if (btnChoiceNoRoleEl) btnChoiceNoRoleEl.classList.toggle('active', m === 'none');
+      if (generatedRoleSectionEl) generatedRoleSectionEl.hidden = m !== 'generated';
+      if (customRoleSectionEl) customRoleSectionEl.hidden = m !== 'custom';
+      if (noRoleSectionEl) noRoleSectionEl.hidden = m !== 'none';
+      if (m === 'custom') {
+        requestAnimationFrame(function () {
+          fitVacancyDescriptionInputHeight();
+        });
+      }
+    }
+
+    function applySelectedScenarioAndStart(scenarioOrNull) {
+      selectedInterviewScenario = scenarioOrNull || null;
       renderSelectedScenarioBadge();
-      messagesEl.innerHTML = '';
-      oneModeScenarioCardEl = null;
+      showInterviewMainUi(true);
+      beginInterviewFlow();
+    }
 
-      var card = document.createElement('div');
-      card.className = 'message hr';
-      card.innerHTML =
-        '<div class="message-label">HR</div>' +
-        '<div class="message-text">' +
-          'First, choose your interview target. Here is a suggested option:' +
-          '<div class="scenario-card">' +
-            '<div class="scenario-card-title">Suggested company and role</div>' +
-            '<div class="scenario-card-main">' + escapeHtml(scenario.role) + ' at ' + escapeHtml(scenario.company) + '</div>' +
-            '<div class="scenario-card-desc">' + escapeHtml(scenario.summary) + '</div>' +
-            '<div class="scenario-card-desc">' + escapeHtml('Expectations: ' + scenario.expectations) + '</div>' +
-            '<div class="scenario-card-actions">' +
-              '<button type="button" class="btn-scenario-primary" id="btnUseScenario">Continue with this option</button>' +
-              '<button type="button" class="btn-scenario-secondary" id="btnNewScenario">Generate another</button>' +
-            '</div>' +
-          '</div>' +
-        '</div>';
-
-      messagesEl.appendChild(card);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-      var btnUse = card.querySelector('#btnUseScenario');
-      var btnNew = card.querySelector('#btnNewScenario');
-      btnUse.addEventListener('click', beginInterviewFlow);
-      btnNew.addEventListener('click', function () {
-        renderScenarioSelectionCard(true);
+    function setupRoleSelectionStep() {
+      showInterviewMainUi(false);
+      aiGeneratedInterviewScenarios = [];
+      var initialScenario = pickRandomScenario('');
+      populateRoleSetupSelect(initialScenario);
+      if (manualRoleInputEl) manualRoleInputEl.value = '';
+      if (manualResponsibilitiesInputEl) manualResponsibilitiesInputEl.value = '';
+      setRoleSetupChoice('generated');
+      requestAnimationFrame(function () {
+        fitVacancyDescriptionInputHeight();
       });
     }
 
@@ -1804,6 +2104,46 @@
 
     modeFullBtn.addEventListener('click', function () { setInterviewMode('full'); });
     modeOneBtn.addEventListener('click', function () { setInterviewMode('one'); });
+
+    roleSetupSelectEl.addEventListener('change', function () {
+      updateRoleSetupPreview(getScenarioBySelectValue(roleSetupSelectEl.value));
+    });
+
+    btnChoiceGeneratedEl.addEventListener('click', function () {
+      setRoleSetupChoice('generated');
+    });
+
+    btnChoiceCustomEl.addEventListener('click', function () {
+      setRoleSetupChoice('custom');
+    });
+
+    btnChoiceNoRoleEl.addEventListener('click', function () {
+      setRoleSetupChoice('none');
+    });
+
+    btnContinueGeneratedEl.addEventListener('click', function () {
+      var scenario = getScenarioBySelectValue(roleSetupSelectEl.value);
+      applySelectedScenarioAndStart(scenario);
+    });
+
+    btnContinueCustomEl.addEventListener('click', function () {
+      var manualRole = manualRoleInputEl ? manualRoleInputEl.value.trim() : '';
+      var manualResp = manualResponsibilitiesInputEl ? manualResponsibilitiesInputEl.value.trim() : '';
+      if (!manualRole) {
+        if (manualRoleInputEl) manualRoleInputEl.focus();
+        return;
+      }
+      applySelectedScenarioAndStart({
+        company: 'Custom role',
+        role: manualRole,
+        summary: manualResp || 'No additional responsibilities provided.',
+        expectations: 'Respond as an interviewer for this custom role context.'
+      });
+    });
+
+    btnContinueWithoutRoleEl.addEventListener('click', function () {
+      applySelectedScenarioAndStart(null);
+    });
 
     btnNewQuestion.addEventListener('click', function () {
       if (interviewMode !== 'one') return;
@@ -1829,6 +2169,92 @@
         clearTimeout(id);
         if (err.name === 'AbortError') throw new Error('Request timed out after ' + (API_TIMEOUT_MS / 1000) + 's');
         throw err;
+      });
+    }
+
+    async function generateInterviewVacancyViaChatGpt(avoidScenario) {
+      if (typeof getOpenAiApiKey !== 'function' || !getOpenAiApiKey()) {
+        throw new Error('Add your OpenAI API key in Settings (main menu).');
+      }
+      var systemPrompt =
+        'You invent realistic English-language job vacancy snippets for interview practice at technology / product / software companies. ' +
+        'Every vacancy MUST be for the job title Senior Product Manager only (same seniority level; do not use other titles such as PM, Group PM, Director of Product, or Engineering Manager). ' +
+        'Vary the hiring company name, product domain, and scope. ' +
+        'Return JSON only with keys: company (string), role (string — always exactly "Senior Product Manager"), summary (string, 1–2 sentences: scope, ownership, product context), ' +
+        'expectations (string, 1–2 sentences: what interviewers will probe for a Senior PM).';
+      var userContent =
+        'Create one new Senior Product Manager vacancy for English HR interview practice. Role title must be exactly: Senior Product Manager.';
+      if (avoidScenario && (avoidScenario.company || avoidScenario.role)) {
+        userContent +=
+          ' Avoid duplicating this exact company pairing: "' +
+          String(avoidScenario.role || '').replace(/"/g, "'") +
+          '" at "' +
+          String(avoidScenario.company || '').replace(/"/g, "'") +
+          '". Use a clearly different company name and product domain; keep the role Senior Product Manager.';
+      }
+      var response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getOpenAiApiKey()
+        },
+        body: JSON.stringify({
+          model: 'gpt-5-mini-2025-08-07',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userContent }
+          ],
+          response_format: { type: 'json_object' }
+        })
+      });
+      if (!response.ok) {
+        var err = await response.json().catch(function () { return { error: { message: response.statusText } }; });
+        throw new Error(err.error && err.error.message ? err.error.message : 'Failed to generate vacancy');
+      }
+      var data = await response.json();
+      var content =
+        data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content
+          ? String(data.choices[0].message.content).trim()
+          : '';
+      var parsed = JSON.parse(content || '{}');
+      var company = String(parsed.company != null ? parsed.company : '').trim();
+      var role = 'Senior Product Manager';
+      var summary = String(parsed.summary != null ? parsed.summary : '').trim();
+      var expectations = String(parsed.expectations != null ? parsed.expectations : '').trim();
+      if (!company) {
+        throw new Error('Invalid vacancy response from API');
+      }
+      if (!summary) {
+        summary = 'Interview practice vacancy; details implied by the role title.';
+      }
+      if (!expectations) {
+        expectations = 'Assess priorities, trade-offs, stakeholder communication, and concrete examples relevant to the role.';
+      }
+      return { company: company, role: role, summary: summary, expectations: expectations };
+    }
+
+    if (btnGenerateVacancyEl) {
+      btnGenerateVacancyEl.addEventListener('click', async function () {
+        var current = getScenarioBySelectValue(roleSetupSelectEl.value);
+        btnGenerateVacancyEl.disabled = true;
+        if (roleSetupPreviewEl) {
+          roleSetupPreviewEl.hidden = false;
+          roleSetupPreviewEl.classList.remove('role-setup-preview-error');
+          roleSetupPreviewEl.textContent = 'Generating vacancy…';
+        }
+        try {
+          var scenario = await generateInterviewVacancyViaChatGpt(current);
+          aiGeneratedInterviewScenarios.push(scenario);
+          populateRoleSetupSelect(scenario);
+        } catch (err) {
+          if (roleSetupPreviewEl) {
+            roleSetupPreviewEl.hidden = false;
+            roleSetupPreviewEl.classList.add('role-setup-preview-error');
+            roleSetupPreviewEl.textContent = err && err.message ? err.message : 'Failed to generate vacancy';
+          }
+        } finally {
+          btnGenerateVacancyEl.disabled = false;
+        }
       });
     }
 
@@ -1981,7 +2407,17 @@
     }
 
     const ANALYSIS_SYSTEM_PROMPT =
-      'You are an HR evaluator. Given role context, interview question, and candidate answer, provide a score from 1 to 5 (1 = very weak, 5 = excellent) and a short description. Evaluate not only answer quality, but also role-fit. If the role context emphasizes specific competencies (for example analytics, experimentation, stakeholder management), and the answer ignores or weakly covers them, reduce the score accordingly and explicitly mention this mismatch in the feedback. Take into account that this is an interviewer-candidate dialogue: answers should be concise, relevant, and specific. In the description explain why this score, list main strengths/weaknesses, and include at least one role-fit comment. Reply with a single JSON object on one line, no markdown, no code blocks. Example: {"score": 3, "description": "Clear communication, but weak role-fit: the answer highlights UX strengths while not addressing analytics expected for this role."}';
+      'You are an HR evaluator. Given role context, interview question, and candidate answer, provide a score from 1 to 5 (1 = very weak, 5 = excellent) and a short description. ' +
+      'Primary scoring principle: the MAIN part of the score must come from answer quality to the specific interview question (relevance to question, clarity, specificity, structure, logic, evidence/examples, conciseness). ' +
+      'Role-fit is secondary and must be applied with this exact 3-level logic: ' +
+      '(1) If the answer clearly contradicts the role context, treat it as a strong negative and reduce the score significantly. ' +
+      '(2) If the answer does not contradict the role but also does not clearly show relevant experience/knowledge for that role, treat role-fit as neutral or a small negative only. ' +
+      '(3) If the answer demonstrates relevant experience/knowledge for the role, treat role-fit as a positive. ' +
+      'Important: do NOT strongly penalize an answer just because it does not fully cover the whole role description. Full role coverage is NOT required in one answer. ' +
+      'Take into account that this is an interviewer-candidate dialogue: answers should be concise, relevant, and specific. ' +
+      'In description: explain the score, list key strengths/weaknesses, and include a brief role-fit note according to the 3-level logic above. ' +
+      'Additionally, if the answer could be meaningfully improved (not already excellent), add improved_answer: a single polished English answer the candidate could say in the interview instead—same intent as their answer, clearer and more specific, interview-appropriate (spoken style, 2–6 sentences). Base improved_answer on the same Skills logic as your score and description. If the answer is already strong (score 5) or there is no substantive improvement to offer, set improved_answer to an empty string "". ' +
+      'Reply with a single JSON object, no markdown, no code blocks. Keys: score (number 1–5), description (string), improved_answer (string, may be empty). Example: {"score": 3, "description": "Clear communication, but weak role-fit…", "improved_answer": "In my last role I owned checkout conversion…"}';
 
     const ENG_ANALYSIS_SYSTEM_PROMPT =
       'You are an English language evaluator for job interviews. Given the candidate\'s answer, evaluate their English level with a score from 1 to 5 (1 = very weak, 5 = native-like). In the description you MUST: (1) Quote or clearly point to each place where there was a grammar, vocabulary, or style error; (2) For each error, suggest the correct or better way to say it—more grammatically correct, more natural, or more professional. Do not check the punctuation marks and the style of writing numbers (for example, 8 or eight). Be specific: e.g. "In \'I have work there\' use \'I have worked there\' or \'I worked there\'." Reply with a single JSON object: {"score": number 1-5, "description": "your detailed feedback with exact error locations and corrections"}';
@@ -1998,15 +2434,20 @@
         const score = typeof parsed.score === 'number' ? parsed.score : parseInt(parsed.score, 10);
         const num = Math.min(5, Math.max(1, isNaN(score) ? 3 : score));
         const desc = typeof parsed.description === 'string' ? parsed.description : String(parsed.description || '');
-        return { score: num, description: desc };
+        var impRaw = parsed.improved_answer != null ? parsed.improved_answer : (parsed.improvedAnswer != null ? parsed.improvedAnswer : '');
+        var improved = typeof impRaw === 'string' ? impRaw.trim() : String(impRaw || '').trim();
+        return { score: num, description: desc, improved_answer: improved };
       } catch (_) {
         const scoreMatch = raw.match(/"score"\s*:\s*(\d)|score\s*:\s*(\d)|(\d)\s*\/\s*5/i);
         const score = scoreMatch ? parseInt(scoreMatch[1] || scoreMatch[2] || scoreMatch[3], 10) : 3;
         const descMatch = raw.match(/"description"\s*:\s*"((?:[^"\\]|\\.)*)"|description\s*:\s*"((?:[^"\\]|\\.)*)"/i);
         const desc = (descMatch && (descMatch[1] || descMatch[2])) ? (descMatch[1] || descMatch[2]).replace(/\\"/g, '"') : raw;
+        var impMatch = raw.match(/"improved_answer"\s*:\s*"((?:[^"\\]|\\.)*)"|"improvedAnswer"\s*:\s*"((?:[^"\\]|\\.)*)"/i);
+        var improvedFallback = (impMatch && (impMatch[1] || impMatch[2])) ? (impMatch[1] || impMatch[2]).replace(/\\"/g, '"').trim() : '';
         return {
           score: Math.min(5, Math.max(1, isNaN(score) ? 3 : score)),
-          description: desc.length > 500 ? desc.slice(0, 497) + '...' : desc
+          description: desc.length > 500 ? desc.slice(0, 497) + '...' : desc,
+          improved_answer: improvedFallback
         };
       }
     }
@@ -2045,7 +2486,7 @@
       }
       const data = await response.json();
       const content = data.choices?.[0]?.message?.content?.trim() || '';
-      if (!content) return { score: null, description: '' };
+      if (!content) return { score: null, description: '', improved_answer: '' };
       return parseAnalysisResponse(content);
     }
 
@@ -2072,7 +2513,7 @@
       }
       const data = await response.json();
       const content = data.choices?.[0]?.message?.content?.trim() || '';
-      if (!content) return { score: null, description: '' };
+      if (!content) return { score: null, description: '', improved_answer: '' };
       return parseAnalysisResponse(content);
     }
 
@@ -2114,19 +2555,19 @@
       var skillsPromise = getAnswerAnalysisWithRetry(hrQuestion, userAnswer);
       var engPromise = getEnglishFeedbackWithRetry(hrQuestion, userAnswer);
       var results = await Promise.allSettled([skillsPromise, engPromise]);
-      var skillsResult = results[0].status === 'fulfilled' ? results[0].value : { score: null, description: (results[0].reason && results[0].reason.message) ? results[0].reason.message : 'Feedback could not be loaded.' };
+      var skillsResult = results[0].status === 'fulfilled' ? results[0].value : { score: null, description: (results[0].reason && results[0].reason.message) ? results[0].reason.message : 'Feedback could not be loaded.', improved_answer: '' };
       var engResult = results[1].status === 'fulfilled' ? results[1].value : { score: null, description: (results[1].reason && results[1].reason.message) ? results[1].reason.message : 'Feedback could not be loaded.' };
       attachFeedbackBlock(userMsgEl, 'Skills feedback', skillsResult);
       attachFeedbackBlock(userMsgEl, 'Eng feedback', engResult);
+      var improved = skillsResult && typeof skillsResult.improved_answer === 'string' ? skillsResult.improved_answer.trim() : '';
+      if (improved) {
+        attachImprovedAnswerBlock(userMsgEl, improved);
+      }
     }
 
     async function sendUserMessage() {
       const text = userInputEl.value.trim();
       if (!text) return;
-      if (!selectedInterviewScenario) {
-        addHrMessage('Please choose a company and role first.');
-        return;
-      }
 
       if (interviewMode === 'one') {
         if (!oneModeCurrentQuestion) {
@@ -2198,9 +2639,27 @@
       el.style.overflowY = sh > maxPx ? 'auto' : 'hidden';
     }
 
+    function vacancyDescriptionInputMaxPx() {
+      return Math.min(Math.round(window.innerHeight * 0.45), 420);
+    }
+
+    function fitVacancyDescriptionInputHeight() {
+      var el = manualResponsibilitiesInputEl;
+      if (!el) return;
+      el.style.height = 'auto';
+      var maxPx = vacancyDescriptionInputMaxPx();
+      var sh = el.scrollHeight;
+      el.style.height = Math.min(sh, maxPx) + 'px';
+      el.style.overflowY = sh > maxPx ? 'auto' : 'hidden';
+    }
+
     userInputEl.addEventListener('input', fitUserAnswerInputHeight);
+    if (manualResponsibilitiesInputEl) {
+      manualResponsibilitiesInputEl.addEventListener('input', fitVacancyDescriptionInputHeight);
+    }
     window.addEventListener('resize', function () {
       fitUserAnswerInputHeight();
+      fitVacancyDescriptionInputHeight();
       if (!isMobileViewport()) {
         setToolsDrawerOpen(true);
       } else if (!toolsDrawerEl.classList.contains('open')) {
@@ -2253,7 +2712,7 @@
       interviewAppStarted = true;
       loadOneQuestionProgressMap();
       updateModeUi();
-      renderScenarioSelectionCard(false);
+      setupRoleSelectionStep();
       fitUserAnswerInputHeight();
       initToolsDrawer();
     }

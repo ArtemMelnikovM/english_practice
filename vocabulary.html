@@ -2559,6 +2559,15 @@
       return el && el.value === 'word' ? 'word' : 'sentence';
     }
 
+    function normalizeWordId(id) {
+      if (id === null || id === undefined) return '';
+      return String(id);
+    }
+
+    function isSameWordId(a, b) {
+      return normalizeWordId(a) === normalizeWordId(b);
+    }
+
     function saveDictionary(list) {
       if (typeof DictionaryFirebase !== 'undefined' && DictionaryFirebase.saveDictionary) {
         DictionaryFirebase.saveDictionary(list);
@@ -2595,7 +2604,7 @@
       try {
         var details = await generateDictionaryDetails(t);
         var updatedList = getDictionary();
-        var item = updatedList.find(function (x) { return x.id === newId; });
+        var item = updatedList.find(function (x) { return isSameWordId(x.id, newId); });
         if (!item) return;
         item.translationRu = details.translationRu;
         item.examplesEn = details.examplesEn;
@@ -2605,7 +2614,7 @@
         renderDictionary();
       } catch (err) {
         var failedList = getDictionary();
-        var failedItem = failedList.find(function (x) { return x.id === newId; });
+        var failedItem = failedList.find(function (x) { return isSameWordId(x.id, newId); });
         if (!failedItem) return;
         failedItem.detailsReady = false;
         failedItem.detailsError = err && err.message ? err.message : 'Failed to generate details';
@@ -2615,14 +2624,14 @@
     }
 
     function deleteWord(id) {
-      var list = getDictionary().filter(function (x) { return x.id !== id; });
+      var list = getDictionary().filter(function (x) { return !isSameWordId(x.id, id); });
       saveDictionary(list);
       renderDictionary();
     }
 
     function setWordLearned(id, learned) {
       var list = getDictionary();
-      var item = list.find(function (x) { return x.id === id; });
+      var item = list.find(function (x) { return isSameWordId(x.id, id); });
       if (!item) return;
       item.learned = !!learned;
       saveDictionary(list);
@@ -2631,7 +2640,7 @@
 
     function updateLastPracticed(id) {
       var list = getDictionary();
-      var item = list.find(function (x) { return x.id === id; });
+      var item = list.find(function (x) { return isSameWordId(x.id, id); });
       if (item) {
         item.lastPracticed = new Date().toISOString();
         saveDictionary(list);
@@ -2717,8 +2726,9 @@
           ? '<span class="dictionary-item-date">' + practicedDateStr + '</span>'
           : '<span class="dictionary-item-date not-practiced">Not practiced yet</span>';
 
-        var isExpanded = expandedWordId === item.id;
-        var translationVisible = !!shownTranslationById[item.id];
+        var itemIdKey = normalizeWordId(item.id);
+        var isExpanded = isSameWordId(expandedWordId, item.id);
+        var translationVisible = !!shownTranslationById[itemIdKey];
 
         var translationHtml = '';
         if (translationVisible) {
@@ -2761,12 +2771,12 @@
           '</div>';
 
         el.querySelector('.dictionary-item-content').addEventListener('click', function () {
-          expandedWordId = expandedWordId === item.id ? null : item.id;
+          expandedWordId = isSameWordId(expandedWordId, item.id) ? null : item.id;
           renderDictionary();
         });
 
         el.querySelector('.dictionary-extra-btn').addEventListener('click', function () {
-          shownTranslationById[item.id] = !shownTranslationById[item.id];
+          shownTranslationById[itemIdKey] = !shownTranslationById[itemIdKey];
           renderDictionary();
         });
 
