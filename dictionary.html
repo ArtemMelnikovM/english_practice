@@ -344,7 +344,7 @@
         if (typeof getOpenAiApiKey !== 'function' || !getOpenAiApiKey()) {
           return null;
         }
-        var systemPrompt = 'You are an English-Russian vocabulary assistant for interview preparation. Given one English word or phrase, return JSON only with: (1) top 3 most common/popular Russian meanings, (2) exactly 3 concise interview-style example sentences in English that naturally use this word/phrase. Keep examples B1-C1 and professional. JSON format: {"translations_ru":["...","...","..."],"examples_en":["...","...","..."]}';
+        var systemPrompt = 'You are an English-Russian vocabulary assistant for interview preparation. Given one English word or phrase, return JSON only with: (1) top 3 most common/popular Russian meanings, (2) exactly 3 concise interview-style example sentences in English that naturally use this word/phrase, (3) one short and clear English explanation of the word/phrase meaning suitable for B1-C1 learners. Keep style professional and concise. JSON format: {"translations_ru":["...","...","..."],"examples_en":["...","...","..."],"explanation_en":"..."}';
         var response = await fetchWithTimeout('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
           headers: {
@@ -371,9 +371,11 @@
         var parsed = JSON.parse(content || '{}');
         var ru = Array.isArray(parsed.translations_ru) ? parsed.translations_ru : [];
         var en = Array.isArray(parsed.examples_en) ? parsed.examples_en : [];
+        var explanationEn = String(parsed.explanation_en || '').trim();
         return {
           translationRu: ru.filter(Boolean).slice(0, 3),
-          examplesEn: en.filter(Boolean).slice(0, 3)
+          examplesEn: en.filter(Boolean).slice(0, 3),
+          explanationEn: explanationEn
         };
       }
 
@@ -381,7 +383,8 @@
         if (!item) return false;
         var ruReady = Array.isArray(item.translationRu) && item.translationRu.length > 0;
         var enReady = Array.isArray(item.examplesEn) && item.examplesEn.length > 0;
-        return !(ruReady && enReady);
+        var explanationReady = !!String(item.explanationEn || '').trim();
+        return !(ruReady && enReady && explanationReady);
       }
 
       async function ensureDictionaryDetails(itemId) {
@@ -405,6 +408,7 @@
           if (!target) return;
           target.translationRu = details.translationRu;
           target.examplesEn = details.examplesEn;
+          target.explanationEn = details.explanationEn || '';
           target.detailsReady = true;
           target.detailsError = '';
           saveDictionary(updated);
@@ -452,6 +456,17 @@
           var translationText = item.translationRu.length
             ? item.translationRu.map(function (line, idx) { return (idx + 1) + '. ' + line; }).join('\n')
             : 'No translation available.';
+          var explanationText = String(item.explanationEn || '').trim();
+          var explanationHtml = '';
+          if (explanationText) {
+            explanationHtml = '<div class="translation">' + escapeHtml(explanationText) + '</div>';
+          } else if (generatingDetailsById[id]) {
+            explanationHtml = '<div class="details-note">Generating English explanation...</div>';
+          } else if (item.detailsError) {
+            explanationHtml = '<div class="details-note">Could not load explanation: ' + escapeHtml(item.detailsError) + '</div>';
+          } else {
+            explanationHtml = '<div class="details-note">Generating English explanation...</div>';
+          }
           var examplesHtml = '';
           if (item.examplesEn.length) {
             examplesHtml = '<ol class="examples">' + item.examplesEn.map(function (example) {
@@ -475,6 +490,8 @@
               '</div>' +
               '<div class="item-extra' + (isExpanded ? ' visible' : '') + '">' +
                 '<div class="extra-label">Word details</div>' +
+                '<div class="extra-label">English explanation</div>' +
+                explanationHtml +
                 '<button class="btn-sm btn-toggle-translation" data-act="toggle-translation">' + (translationVisible ? 'Hide translation' : 'Show translation') + '</button>' +
                 (translationVisible ? '<div class="translation">' + escapeHtml(translationText) + '</div>' : '') +
                 '<div class="extra-label">Interview examples</div>' +
@@ -500,6 +517,7 @@
           learned: false,
           translationRu: [],
           examplesEn: [],
+          explanationEn: '',
           detailsReady: false
         });
         saveDictionary(list);
@@ -514,6 +532,7 @@
           if (!item) return;
           item.translationRu = details.translationRu;
           item.examplesEn = details.examplesEn;
+          item.explanationEn = details.explanationEn || '';
           item.detailsReady = true;
           item.detailsError = '';
           saveDictionary(updated);
